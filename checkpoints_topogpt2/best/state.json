@@ -1,0 +1,129 @@
+{
+  "completed_epochs": 4,
+  "global_step": 36209,
+  "best_val_loss": 1.7773439910557367,
+  "history": {
+    "train_loss": [
+      3.354683684574705,
+      1.9984693332836416,
+      1.9012653170097193,
+      1.853923104756527
+    ],
+    "val_loss": [
+      2.294426638735264,
+      1.865037854896711,
+      1.7896975268598758,
+      1.7773439910557367
+    ],
+    "perplexity": [
+      9.918747356084952,
+      6.456180279403076,
+      5.9876410918478635,
+      5.914127564140669
+    ],
+    "recon_loss": [
+      0.538496156376088,
+      0.1820906620065869,
+      0.13982247337796594,
+      0.11967963705430934
+    ],
+    "delta": [
+      0.49999964237213135,
+      0.49999988079071045,
+      0.4999999403953552,
+      0.49999937415122986
+    ],
+    "alpha": [
+      0.6931478956159383,
+      0.6931474187785528,
+      0.6931472995692419,
+      0.6931484320582687
+    ],
+    "t_eff": [
+      41.25969430029172,
+      14.27762973412443,
+      50.16427601891983,
+      14.642359745776
+    ],
+    "kappa": [
+      Infinity,
+      Infinity,
+      Infinity,
+      Infinity
+    ],
+    "berry_phase": [
+      351.85802841186523,
+      895.2539405822754,
+      642.4546012878418,
+      865.5080623626709
+    ],
+    "winding_number": [
+      56,
+      142,
+      102,
+      138
+    ],
+    "lc": [
+      0.8774063797305813,
+      0.8761302644755983,
+      0.8738854782921928,
+      0.8724120160401692
+    ],
+    "sp": [
+      0.10965092468122356,
+      0.10090526263766025,
+      0.10368606417272497,
+      0.10467046231443432
+    ],
+    "phase": [
+      "topological_insulator",
+      "topological_insulator",
+      "topological_insulator",
+      "topological_insulator"
+    ]
+  },
+  "config": {
+    "DEVICE": "cuda",
+    "RANDOM_SEED": 42,
+    "USE_AMP": true,
+    "SCALE": "small",
+    "VOCAB_SIZE": 50257,
+    "MAX_SEQ_LEN": 256,
+    "D_MODEL": 256,
+    "N_HEADS": 8,
+    "N_KV_HEADS": 8,
+    "N_LAYERS": 6,
+    "DROPOUT": 0.1,
+    "MOE_ENABLED": true,
+    "N_EXPERTS": 4,
+    "MOE_TOP_K": 2,
+    "MOE_AUX_LOSS_WEIGHT": 0.01,
+    "TORUS_GRID_SIZE": 8,
+    "TORUS_RADIAL_BINS": 2,
+    "TORUS_ANGULAR_BINS": 4,
+    "SPECTRAL_LATENT_RATIO": 0.5,
+    "SPECTRAL_KERNEL_INIT_SCALE": 0.02,
+    "NUM_SPECTRAL_LAYERS": 2,
+    "AE_RECON_WEIGHT": 0.01,
+    "BATCH_SIZE": 4,
+    "GRAD_ACCUM_STEPS": 8,
+    "LEARNING_RATE": 0.0003,
+    "WEIGHT_DECAY": 0.1,
+    "EPOCHS": 5,
+    "WARMUP_RATIO": 0.05,
+    "GRADIENT_CLIP_NORM": 1.0,
+    "GRADIENT_CHECKPOINTING": true,
+    "CORPUS": "tinystories",
+    "CORPUS_FILE": "",
+    "DATA_DIR": "data_topogpt2",
+    "MAX_TRAIN_TOKENS": 50000000,
+    "CHECKPOINT_DIR": "checkpoints_topogpt2",
+    "CHECKPOINT_INTERVAL_MINUTES": 10,
+    "MAX_CHECKPOINTS": 5,
+    "LOG_INTERVAL_STEPS": 100,
+    "EVAL_INTERVAL_STEPS": 500,
+    "LOG_LEVEL": "INFO",
+    "T_INIT": 1.0
+  },
+  "saved_at": "2026-04-14T00:58:28.833169"
+}
