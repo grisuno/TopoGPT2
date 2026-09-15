@@ -1,0 +1,1080 @@
+# Subsystem: root
+
+## app.py
+- Layer: utility
+- Language: py
+- Symbols:
+  - `TopoGPT2Config` (class, line 55) `class TopoGPT2Config`
+  - `setup_logger` (method, line 155) `def setup_logger(name, level)`
+  - `set_seed` (method, line 165) `def set_seed(seed, device)`
+  - `QuaternionOps` (class, line 177) `class QuaternionOps`
+  - `QuaternionLinear` (class, line 216) `class QuaternionLinear(Module)`
+  - `QuaternionSpectralLayer` (class, line 261) `class QuaternionSpectralLayer(Module)`
+  - `SpectralAutoencoder` (class, line 348) `class SpectralAutoencoder(Module)`
+  - `QuaternionTorusBrain` (class, line 431) `class QuaternionTorusBrain(Module)`
+  - `RotaryEmbedding` (class, line 648) `class RotaryEmbedding(Module)`
+  - `RMSNorm` (class, line 696) `class RMSNorm(Module)`
+  - `SwiGLU` (class, line 713) `class SwiGLU(Module)`
+  - `TopoMoEBrain` (class, line 742) `class TopoMoEBrain(Module)`
+  - `MultiHeadAttention` (class, line 847) `class MultiHeadAttention(Module)`
+  - `TopoGPT2Layer` (class, line 929) `class TopoGPT2Layer(Module)`
+  - `TopoGPT2` (class, line 976) `class TopoGPT2(Module)`
+  - `BPETokenizer` (class, line 1082) `class BPETokenizer`
+  - `CorpusDownloader` (class, line 1107) `class CorpusDownloader`
+  - `TokenizedDataset` (class, line 1170) `class TokenizedDataset(Dataset)`
+  - `CheckpointManager` (class, line 1220) `class CheckpointManager`
+  - `TopoGPT2Trainer` (class, line 1453) `class TopoGPT2Trainer`
+  - `MechanisticMetrics` (class, line 1746) `class MechanisticMetrics`
+  - `Phase0_KernelOptimizer` (class, line 1983) `class Phase0_KernelOptimizer`
+  - `Phase1_BatchProspector` (class, line 2058) `class Phase1_BatchProspector`
+  - `Phase2_SeedMiner` (class, line 2141) `class Phase2_SeedMiner`
+  - `Phase4_AnnealingRefiner` (class, line 2223) `class Phase4_AnnealingRefiner`
+  - `TopoPhasePipeline` (class, line 2384) `class TopoPhasePipeline`
+  - `main` (method, line 2506) `def main()`
+  - `__post_init__` (method, line 124) `def __post_init__(self)`
+  - `hamilton_product` (method, line 185) `def hamilton_product(q1, q2)`
+  - `normalize` (method, line 197) `def normalize(q, eps)`
+  - `conjugate` (method, line 201) `def conjugate(q)`
+  - `rotate_vector` (method, line 206) `def rotate_vector(v, q)`
+  - `__init__` (method, line 228) `def __init__(self, in_features, out_features, bias)`
+  - `forward` (method, line 244) `def forward(self, x)`
+  - `__init__` (method, line 281) `def __init__(self, in_q, out_q, grid_h, grid_w, init_scale)`
+  - `_kernel` (method, line 300) `def _kernel(self, c)`
+  - `_contract` (method, line 303) `def _contract(self, W, X)`
+  - `forward` (method, line 307) `def forward(self, x)`
+  - `__init__` (method, line 361) `def __init__(self, config)`
+  - `_filter1d` (method, line 393) `def _filter1d(self, x, kr, ki)`
+  - `encode` (method, line 399) `def encode(self, x)`
+  - `decode` (method, line 404) `def decode(self, z)`
+  - `forward` (method, line 409) `def forward(self, x)`
+  - `process_torus_grid` (method, line 416) `def process_torus_grid(self, grid)`
+  - `__init__` (method, line 449) `def __init__(self, d_model, config)`
+  - `_build_torus_graph` (method, line 489) `def _build_torus_graph(self)`
+  - `_torus_soft_assign` (method, line 523) `def _torus_soft_assign(self, phi1, phi2)`
+  - `_message_passing` (method, line 550) `def _message_passing(self, node_feat)`
+  - `forward` (method, line 587) `def forward(self, x)`
+  - `__init__` (method, line 655) `def __init__(self, d_head, max_seq_len, base)`
+  - `_build_cache` (method, line 661) `def _build_cache(self, seq_len)`
+  - `_rotate_half` (method, line 668) `def _rotate_half(self, x)`
+  - `forward` (method, line 672) `def forward(self, q, k, seq_len, offset)`
+  - `__init__` (method, line 699) `def __init__(self, d_model, eps)`
+  - `forward` (method, line 704) `def forward(self, x)`
+  - `__init__` (method, line 720) `def __init__(self, d_model, expansion, dropout)`
+  - `forward` (method, line 734) `def forward(self, x)`
+  - `__init__` (method, line 757) `def __init__(self, d_model, config)`
+  - `_route` (method, line 778) `def _route(self, x)`
+  - `forward` (method, line 820) `def forward(self, x)`
+  - `__init__` (method, line 857) `def __init__(self, d_model, n_heads, config)`
+  - `forward` (method, line 875) `def forward(self, x, is_causal, past_kv)`
+  - `__init__` (method, line 938) `def __init__(self, d_model, n_heads, config)`
+  - `_forward_impl` (method, line 947) `def _forward_impl(self, x, past_kv)`
+  - `forward` (method, line 956) `def forward(self, x, past_kv)`
+  - `__init__` (method, line 987) `def __init__(self, config)`
+  - `_init_weights` (method, line 1006) `def _init_weights(self)`
+  - `forward` (method, line 1013) `def forward(self, token_ids, past_kvs)`
+  - `count_params` (method, line 1036) `def count_params(self)`
+  - `generate` (method, line 1042) `def generate(self, token_ids, max_new_tokens, temperature, top_k)`
+  - `__init__` (method, line 1085) `def __init__(self, encoding)`
+  - `encode` (method, line 1093) `def encode(self, text)`
+  - `decode` (method, line 1096) `def decode(self, tokens)`
+  - `eot_token` (method, line 1099) `def eot_token(self)`
+  - `__init__` (method, line 1119) `def __init__(self, corpus, data_dir, logger)`
+  - `get_text` (method, line 1125) `def get_text(self, split)`
+  - `_download_hf` (method, line 1150) `def _download_hf(self, dataset_name, split, text_column, name)`
+  - `__init__` (method, line 1179) `def __init__(self, text, tokenizer, seq_len, max_tokens, cache_dir, split_tag)`
+  - `__len__` (method, line 1206) `def __len__(self)`
+  - `__getitem__` (method, line 1209) `def __getitem__(self, idx)`
+  - `__init__` (method, line 1245) `def __init__(self, config, logger)`
+  - `patch_config_for_resume` (method, line 1255) `def patch_config_for_resume(self, cfg)`
+  - `_save_model` (method, line 1284) `def _save_model(self, model, directory)`
+  - `_load_model` (method, line 1297) `def _load_model(self, model, directory)`
+  - `_save_optimizer` (method, line 1328) `def _save_optimizer(self, optimizer, directory)`
+  - `_load_optimizer` (method, line 1331) `def _load_optimizer(self, optimizer, directory, device)`
+  - `_save_state` (method, line 1340) `def _save_state(self, state, directory)`
+  - `_load_state` (method, line 1345) `def _load_state(self, directory)`
+  - `should_save` (method, line 1356) `def should_save(self)`
+  - `save` (method, line 1359) `def save(self, model, optimizer, state, is_best)`
+  - `load_latest` (method, line 1404) `def load_latest(self, model, optimizer)`
+  - `load_best` (method, line 1431) `def load_best(self, model)`
+  - `has_checkpoint` (method, line 1443) `def has_checkpoint(self)`
+  - `__init__` (method, line 1465) `def __init__(self, model, config, tokenizer)`
+  - `resume` (method, line 1500) `def resume(self)`
+  - `_current_state` (method, line 1525) `def _current_state(self)`
+  - `_cosine_lr` (method, line 1536) `def _cosine_lr(self, step_in_session, total_steps_session)`
+  - `_set_lr` (method, line 1544) `def _set_lr(self, lr)`
+  - `train` (method, line 1548) `def train(self, train_dl, val_dl)`
+  - `_sample_text` (method, line 1684) `def _sample_text(self, tokenizer, prompts, max_new, temperature, top_k)`
+  - `evaluate` (method, line 1716) `def evaluate(self, dataloader)`
+  - `__init__` (method, line 1766) `def __init__(self, config)`
+  - `compute_delta` (method, line 1774) `def compute_delta(self, model)`
+  - `compute_alpha` (method, line 1781) `def compute_alpha(self, delta)`
+  - `update_grad_buffer` (method, line 1786) `def update_grad_buffer(self, model)`
+  - `compute_t_eff` (method, line 1812) `def compute_t_eff(self, lr)`
+  - `compute_kappa` (method, line 1820) `def compute_kappa(self, model, dataloader, n_batches)`
+  - `compute_berry_phase` (method, line 1878) `def compute_berry_phase(self, model)`
+  - `compute_lc` (method, line 1891) `def compute_lc(self, model)`
+  - `compute_sp` (method, line 1905) `def compute_sp(self, model)`
+  - `classify_phase` (method, line 1921) `def classify_phase(self, delta, kappa, berry)`
+  - `compute_all` (method, line 1940) `def compute_all(self, model, lr, dataloader, compute_kappa)`
+  - `format_log` (method, line 1965) `def format_log(self, m)`
+  - `__init__` (method, line 2001) `def __init__(self, config, logger)`
+  - `_measure_ratio` (method, line 2005) `def _measure_ratio(self, ratio, sample_batch)`
+  - `optimize` (method, line 2034) `def optimize(self, dataloader)`
+  - `__init__` (method, line 2074) `def __init__(self, config, logger)`
+  - `prospect` (method, line 2078) `def prospect(self, candidates, train_dataset, prospect_steps)`
+  - `__init__` (method, line 2157) `def __init__(self, config, logger)`
+  - `mine` (method, line 2161) `def mine(self, seed_start, n_seeds, train_dataset, prospect_steps)`
+  - `__init__` (method, line 2243) `def __init__(self, trainer, t0, cooling_rate, stagnation_patience)`
+  - `refine` (method, line 2252) `def refine(self, train_dl, val_dl, refine_epochs)`
+  - `__init__` (method, line 2404) `def __init__(self, config, train_dataset, val_dataset, tokenizer, logger)`
+  - `_make_dataloaders` (method, line 2414) `def _make_dataloaders(self, batch_size)`
+  - `run` (method, line 2426) `def run(self, run_prospect, refine_epochs, resume, prospect_steps, probe_seeds, seed_start)`
+  - `ckpt_fn` (method, line 964) `def ckpt_fn(x_in)`
+
+## inference.py
+- Layer: utility
+- Language: py
+- Symbols:
+  - `_load_source_module` (function, line 19) `def _load_source_module(path)`
+  - `InferenceConfig` (class, line 28) `class InferenceConfig`
+  - `CheckpointInspector` (class, line 45) `class CheckpointInspector`
+  - `ModelLoader` (class, line 90) `class ModelLoader`
+  - `GenerationEngine` (class, line 115) `class GenerationEngine`
+  - `InferenceRunner` (class, line 140) `class InferenceRunner`
+  - `parse_arguments` (method, line 178) `def parse_arguments()`
+  - `__init__` (method, line 47) `def __init__(self, logger)`
+  - `inspect_kq_head_count` (method, line 50) `def inspect_kq_head_count(self, checkpoint_path, d_model, n_heads)`
+  - `patch_config` (method, line 62) `def patch_config(self, config, source_module)`
+  - `_resolve_preset` (method, line 81) `def _resolve_preset(self, scale)`
+  - `__init__` (method, line 92) `def __init__(self, checkpoint_name, logger)`
+  - `load_model` (method, line 96) `def load_model(self, config, source_module)`
+  - `__init__` (method, line 117) `def __init__(self, config, logger)`
+  - `generate` (method, line 121) `def generate(self, model, tokenizer, prompt_text)`
+  - `sample_logits` (method, line 132) `def sample_logits(self, logits)`
+  - `__init__` (method, line 142) `def __init__(self, config)`
+  - `_setup_logger` (method, line 146) `def _setup_logger(self)`
+  - `run` (method, line 155) `def run(self)`
+  - `_print_result` (method, line 170) `def _print_result(self, prompt, output)`
+
+## inference2.py
+- Layer: utility
+- Language: py
+- Symbols:
+  - `build_logger` (function, line 79) `def build_logger(name, level)`
+  - `InferenceConfig` (class, line 97) `class InferenceConfig`
+  - `BPETokenizer` (class, line 170) `class BPETokenizer`
+  - `QuaternionOps` (class, line 196) `class QuaternionOps`
+  - `QuaternionLinear` (class, line 219) `class QuaternionLinear(Module)`
+  - `QuaternionSpectralLayer` (class, line 252) `class QuaternionSpectralLayer(Module)`
+  - `SpectralAutoencoder` (class, line 306) `class SpectralAutoencoder(Module)`
+  - `QuaternionTorusBrain` (class, line 358) `class QuaternionTorusBrain(Module)`
+  - `SwiGLU` (class, line 462) `class SwiGLU(Module)`
+  - `TopoMoEBrain` (class, line 481) `class TopoMoEBrain(Module)`
+  - `RotaryEmbedding` (class, line 537) `class RotaryEmbedding(Module)`
+  - `RMSNorm` (class, line 577) `class RMSNorm(Module)`
+  - `MultiHeadAttention` (class, line 589) `class MultiHeadAttention(Module)`
+  - `TopoGPT2Layer` (class, line 638) `class TopoGPT2Layer(Module)`
+  - `TopoGPT2` (class, line 660) `class TopoGPT2(Module)`
+  - `ModelConfig` (class, line 700) `class ModelConfig`
+  - `CheckpointArchProber` (class, line 735) `class CheckpointArchProber`
+  - `CheckpointLoader` (class, line 890) `class CheckpointLoader`
+  - `Sampler` (class, line 943) `class Sampler`
+  - `GenerationEngine` (class, line 1003) `class GenerationEngine`
+  - `ResultPrinter` (class, line 1082) `class ResultPrinter`
+  - `InferencePipeline` (class, line 1116) `class InferencePipeline`
+  - `build_arg_parser` (method, line 1217) `def build_arg_parser()`
+  - `main` (method, line 1288) `def main()`
+  - `validate` (method, line 148) `def validate(self)`
+  - `__init__` (method, line 175) `def __init__(self)`
+  - `encode` (method, line 182) `def encode(self, text)`
+  - `decode` (method, line 185) `def decode(self, token_ids)`
+  - `decode_single` (method, line 188) `def decode_single(self, token_id)`
+  - `hamilton_product` (method, line 200) `def hamilton_product(q1, q2)`
+  - `normalize` (method, line 211) `def normalize(q, eps)`
+  - `conjugate` (method, line 215) `def conjugate(q)`
+  - `__init__` (method, line 227) `def __init__(self, in_features, out_features, bias)`
+  - `forward` (method, line 241) `def forward(self, x)`
+  - `__init__` (method, line 259) `def __init__(self, in_q, out_q, grid_h, grid_w, init_scale)`
+  - `_kernel` (method, line 276) `def _kernel(self, c)`
+  - `_contract` (method, line 279) `def _contract(self, W, X)`
+  - `forward` (method, line 282) `def forward(self, x)`
+  - `__init__` (method, line 312) `def __init__(self, cfg)`
+  - `_filter1d` (method, line 334) `def _filter1d(self, x, kr, ki)`
+  - `encode` (method, line 341) `def encode(self, x)`
+  - `decode` (method, line 344) `def decode(self, z)`
+  - `forward` (method, line 347) `def forward(self, x)`
+  - `process_torus_grid` (method, line 351) `def process_torus_grid(self, grid)`
+  - `__init__` (method, line 370) `def __init__(self, d_model, cfg)`
+  - `_build_torus_graph` (method, line 395) `def _build_torus_graph(self)`
+  - `_torus_soft_assign` (method, line 411) `def _torus_soft_assign(self, phi1, phi2)`
+  - `_message_passing` (method, line 423) `def _message_passing(self, node_feat)`
+  - `forward` (method, line 437) `def forward(self, x)`
+  - `__init__` (method, line 465) `def __init__(self, d_model, expansion, dropout)`
+  - `forward` (method, line 475) `def forward(self, x)`
+  - `__init__` (method, line 488) `def __init__(self, d_model, cfg)`
+  - `_route` (method, line 503) `def _route(self, x)`
+  - `forward` (method, line 528) `def forward(self, x)`
+  - `__init__` (method, line 542) `def __init__(self, d_head, max_seq_len)`
+  - `_build_cache` (method, line 550) `def _build_cache(self, seq_len)`
+  - `_rotate_half` (method, line 557) `def _rotate_half(x)`
+  - `forward` (method, line 561) `def forward(self, q, k, seq_len, offset)`
+  - `__init__` (method, line 580) `def __init__(self, d_model, eps)`
+  - `forward` (method, line 585) `def forward(self, x)`
+  - `__init__` (method, line 594) `def __init__(self, d_model, n_heads, cfg)`
+  - `forward` (method, line 609) `def forward(self, x, is_causal, past_kv)`
+  - `__init__` (method, line 641) `def __init__(self, d_model, n_heads, cfg)`
+  - `forward` (method, line 649) `def forward(self, x, past_kv)`
+  - `__init__` (method, line 666) `def __init__(self, cfg)`
+  - `forward` (method, line 678) `def forward(self, token_ids, past_kvs)`
+  - `d_quat` (method, line 723) `def d_quat(self)`
+  - `gqa_groups` (method, line 727) `def gqa_groups(self)`
+  - `__init__` (method, line 768) `def __init__(self, logger)`
+  - `_load_shapes` (method, line 771) `def _load_shapes(self, path)`
+  - `probe` (method, line 786) `def probe(self, path)`
+  - `_fallback_d_head` (method, line 871) `def _fallback_d_head(d_model, q_out, k_out)`
+  - `__init__` (method, line 896) `def __init__(self, logger)`
+  - `load` (method, line 899) `def load(self, path, model, device)`
+  - `__init__` (method, line 950) `def __init__(self, cfg)`
+  - `__call__` (method, line 953) `def __call__(self, logits, generated_ids)`
+  - `__init__` (method, line 1013) `def __init__(self, model, tokenizer, cfg, logger)`
+  - `generate` (method, line 1027) `def generate(self, prompt)`
+  - `_maybe_stream` (method, line 1071) `def _maybe_stream(self, token_id)`
+  - `print_single` (method, line 1087) `def print_single(self, prompt, full_text, tps, show_timing)`
+  - `print_benchmark` (method, line 1100) `def print_benchmark(self, runs, tps_list)`
+  - `__init__` (method, line 1127) `def __init__(self, cfg, logger)`
+  - `_build_model` (method, line 1131) `def _build_model(self)`
+  - `run` (method, line 1149) `def run(self)`
+  - `_run_single` (method, line 1164) `def _run_single(self, engine, printer)`
+  - `_run_interactive` (method, line 1176) `def _run_interactive(self, engine, printer)`
+  - `_run_benchmark` (method, line 1199) `def _run_benchmark(self, engine, printer)`
+
+## install.sh
+- Layer: utility
+- Language: sh
+
+## quantize.py
+- Layer: utility
+- Language: py
+- Symbols:
+  - `InferenceConfig` (class, line 34) `class InferenceConfig`
+  - `CheckpointInspector` (class, line 105) `class CheckpointInspector`
+  - `QuaternionOps` (class, line 162) `class QuaternionOps`
+  - `QuaternionLinear` (class, line 195) `class QuaternionLinear(Module)`
+  - `QuaternionSpectralLayer` (class, line 220) `class QuaternionSpectralLayer(Module)`
+  - `SpectralAutoencoder` (class, line 262) `class SpectralAutoencoder(Module)`
+  - `QuaternionTorusBrain` (class, line 312) `class QuaternionTorusBrain(Module)`
+  - `RotaryEmbedding` (class, line 408) `class RotaryEmbedding(Module)`
+  - `RMSNorm` (class, line 440) `class RMSNorm(Module)`
+  - `SwiGLU` (class, line 451) `class SwiGLU(Module)`
+  - `TopoMoEBrain` (class, line 468) `class TopoMoEBrain(Module)`
+  - `MultiHeadAttention` (class, line 522) `class MultiHeadAttention(Module)`
+  - `TopoGPT2Layer` (class, line 568) `class TopoGPT2Layer(Module)`
+  - `TopoGPT2` (class, line 590) `class TopoGPT2(Module)`
+  - `BPETokenizer` (class, line 651) `class BPETokenizer`
+  - `QuantizationFormat` (class, line 668) `class QuantizationFormat(Enum)`
+  - `IQuantizer` (class, line 678) `class IQuantizer(ABC)`
+  - `BitNetQuantizer` (class, line 692) `class BitNetQuantizer(IQuantizer)`
+  - `INT4Quantizer` (class, line 721) `class INT4Quantizer(IQuantizer)`
+  - `INT8Quantizer` (class, line 746) `class INT8Quantizer(IQuantizer)`
+  - `Float16Quantizer` (class, line 760) `class Float16Quantizer(IQuantizer)`
+  - `BFloat16Quantizer` (class, line 774) `class BFloat16Quantizer(IQuantizer)`
+  - `Float32Quantizer` (class, line 788) `class Float32Quantizer(IQuantizer)`
+  - `Float64Quantizer` (class, line 802) `class Float64Quantizer(IQuantizer)`
+  - `QuantizerFactory` (class, line 816) `class QuantizerFactory`
+  - `ModelLoader` (class, line 834) `class ModelLoader`
+  - `InferenceEngine` (class, line 883) `class InferenceEngine`
+  - `QuantizationInferencePipeline` (class, line 907) `class QuantizationInferencePipeline`
+  - `parse_arguments` (method, line 939) `def parse_arguments()`
+  - `main` (method, line 965) `def main()`
+  - `resolve_gqa` (method, line 86) `def resolve_gqa(self)`
+  - `inspect_and_patch` (method, line 108) `def inspect_and_patch(path, config)`
+  - `hamilton_product` (method, line 165) `def hamilton_product(q1, q2)`
+  - `normalize` (method, line 176) `def normalize(q, eps)`
+  - `conjugate` (method, line 180) `def conjugate(q)`
+  - `rotate_vector` (method, line 185) `def rotate_vector(v, q)`
+  - `__init__` (method, line 196) `def __init__(self, in_features, out_features, bias)`
+  - `forward` (method, line 209) `def forward(self, x)`
+  - `__init__` (method, line 221) `def __init__(self, in_q, out_q, grid_h, grid_w, init_scale)`
+  - `_kernel` (method, line 233) `def _kernel(self, c)`
+  - `_contract` (method, line 236) `def _contract(self, W, X)`
+  - `forward` (method, line 239) `def forward(self, x)`
+  - `__init__` (method, line 263) `def __init__(self, config)`
+  - `_filter1d` (method, line 286) `def _filter1d(self, x, kr, ki)`
+  - `encode` (method, line 291) `def encode(self, x)`
+  - `decode` (method, line 295) `def decode(self, z)`
+  - `forward` (method, line 299) `def forward(self, x)`
+  - `process_torus_grid` (method, line 305) `def process_torus_grid(self, grid)`
+  - `__init__` (method, line 313) `def __init__(self, d_model, config)`
+  - `_build_torus_graph` (method, line 338) `def _build_torus_graph(self)`
+  - `_torus_soft_assign` (method, line 354) `def _torus_soft_assign(self, phi1, phi2)`
+  - `_message_passing` (method, line 365) `def _message_passing(self, node_feat)`
+  - `forward` (method, line 380) `def forward(self, x)`
+  - `__init__` (method, line 409) `def __init__(self, d_head, max_seq_len, base)`
+  - `_build_cache` (method, line 415) `def _build_cache(self, seq_len)`
+  - `_rotate_half` (method, line 422) `def _rotate_half(self, x)`
+  - `forward` (method, line 426) `def forward(self, q, k, seq_len, offset)`
+  - `__init__` (method, line 441) `def __init__(self, d_model, eps)`
+  - `forward` (method, line 446) `def forward(self, x)`
+  - `__init__` (method, line 452) `def __init__(self, d_model, expansion, dropout)`
+  - `forward` (method, line 464) `def forward(self, x)`
+  - `__init__` (method, line 469) `def __init__(self, d_model, config)`
+  - `_route` (method, line 486) `def _route(self, x)`
+  - `forward` (method, line 509) `def forward(self, x)`
+  - `__init__` (method, line 523) `def __init__(self, d_model, n_heads, config)`
+  - `forward` (method, line 539) `def forward(self, x, is_causal, past_kv)`
+  - `__init__` (method, line 569) `def __init__(self, d_model, n_heads, config)`
+  - `_forward_impl` (method, line 579) `def _forward_impl(self, x, past_kv)`
+  - `forward` (method, line 586) `def forward(self, x, past_kv)`
+  - `__init__` (method, line 591) `def __init__(self, config)`
+  - `_init_weights` (method, line 606) `def _init_weights(self)`
+  - `forward` (method, line 613) `def forward(self, token_ids, past_kvs)`
+  - `generate` (method, line 627) `def generate(self, token_ids, max_new_tokens, temperature, top_k, eos_token_id)`
+  - `__init__` (method, line 652) `def __init__(self, encoding)`
+  - `encode` (method, line 658) `def encode(self, text)`
+  - `decode` (method, line 661) `def decode(self, tokens)`
+  - `eot_token` (method, line 664) `def eot_token(self)`
+  - `quantize` (method, line 680) `def quantize(self, model)`
+  - `get_format_name` (method, line 684) `def get_format_name(self)`
+  - `get_bits_per_weight` (method, line 688) `def get_bits_per_weight(self)`
+  - `__init__` (method, line 693) `def __init__(self, config)`
+  - `quantize` (method, line 696) `def quantize(self, model)`
+  - `get_format_name` (method, line 714) `def get_format_name(self)`
+  - `get_bits_per_weight` (method, line 717) `def get_bits_per_weight(self)`
+  - `__init__` (method, line 722) `def __init__(self, config)`
+  - `quantize` (method, line 725) `def quantize(self, model)`
+  - `get_format_name` (method, line 739) `def get_format_name(self)`
+  - `get_bits_per_weight` (method, line 742) `def get_bits_per_weight(self)`
+  - `__init__` (method, line 747) `def __init__(self, config)`
+  - `quantize` (method, line 750) `def quantize(self, model)`
+  - `get_format_name` (method, line 753) `def get_format_name(self)`
+  - `get_bits_per_weight` (method, line 756) `def get_bits_per_weight(self)`
+  - `__init__` (method, line 761) `def __init__(self, config)`
+  - `quantize` (method, line 764) `def quantize(self, model)`
+  - `get_format_name` (method, line 767) `def get_format_name(self)`
+  - `get_bits_per_weight` (method, line 770) `def get_bits_per_weight(self)`
+  - `__init__` (method, line 775) `def __init__(self, config)`
+  - `quantize` (method, line 778) `def quantize(self, model)`
+  - `get_format_name` (method, line 781) `def get_format_name(self)`
+  - `get_bits_per_weight` (method, line 784) `def get_bits_per_weight(self)`
+  - `__init__` (method, line 789) `def __init__(self, config)`
+  - `quantize` (method, line 792) `def quantize(self, model)`
+  - `get_format_name` (method, line 795) `def get_format_name(self)`
+  - `get_bits_per_weight` (method, line 798) `def get_bits_per_weight(self)`
+  - `__init__` (method, line 803) `def __init__(self, config)`
+  - `quantize` (method, line 806) `def quantize(self, model)`
+  - `get_format_name` (method, line 809) `def get_format_name(self)`
+  - `get_bits_per_weight` (method, line 812) `def get_bits_per_weight(self)`
+  - `create_quantizer` (method, line 818) `def create_quantizer(fmt, config)`
+  - `__init__` (method, line 835) `def __init__(self, config, logger)`
+  - `load_checkpoint` (method, line 839) `def load_checkpoint(self)`
+  - `__init__` (method, line 884) `def __init__(self, config, model, tokenizer)`
+  - `run_inference` (method, line 891) `def run_inference(self, prompt)`
+  - `__init__` (method, line 908) `def __init__(self, config)`
+  - `execute` (method, line 919) `def execute(self)`
+
+## reinforce.py
+- Layer: utility
+- Language: py
+- Symbols:
+  - `RLConfig` (class, line 27) `class RLConfig`
+  - `RewardSignalType` (class, line 72) `class RewardSignalType(Enum)`
+  - `CheckpointPatcher` (class, line 84) `class CheckpointPatcher`
+  - `MechanisticRewardCalculator` (class, line 120) `class MechanisticRewardCalculator`
+  - `RewardModel` (class, line 152) `class RewardModel(Module)`
+  - `ExperienceBuffer` (class, line 189) `class ExperienceBuffer`
+  - `ValueHead` (class, line 240) `class ValueHead(Module)`
+  - `PPOTrainer` (class, line 262) `class PPOTrainer`
+  - `ChatAgent` (class, line 519) `class ChatAgent`
+  - `setup_logger` (method, line 597) `def setup_logger(name, level)`
+  - `create_rl_agent_from_checkpoint` (method, line 606) `def create_rl_agent_from_checkpoint(model_path, config, tokenizer, logger)`
+  - `__init__` (method, line 86) `def __init__(self, logger)`
+  - `align_config` (method, line 89) `def align_config(self, model_path, config, source_module)`
+  - `_resolve_preset` (method, line 111) `def _resolve_preset(self, scale)`
+  - `__init__` (method, line 122) `def __init__(self, config, logger)`
+  - `compute_lc_reward` (method, line 129) `def compute_lc_reward(self, lc_value)`
+  - `compute_sp_reward` (method, line 133) `def compute_sp_reward(self, sp_value)`
+  - `compute_delta_reward` (method, line 137) `def compute_delta_reward(self, delta_value)`
+  - `compute_mechanistic_reward` (method, line 142) `def compute_mechanistic_reward(self, metrics)`
+  - `__init__` (method, line 154) `def __init__(self, config, vocab_size, d_model)`
+  - `_init_weights` (method, line 173) `def _init_weights(self)`
+  - `forward` (method, line 180) `def forward(self, input_ids, attention_mask)`
+  - `__init__` (method, line 191) `def __init__(self, config, capacity)`
+  - `add` (method, line 198) `def add(self, experience)`
+  - `compute_advantages` (method, line 201) `def compute_advantages(self, values, rewards, masks)`
+  - `sample_minibatches` (method, line 215) `def sample_minibatches(self, batch_size)`
+  - `_collate` (method, line 226) `def _collate(self, batch)`
+  - `clear` (method, line 237) `def clear(self)`
+  - `__init__` (method, line 242) `def __init__(self, d_model, hidden_dim)`
+  - `_init_weights` (method, line 251) `def _init_weights(self)`
+  - `forward` (method, line 258) `def forward(self, hidden_states)`
+  - `__init__` (method, line 264) `def __init__(self, policy_model, config, reward_model, ref_model, logger)`
+  - `generate_with_policy` (method, line 294) `def generate_with_policy(self, prompt_ids, max_new_tokens)`
+  - `compute_kl_divergence` (method, line 306) `def compute_kl_divergence(self, policy_logits, ref_logits)`
+  - `compute_reward` (method, line 317) `def compute_reward(self, responses, prompts, metrics)`
+  - `collect_experience` (method, line 336) `def collect_experience(self, prompts, num_samples)`
+  - `_extract_mechanistic_metrics` (method, line 367) `def _extract_mechanistic_metrics(self, tokens)`
+  - `ppo_update` (method, line 398) `def ppo_update(self, batch)`
+  - `train_step` (method, line 460) `def train_step(self, prompts)`
+  - `_save_checkpoint` (method, line 482) `def _save_checkpoint(self)`
+  - `load_checkpoint` (method, line 498) `def load_checkpoint(self, path)`
+  - `__init__` (method, line 521) `def __init__(self, policy_model, config, tokenizer, logger)`
+  - `attach_trainer` (method, line 530) `def attach_trainer(self, trainer)`
+  - `respond` (method, line 533) `def respond(self, user_message, max_new_tokens)`
+  - `_format_conversation` (method, line 553) `def _format_conversation(self)`
+  - `train_on_feedback` (method, line 562) `def train_on_feedback(self, user_message, response, reward_score)`
+  - `reset_conversation` (method, line 594) `def reset_conversation(self)`
+
+## topogpt2_1.py
+- Layer: utility
+- Language: py
+- Symbols:
+  - `TopoGPT2Config` (class, line 55) `class TopoGPT2Config`
+  - `setup_logger` (method, line 155) `def setup_logger(name, level)`
+  - `set_seed` (method, line 165) `def set_seed(seed, device)`
+  - `QuaternionOps` (class, line 177) `class QuaternionOps`
+  - `QuaternionLinear` (class, line 216) `class QuaternionLinear(Module)`
+  - `QuaternionSpectralLayer` (class, line 261) `class QuaternionSpectralLayer(Module)`
+  - `SpectralAutoencoder` (class, line 348) `class SpectralAutoencoder(Module)`
+  - `QuaternionTorusBrain` (class, line 431) `class QuaternionTorusBrain(Module)`
+  - `RotaryEmbedding` (class, line 648) `class RotaryEmbedding(Module)`
+  - `RMSNorm` (class, line 696) `class RMSNorm(Module)`
+  - `SwiGLU` (class, line 713) `class SwiGLU(Module)`
+  - `TopoMoEBrain` (class, line 742) `class TopoMoEBrain(Module)`
+  - `MultiHeadAttention` (class, line 847) `class MultiHeadAttention(Module)`
+  - `TopoGPT2Layer` (class, line 929) `class TopoGPT2Layer(Module)`
+  - `TopoGPT2` (class, line 976) `class TopoGPT2(Module)`
+  - `BPETokenizer` (class, line 1082) `class BPETokenizer`
+  - `CorpusDownloader` (class, line 1107) `class CorpusDownloader`
+  - `TokenizedDataset` (class, line 1170) `class TokenizedDataset(Dataset)`
+  - `CheckpointManager` (class, line 1220) `class CheckpointManager`
+  - `TopoGPT2Trainer` (class, line 1453) `class TopoGPT2Trainer`
+  - `MechanisticMetrics` (class, line 1746) `class MechanisticMetrics`
+  - `Phase0_KernelOptimizer` (class, line 1983) `class Phase0_KernelOptimizer`
+  - `Phase1_BatchProspector` (class, line 2058) `class Phase1_BatchProspector`
+  - `Phase2_SeedMiner` (class, line 2141) `class Phase2_SeedMiner`
+  - `Phase4_AnnealingRefiner` (class, line 2223) `class Phase4_AnnealingRefiner`
+  - `TopoPhasePipeline` (class, line 2384) `class TopoPhasePipeline`
+  - `main` (method, line 2506) `def main()`
+  - `__post_init__` (method, line 124) `def __post_init__(self)`
+  - `hamilton_product` (method, line 185) `def hamilton_product(q1, q2)`
+  - `normalize` (method, line 197) `def normalize(q, eps)`
+  - `conjugate` (method, line 201) `def conjugate(q)`
+  - `rotate_vector` (method, line 206) `def rotate_vector(v, q)`
+  - `__init__` (method, line 228) `def __init__(self, in_features, out_features, bias)`
+  - `forward` (method, line 244) `def forward(self, x)`
+  - `__init__` (method, line 281) `def __init__(self, in_q, out_q, grid_h, grid_w, init_scale)`
+  - `_kernel` (method, line 300) `def _kernel(self, c)`
+  - `_contract` (method, line 303) `def _contract(self, W, X)`
+  - `forward` (method, line 307) `def forward(self, x)`
+  - `__init__` (method, line 361) `def __init__(self, config)`
+  - `_filter1d` (method, line 393) `def _filter1d(self, x, kr, ki)`
+  - `encode` (method, line 399) `def encode(self, x)`
+  - `decode` (method, line 404) `def decode(self, z)`
+  - `forward` (method, line 409) `def forward(self, x)`
+  - `process_torus_grid` (method, line 416) `def process_torus_grid(self, grid)`
+  - `__init__` (method, line 449) `def __init__(self, d_model, config)`
+  - `_build_torus_graph` (method, line 489) `def _build_torus_graph(self)`
+  - `_torus_soft_assign` (method, line 523) `def _torus_soft_assign(self, phi1, phi2)`
+  - `_message_passing` (method, line 550) `def _message_passing(self, node_feat)`
+  - `forward` (method, line 587) `def forward(self, x)`
+  - `__init__` (method, line 655) `def __init__(self, d_head, max_seq_len, base)`
+  - `_build_cache` (method, line 661) `def _build_cache(self, seq_len)`
+  - `_rotate_half` (method, line 668) `def _rotate_half(self, x)`
+  - `forward` (method, line 672) `def forward(self, q, k, seq_len, offset)`
+  - `__init__` (method, line 699) `def __init__(self, d_model, eps)`
+  - `forward` (method, line 704) `def forward(self, x)`
+  - `__init__` (method, line 720) `def __init__(self, d_model, expansion, dropout)`
+  - `forward` (method, line 734) `def forward(self, x)`
+  - `__init__` (method, line 757) `def __init__(self, d_model, config)`
+  - `_route` (method, line 778) `def _route(self, x)`
+  - `forward` (method, line 820) `def forward(self, x)`
+  - `__init__` (method, line 857) `def __init__(self, d_model, n_heads, config)`
+  - `forward` (method, line 875) `def forward(self, x, is_causal, past_kv)`
+  - `__init__` (method, line 938) `def __init__(self, d_model, n_heads, config)`
+  - `_forward_impl` (method, line 947) `def _forward_impl(self, x, past_kv)`
+  - `forward` (method, line 956) `def forward(self, x, past_kv)`
+  - `__init__` (method, line 987) `def __init__(self, config)`
+  - `_init_weights` (method, line 1006) `def _init_weights(self)`
+  - `forward` (method, line 1013) `def forward(self, token_ids, past_kvs)`
+  - `count_params` (method, line 1036) `def count_params(self)`
+  - `generate` (method, line 1042) `def generate(self, token_ids, max_new_tokens, temperature, top_k)`
+  - `__init__` (method, line 1085) `def __init__(self, encoding)`
+  - `encode` (method, line 1093) `def encode(self, text)`
+  - `decode` (method, line 1096) `def decode(self, tokens)`
+  - `eot_token` (method, line 1099) `def eot_token(self)`
+  - `__init__` (method, line 1119) `def __init__(self, corpus, data_dir, logger)`
+  - `get_text` (method, line 1125) `def get_text(self, split)`
+  - `_download_hf` (method, line 1150) `def _download_hf(self, dataset_name, split, text_column, name)`
+  - `__init__` (method, line 1179) `def __init__(self, text, tokenizer, seq_len, max_tokens, cache_dir, split_tag)`
+  - `__len__` (method, line 1206) `def __len__(self)`
+  - `__getitem__` (method, line 1209) `def __getitem__(self, idx)`
+  - `__init__` (method, line 1245) `def __init__(self, config, logger)`
+  - `patch_config_for_resume` (method, line 1255) `def patch_config_for_resume(self, cfg)`
+  - `_save_model` (method, line 1284) `def _save_model(self, model, directory)`
+  - `_load_model` (method, line 1297) `def _load_model(self, model, directory)`
+  - `_save_optimizer` (method, line 1328) `def _save_optimizer(self, optimizer, directory)`
+  - `_load_optimizer` (method, line 1331) `def _load_optimizer(self, optimizer, directory, device)`
+  - `_save_state` (method, line 1340) `def _save_state(self, state, directory)`
+  - `_load_state` (method, line 1345) `def _load_state(self, directory)`
+  - `should_save` (method, line 1356) `def should_save(self)`
+  - `save` (method, line 1359) `def save(self, model, optimizer, state, is_best)`
+  - `load_latest` (method, line 1404) `def load_latest(self, model, optimizer)`
+  - `load_best` (method, line 1431) `def load_best(self, model)`
+  - `has_checkpoint` (method, line 1443) `def has_checkpoint(self)`
+  - `__init__` (method, line 1465) `def __init__(self, model, config, tokenizer)`
+  - `resume` (method, line 1500) `def resume(self)`
+  - `_current_state` (method, line 1525) `def _current_state(self)`
+  - `_cosine_lr` (method, line 1536) `def _cosine_lr(self, step_in_session, total_steps_session)`
+  - `_set_lr` (method, line 1544) `def _set_lr(self, lr)`
+  - `train` (method, line 1548) `def train(self, train_dl, val_dl)`
+  - `_sample_text` (method, line 1684) `def _sample_text(self, tokenizer, prompts, max_new, temperature, top_k)`
+  - `evaluate` (method, line 1716) `def evaluate(self, dataloader)`
+  - `__init__` (method, line 1766) `def __init__(self, config)`
+  - `compute_delta` (method, line 1774) `def compute_delta(self, model)`
+  - `compute_alpha` (method, line 1781) `def compute_alpha(self, delta)`
+  - `update_grad_buffer` (method, line 1786) `def update_grad_buffer(self, model)`
+  - `compute_t_eff` (method, line 1812) `def compute_t_eff(self, lr)`
+  - `compute_kappa` (method, line 1820) `def compute_kappa(self, model, dataloader, n_batches)`
+  - `compute_berry_phase` (method, line 1878) `def compute_berry_phase(self, model)`
+  - `compute_lc` (method, line 1891) `def compute_lc(self, model)`
+  - `compute_sp` (method, line 1905) `def compute_sp(self, model)`
+  - `classify_phase` (method, line 1921) `def classify_phase(self, delta, kappa, berry)`
+  - `compute_all` (method, line 1940) `def compute_all(self, model, lr, dataloader, compute_kappa)`
+  - `format_log` (method, line 1965) `def format_log(self, m)`
+  - `__init__` (method, line 2001) `def __init__(self, config, logger)`
+  - `_measure_ratio` (method, line 2005) `def _measure_ratio(self, ratio, sample_batch)`
+  - `optimize` (method, line 2034) `def optimize(self, dataloader)`
+  - `__init__` (method, line 2074) `def __init__(self, config, logger)`
+  - `prospect` (method, line 2078) `def prospect(self, candidates, train_dataset, prospect_steps)`
+  - `__init__` (method, line 2157) `def __init__(self, config, logger)`
+  - `mine` (method, line 2161) `def mine(self, seed_start, n_seeds, train_dataset, prospect_steps)`
+  - `__init__` (method, line 2243) `def __init__(self, trainer, t0, cooling_rate, stagnation_patience)`
+  - `refine` (method, line 2252) `def refine(self, train_dl, val_dl, refine_epochs)`
+  - `__init__` (method, line 2404) `def __init__(self, config, train_dataset, val_dataset, tokenizer, logger)`
+  - `_make_dataloaders` (method, line 2414) `def _make_dataloaders(self, batch_size)`
+  - `run` (method, line 2426) `def run(self, run_prospect, refine_epochs, resume, prospect_steps, probe_seeds, seed_start)`
+  - `ckpt_fn` (method, line 964) `def ckpt_fn(x_in)`
+
+## topogpt2_embeddings_navigator.py
+- Layer: infrastructure
+- Language: py
+- Symbols:
+  - `ThemeTokens` (class, line 86) `class ThemeTokens`
+  - `PlotTheme` (class, line 103) `class PlotTheme`
+  - `SamplingLimits` (class, line 118) `class SamplingLimits`
+  - `MetricsConfig` (class, line 132) `class MetricsConfig`
+  - `ProjectionConfig` (class, line 146) `class ProjectionConfig`
+  - `NavigatorConfig` (class, line 156) `class NavigatorConfig`
+  - `StyleInjector` (class, line 189) `class StyleInjector`
+  - `CheckpointBundle` (class, line 263) `class CheckpointBundle`
+  - `ModelLoader` (class, line 312) `class ModelLoader`
+  - `ActivationCapture` (class, line 522) `class ActivationCapture`
+  - `MetricSuite` (class, line 600) `class MetricSuite`
+  - `Projector` (class, line 1068) `class Projector`
+  - `FigureStyler` (class, line 1195) `class FigureStyler`
+  - `RenderContext` (class, line 1243) `class RenderContext`
+  - `BaseEmbeddingView` (class, line 1255) `class BaseEmbeddingView(ABC)`
+  - `OverviewView` (class, line 1274) `class OverviewView(BaseEmbeddingView)`
+  - `CloudView` (class, line 1352) `class CloudView(BaseEmbeddingView)`
+  - `MetricsView` (class, line 1475) `class MetricsView(BaseEmbeddingView)`
+  - `PersistenceView` (class, line 1569) `class PersistenceView(BaseEmbeddingView)`
+  - `BerryPhaseView` (class, line 1666) `class BerryPhaseView(BaseEmbeddingView)`
+  - `LipschitzView` (class, line 1758) `class LipschitzView(BaseEmbeddingView)`
+  - `NeighborhoodView` (class, line 1834) `class NeighborhoodView(BaseEmbeddingView)`
+  - `CrossLayerView` (class, line 1933) `class CrossLayerView(BaseEmbeddingView)`
+  - `QuaternionView` (class, line 1994) `class QuaternionView(BaseEmbeddingView)`
+  - `RawView` (class, line 2108) `class RawView(BaseEmbeddingView)`
+  - `ViewRegistry` (class, line 2145) `class ViewRegistry`
+  - `SidebarController` (class, line 2161) `class SidebarController`
+  - `ModuleImporter` (class, line 2217) `class ModuleImporter`
+  - `NavigatorApp` (class, line 2255) `class NavigatorApp`
+  - `main` (method, line 2418) `def main()`
+  - `__init__` (method, line 192) `def __init__(self, theme)`
+  - `inject` (method, line 195) `def inject(self)`
+  - `__init__` (method, line 266) `def __init__(self, model, config, tokenizer, source_name)`
+  - `model` (method, line 279) `def model(self)`
+  - `config` (method, line 284) `def config(self)`
+  - `tokenizer` (method, line 289) `def tokenizer(self)`
+  - `source_name` (method, line 294) `def source_name(self)`
+  - `device` (method, line 299) `def device(self)`
+  - `num_layers` (method, line 303) `def num_layers(self)`
+  - `embedding_dim` (method, line 307) `def embedding_dim(self)`
+  - `__init__` (method, line 315) `def __init__(self, config)`
+  - `load` (method, line 318) `def load(self, source, topogpt2_module)`
+  - `_read_state_dict` (method, line 344) `def _read_state_dict(self, source)`
+  - `_materialize` (method, line 366) `def _materialize(self, source)`
+  - `_extract_payload` (method, line 374) `def _extract_payload(self, obj)`
+  - `_build_config` (method, line 391) `def _build_config(self, topogpt2_module, embedded_cfg, state_dict)`
+  - `_infer_config` (method, line 405) `def _infer_config(self, topogpt2_module, state_dict)`
+  - `_infer_d_model` (method, line 433) `def _infer_d_model(state_dict)`
+  - `_infer_num_layers` (method, line 439) `def _infer_num_layers(state_dict)`
+  - `_infer_n_heads` (method, line 450) `def _infer_n_heads(state_dict, d_model)`
+  - `_infer_max_seq_len` (method, line 467) `def _infer_max_seq_len(state_dict)`
+  - `_infer_n_kv_heads` (method, line 475) `def _infer_n_kv_heads(state_dict, d_head, n_heads)`
+  - `_infer_torus_grid` (method, line 505) `def _infer_torus_grid(state_dict)`
+  - `_validate_load` (method, line 514) `def _validate_load(missing, unexpected)`
+  - `__init__` (method, line 525) `def __init__(self, config)`
+  - `run` (method, line 528) `def run(self, bundle, text)`
+  - `_decode_pieces` (method, line 589) `def _decode_pieces(tokenizer, ids)`
+  - `__init__` (method, line 603) `def __init__(self, config)`
+  - `compute` (method, line 606) `def compute(self, points, knn)`
+  - `_sanitize` (method, line 642) `def _sanitize(self, points)`
+  - `_trivial` (method, line 645) `def _trivial(self, base)`
+  - `_pairwise` (method, line 675) `def _pairwise(self, points)`
+  - `_shortest_paths` (method, line 678) `def _shortest_paths(self, points, knn)`
+  - `_sp_metrics` (method, line 698) `def _sp_metrics(self, dist_eucl, dist_geo)`
+  - `_kappa` (method, line 718) `def _kappa(self, dist_eucl, dist_geo)`
+  - `_gromov_delta` (method, line 759) `def _gromov_delta(self, dist_geo)`
+  - `_persistence` (method, line 783) `def _persistence(self, points, dist_eucl)`
+  - `_h0_from_mst` (method, line 810) `def _h0_from_mst(self, edges, n)`
+  - `_h1_from_edges` (method, line 845) `def _h1_from_edges(self, edges, n)`
+  - `_berry_phases` (method, line 905) `def _berry_phases(self, points)`
+  - `_winding_numbers` (method, line 920) `def _winding_numbers(self, points)`
+  - `_planar_winding` (method, line 936) `def _planar_winding(self, xs, ys)`
+  - `_lipschitz` (method, line 947) `def _lipschitz(self, points)`
+  - `_trajectory_geometry` (method, line 954) `def _trajectory_geometry(self, points)`
+  - `_safe_pca3` (method, line 1017) `def _safe_pca3(self, points)`
+  - `_spectral_properties` (method, line 1030) `def _spectral_properties(self, points)`
+  - `__init__` (method, line 1071) `def __init__(self, config)`
+  - `project` (method, line 1074) `def project(self, points, method, n_components)`
+  - `_pca` (method, line 1105) `def _pca(self, points, n_components)`
+  - `_isomap` (method, line 1123) `def _isomap(self, points, n_components)`
+  - `_umap` (method, line 1144) `def _umap(self, points, n_components)`
+  - `_random` (method, line 1171) `def _random(self, points, n_components)`
+  - `_sphere` (method, line 1181) `def _sphere(self, points, n_components)`
+  - `__init__` (method, line 1198) `def __init__(self, config)`
+  - `style_3d` (method, line 1201) `def style_3d(self, fig, title, height)`
+  - `style_2d` (method, line 1223) `def style_2d(self, fig, title, height)`
+  - `__init__` (method, line 1261) `def __init__(self, ctx)`
+  - `ctx` (method, line 1265) `def ctx(self)`
+  - `render` (method, line 1270) `def render(self)`
+  - `render` (method, line 1280) `def render(self)`
+  - `_render_tokens` (method, line 1284) `def _render_tokens(self)`
+  - `_render_layer_evolution` (method, line 1310) `def _render_layer_evolution(self)`
+  - `render` (method, line 1358) `def render(self)`
+  - `_choose` (method, line 1378) `def _choose(self, acts, selection)`
+  - `_render_trajectory` (method, line 1386) `def _render_trajectory(self, emb, tokens, ids, norms, stage, method, info)`
+  - `_render_residual_streams` (method, line 1442) `def _render_residual_streams(self, acts, method)`
+  - `render` (method, line 1481) `def render(self)`
+  - `_get_metrics` (method, line 1490) `def _get_metrics(self, stage)`
+  - `_render_card` (method, line 1496) `def _render_card(self, m)`
+  - `_render_kappa` (method, line 1521) `def _render_kappa(self, m)`
+  - `_render_path_metrics` (method, line 1544) `def _render_path_metrics(self, m)`
+  - `render` (method, line 1575) `def render(self)`
+  - `_stage_metrics` (method, line 1583) `def _stage_metrics(self, stage)`
+  - `_render_diagram` (method, line 1591) `def _render_diagram(self, m)`
+  - `_render_barcode` (method, line 1633) `def _render_barcode(self, m)`
+  - `render` (method, line 1672) `def render(self)`
+  - `_stage_metrics` (method, line 1680) `def _stage_metrics(self, stage)`
+  - `_render_berry` (method, line 1688) `def _render_berry(self, m, stage)`
+  - `_render_winding` (method, line 1720) `def _render_winding(self, m, stage)`
+  - `render` (method, line 1764) `def render(self)`
+  - `_stage_metrics` (method, line 1772) `def _stage_metrics(self, stage)`
+  - `_render_lc` (method, line 1780) `def _render_lc(self, m)`
+  - `_render_dynamics` (method, line 1807) `def _render_dynamics(self, m)`
+  - `render` (method, line 1840) `def render(self)`
+  - `_stage_metrics` (method, line 1849) `def _stage_metrics(self, stage)`
+  - `_stage_points` (method, line 1857) `def _stage_points(self, stage)`
+  - `_render_graph` (method, line 1864) `def _render_graph(self, points, m)`
+  - `_render_coherence` (method, line 1911) `def _render_coherence(self, points)`
+  - `render` (method, line 1939) `def render(self)`
+  - `_cosine_diag` (method, line 1962) `def _cosine_diag(self, A, B)`
+  - `_render_heatmap` (method, line 1968) `def _render_heatmap(self, title, z, xlabels, tokens, diverging)`
+  - `render` (method, line 2000) `def render(self)`
+  - `_points` (method, line 2021) `def _points(self, stage)`
+  - `_render_component_norms` (method, line 2029) `def _render_component_norms(self, comps)`
+  - `_render_quaternion_norms` (method, line 2054) `def _render_quaternion_norms(self, comps)`
+  - `_render_sphere` (method, line 2070) `def _render_sphere(self, comps)`
+  - `render` (method, line 2114) `def render(self)`
+  - `_points` (method, line 2136) `def _points(self, stage)`
+  - `__init__` (method, line 2148) `def __init__(self, context)`
+  - `register` (method, line 2152) `def register(self, factory)`
+  - `build` (method, line 2156) `def build(self)`
+  - `__init__` (method, line 2164) `def __init__(self, config)`
+  - `render` (method, line 2167) `def render(self)`
+  - `load` (method, line 2220) `def load(self, path)`
+  - `__init__` (method, line 2258) `def __init__(self, config)`
+  - `run` (method, line 2269) `def run(self)`
+  - `_render_header` (method, line 2307) `def _render_header(self)`
+  - `_render_landing` (method, line 2324) `def _render_landing(self)`
+  - `_try_load_bundle` (method, line 2335) `def _try_load_bundle(self, selections)`
+  - `_compute_all_metrics` (method, line 2351) `def _compute_all_metrics(self, activations, knn)`
+  - `_render_meta` (method, line 2367) `def _render_meta(self, bundle, activations, knn)`
+  - `_build_registry` (method, line 2380) `def _build_registry(self, ctx)`
+  - `_render_tabs` (method, line 2394) `def _render_tabs(self, registry)`
+  - `_render_footer` (method, line 2408) `def _render_footer(self)`
+  - `hook` (method, line 561) `def hook(_module, _inputs, output)`
+  - `find` (method, line 818) `def find(x)`
+  - `union` (method, line 824) `def union(x, y)`
+  - `find` (method, line 864) `def find(x)`
+  - `union` (method, line 870) `def union(x, y)`
+
+## topogpt2_explorer.py
+- Layer: utility
+- Language: py
+- Symbols:
+  - `ThemeTokens` (class, line 59) `class ThemeTokens`
+  - `PlotTheme` (class, line 76) `class PlotTheme`
+  - `SamplingLimits` (class, line 91) `class SamplingLimits`
+  - `MetricsConfig` (class, line 108) `class MetricsConfig`
+  - `GenerationLimits` (class, line 120) `class GenerationLimits`
+  - `ExplorerConfig` (class, line 129) `class ExplorerConfig`
+  - `StyleInjector` (class, line 168) `class StyleInjector`
+  - `TensorClassifier` (class, line 244) `class TensorClassifier`
+  - `CheckpointLoader` (class, line 337) `class CheckpointLoader`
+  - `TensorInventory` (class, line 429) `class TensorInventory`
+  - `TensorProjector` (class, line 515) `class TensorProjector`
+  - `MetricCalculator` (class, line 635) `class MetricCalculator`
+  - `FigureStyler` (class, line 836) `class FigureStyler`
+  - `VisualizationContext` (class, line 883) `class VisualizationContext(Protocol)`
+  - `RenderContext` (class, line 894) `class RenderContext`
+  - `BaseVisualizer` (class, line 904) `class BaseVisualizer(ABC)`
+  - `OverviewVisualizer` (class, line 931) `class OverviewVisualizer(BaseVisualizer)`
+  - `TensorExplorerVisualizer` (class, line 999) `class TensorExplorerVisualizer(BaseVisualizer)`
+  - `QuaternionDecompositionVisualizer` (class, line 1227) `class QuaternionDecompositionVisualizer(BaseVisualizer)`
+  - `SpectralKernelVisualizer` (class, line 1385) `class SpectralKernelVisualizer(BaseVisualizer)`
+  - `TorusTopologyVisualizer` (class, line 1538) `class TorusTopologyVisualizer(BaseVisualizer)`
+  - `AttentionVisualizer` (class, line 1773) `class AttentionVisualizer(BaseVisualizer)`
+  - `MoEVisualizer` (class, line 1916) `class MoEVisualizer(BaseVisualizer)`
+  - `LayerEvolutionVisualizer` (class, line 2061) `class LayerEvolutionVisualizer(BaseVisualizer)`
+  - `GlobalGeometryVisualizer` (class, line 2151) `class GlobalGeometryVisualizer(BaseVisualizer)`
+  - `VisualizerRegistry` (class, line 2291) `class VisualizerRegistry`
+  - `SidebarController` (class, line 2316) `class SidebarController`
+  - `ExplorerApp` (class, line 2359) `class ExplorerApp`
+  - `main` (method, line 2493) `def main()`
+  - `__init__` (method, line 171) `def __init__(self, theme)`
+  - `_build_css` (method, line 174) `def _build_css(self)`
+  - `inject` (method, line 239) `def inject(self)`
+  - `classify` (method, line 258) `def classify(self, name, shape)`
+  - `_classify_role` (method, line 286) `def _classify_role(self, name)`
+  - `_extract_layer` (method, line 328) `def _extract_layer(self, name)`
+  - `_extract_quaternion_component` (method, line 332) `def _extract_quaternion_component(self, name)`
+  - `__init__` (method, line 345) `def __init__(self, config)`
+  - `load` (method, line 348) `def load(self, source)`
+  - `_materialize` (method, line 373) `def _materialize(self, source)`
+  - `_load_safetensors` (method, line 382) `def _load_safetensors(self, buffer)`
+  - `_load_torch` (method, line 389) `def _load_torch(self, buffer)`
+  - `_extract_state_dict` (method, line 399) `def _extract_state_dict(self, obj)`
+  - `_looks_like_state_dict` (method, line 413) `def _looks_like_state_dict(obj)`
+  - `_to_cpu_float32` (method, line 420) `def _to_cpu_float32(tensor)`
+  - `__init__` (method, line 432) `def __init__(self, tensors, classifier)`
+  - `names` (method, line 443) `def names(self)`
+  - `tensor` (method, line 447) `def tensor(self, name)`
+  - `meta` (method, line 451) `def meta(self, name)`
+  - `layers` (method, line 455) `def layers(self)`
+  - `roles` (method, line 460) `def roles(self)`
+  - `filter` (method, line 464) `def filter(self, role, layer, component, spectral_only)`
+  - `total_parameters` (method, line 485) `def total_parameters(self)`
+  - `summary_rows` (method, line 489) `def summary_rows(self)`
+  - `__init__` (method, line 526) `def __init__(self, config)`
+  - `to_matrix` (method, line 531) `def to_matrix(self, tensor)`
+  - `subsample` (method, line 553) `def subsample(self, matrix, max_rows, max_cols, seed)`
+  - `project_3d` (method, line 575) `def project_3d(self, matrix, method)`
+  - `_pca_3d` (method, line 606) `def _pca_3d(self, matrix)`
+  - `_random_3d` (method, line 617) `def _random_3d(self, matrix)`
+  - `__init__` (method, line 643) `def __init__(self, config)`
+  - `compute_all` (method, line 649) `def compute_all(self, matrix)`
+  - `_svd_safe` (method, line 681) `def _svd_safe(self, matrix)`
+  - `_effective_rank_from_svd` (method, line 690) `def _effective_rank_from_svd(self, svd_values, shape)`
+  - `_participation_from_svd` (method, line 707) `def _participation_from_svd(self, svd_values, shape)`
+  - `sparsity` (method, line 720) `def sparsity(self, matrix, threshold)`
+  - `entropy` (method, line 727) `def entropy(self, matrix)`
+  - `effective_rank` (method, line 748) `def effective_rank(self, matrix)`
+  - `participation_ratio` (method, line 753) `def participation_ratio(self, matrix)`
+  - `fractal_dimension` (method, line 762) `def fractal_dimension(self, matrix)`
+  - `coherence` (method, line 781) `def coherence(self, matrix)`
+  - `spectral_flatness` (method, line 796) `def spectral_flatness(self, matrix)`
+  - `dominant_frequency` (method, line 814) `def dominant_frequency(self, matrix)`
+  - `_subsample_for_svd` (method, line 824) `def _subsample_for_svd(self, matrix)`
+  - `_subsample_for_pca` (method, line 830) `def _subsample_for_pca(self, matrix)`
+  - `__init__` (method, line 839) `def __init__(self, config)`
+  - `style_3d` (method, line 842) `def style_3d(self, fig, title)`
+  - `style_2d` (method, line 864) `def style_2d(self, fig, title, height)`
+  - `__init__` (method, line 914) `def __init__(self, context)`
+  - `ctx` (method, line 918) `def ctx(self)`
+  - `is_applicable` (method, line 922) `def is_applicable(self)`
+  - `render` (method, line 927) `def render(self)`
+  - `render` (method, line 937) `def render(self)`
+  - `_render_headline` (method, line 950) `def _render_headline(self, total_params, num_tensors, num_layers)`
+  - `_render_role_breakdown` (method, line 957) `def _render_role_breakdown(self, role_counts, role_params)`
+  - `_render_inventory_table` (method, line 984) `def _render_inventory_table(self, rows)`
+  - `render` (method, line 1005) `def render(self)`
+  - `_render_meta` (method, line 1042) `def _render_meta(self, meta)`
+  - `_render_metric_grid` (method, line 1050) `def _render_metric_grid(self, metrics)`
+  - `_render_point_cloud` (method, line 1069) `def _render_point_cloud(self, matrix, name, method)`
+  - `_render_heatmap` (method, line 1103) `def _render_heatmap(self, matrix, name)`
+  - `_render_distribution` (method, line 1125) `def _render_distribution(self, matrix, name)`
+  - `_render_spectrum` (method, line 1149) `def _render_spectrum(self, matrix, name)`
+  - `_render_singular_spectrum` (method, line 1180) `def _render_singular_spectrum(self, matrix, name)`
+  - `is_applicable` (method, line 1233) `def is_applicable(self)`
+  - `render` (method, line 1237) `def render(self)`
+  - `_group_quaternion_bundles` (method, line 1249) `def _group_quaternion_bundles(self)`
+  - `_quaternion_bundle_key` (method, line 1263) `def _quaternion_bundle_key(name, component)`
+  - `_render_component_stats` (method, line 1278) `def _render_component_stats(self, components)`
+  - `_render_component_heatmaps` (method, line 1290) `def _render_component_heatmaps(self, components)`
+  - `_render_component_spectra` (method, line 1315) `def _render_component_spectra(self, components)`
+  - `_render_unit_norm_distribution` (method, line 1346) `def _render_unit_norm_distribution(self, components)`
+  - `is_applicable` (method, line 1391) `def is_applicable(self)`
+  - `render` (method, line 1397) `def render(self)`
+  - `_pair_kr_ki` (method, line 1413) `def _pair_kr_ki(self)`
+  - `_reshape_to_2d` (method, line 1428) `def _reshape_to_2d(self, magnitude, phase)`
+  - `_render_magnitude_phase` (method, line 1439) `def _render_magnitude_phase(self, magnitude, phase, key)`
+  - `_render_complex_scatter` (method, line 1470) `def _render_complex_scatter(self, complex_kernel, key)`
+  - `_render_radial_profile` (method, line 1504) `def _render_radial_profile(self, magnitude, key)`
+  - `is_applicable` (method, line 1544) `def is_applicable(self)`
+  - `render` (method, line 1547) `def render(self)`
+  - `_infer_grid` (method, line 1568) `def _infer_grid(self, n_nodes)`
+  - `_render_headline_metrics` (method, line 1578) `def _render_headline_metrics(self, nodes, edges, radial_bins, angular_bins)`
+  - `_render_3d_torus` (method, line 1591) `def _render_3d_torus(self, nodes, edges, radial_bins, angular_bins)`
+  - `_torus_positions` (method, line 1605) `def _torus_positions(self, nodes, radial_bins, angular_bins)`
+  - `_add_edges` (method, line 1631) `def _add_edges(self, fig, positions, radial_bins, angular_bins, edges)`
+  - `_edge_label` (method, line 1669) `def _edge_label(edge_type)`
+  - `_build_segments` (method, line 1678) `def _build_segments(positions, radial_bins, angular_bins)`
+  - `_add_nodes` (method, line 1697) `def _add_nodes(self, fig, positions, node_colors, n_nodes)`
+  - `_render_node_correlation` (method, line 1725) `def _render_node_correlation(self, nodes)`
+  - `_render_edge_quaternions` (method, line 1747) `def _render_edge_quaternions(self, edges)`
+  - `is_applicable` (method, line 1779) `def is_applicable(self)`
+  - `render` (method, line 1785) `def render(self)`
+  - `_infer_head_count` (method, line 1813) `def _infer_head_count(self, matrix, proj)`
+  - `_render_per_head_norms` (method, line 1822) `def _render_per_head_norms(self, matrix, proj)`
+  - `_render_per_head_spectrum` (method, line 1849) `def _render_per_head_spectrum(self, matrix, proj, layer)`
+  - `_render_head_similarity` (method, line 1881) `def _render_head_similarity(self, matrix, proj, layer)`
+  - `_render_summary_metrics` (method, line 1908) `def _render_summary_metrics(self, metrics)`
+  - `is_applicable` (method, line 1922) `def is_applicable(self)`
+  - `render` (method, line 1927) `def render(self)`
+  - `_render_router_norms` (method, line 1949) `def _render_router_norms(self, router, layer)`
+  - `_render_routing_probe` (method, line 1972) `def _render_routing_probe(self, router, layer)`
+  - `_render_expert_similarity` (method, line 2015) `def _render_expert_similarity(self, layer)`
+  - `_softmax` (method, line 2055) `def _softmax(logits)`
+  - `is_applicable` (method, line 2067) `def is_applicable(self)`
+  - `render` (method, line 2070) `def render(self)`
+  - `_render_metric_grid` (method, line 2113) `def _render_metric_grid(self, role, layers, series)`
+  - `render` (method, line 2157) `def render(self)`
+  - `_render_scatter` (method, line 2204) `def _render_scatter(self, emb, labels, roles, sizes, pca)`
+  - `_render_feature_correlation` (method, line 2246) `def _render_feature_correlation(self, X_std, example)`
+  - `_build_palette` (method, line 2279) `def _build_palette(n)`
+  - `__init__` (method, line 2294) `def __init__(self, context)`
+  - `register` (method, line 2298) `def register(self, factory)`
+  - `build` (method, line 2307) `def build(self)`
+  - `applicable` (method, line 2311) `def applicable(self)`
+  - `__init__` (method, line 2319) `def __init__(self, config)`
+  - `render` (method, line 2322) `def render(self)`
+  - `__init__` (method, line 2362) `def __init__(self, config)`
+  - `run` (method, line 2372) `def run(self)`
+  - `_configure_page` (method, line 2394) `def _configure_page(self)`
+  - `_render_header` (method, line 2401) `def _render_header(self)`
+  - `_render_landing` (method, line 2416) `def _render_landing(self)`
+  - `_resolve_checkpoint` (method, line 2437) `def _resolve_checkpoint(self, selections)`
+  - `_build_registry` (method, line 2452) `def _build_registry(self, context)`
+  - `_render_tabs` (method, line 2465) `def _render_tabs(self, registry)`
+  - `_render_footer` (method, line 2483) `def _render_footer(self)`
+
+## topogpt2_grid_scaler.py
+- Layer: utility
+- Language: py
+- Symbols:
+  - `InterpolationConfig` (class, line 97) `class InterpolationConfig`
+  - `ValidationConfig` (class, line 108) `class ValidationConfig`
+  - `ProgressiveConfig` (class, line 121) `class ProgressiveConfig`
+  - `OutputConfig` (class, line 131) `class OutputConfig`
+  - `TopoScalerConfig` (class, line 141) `class TopoScalerConfig`
+  - `_setup_logger` (method, line 169) `def _setup_logger(name, level)`
+  - `ModuleImporter` (class, line 181) `class ModuleImporter`
+  - `CheckpointReader` (class, line 205) `class CheckpointReader`
+  - `ConfigReconstructor` (class, line 242) `class ConfigReconstructor`
+  - `TensorRole` (class, line 328) `class TensorRole`
+  - `SpectralInterpolator` (class, line 380) `class SpectralInterpolator`
+  - `StateScaler` (class, line 483) `class StateScaler`
+  - `ScalingValidator` (class, line 635) `class ScalingValidator`
+  - `ModelAssembler` (class, line 723) `class ModelAssembler`
+  - `CheckpointSaver` (class, line 751) `class CheckpointSaver`
+  - `TopoGPT2DModelScaler` (class, line 860) `class TopoGPT2DModelScaler`
+  - `build_parser` (method, line 1070) `def build_parser()`
+  - `config_from_args` (method, line 1097) `def config_from_args(args)`
+  - `main` (method, line 1119) `def main()`
+  - `__post_init__` (method, line 159) `def __post_init__(self)`
+  - `load` (method, line 184) `def load(self, path)`
+  - `read` (method, line 208) `def read(self, path, device)`
+  - `_extract` (method, line 225) `def _extract(self, obj)`
+  - `reconstruct` (method, line 245) `def reconstruct(self, mod, state_dict, embedded)`
+  - `_infer` (method, line 259) `def _infer(self, mod, sd)`
+  - `_infer_d_head` (method, line 291) `def _infer_d_head(sd)`
+  - `_infer_n_kv` (method, line 298) `def _infer_n_kv(sd, d_head, n_heads)`
+  - `_infer_max_seq` (method, line 308) `def _infer_max_seq(sd)`
+  - `_infer_torus` (method, line 315) `def _infer_torus(sd)`
+  - `classify` (method, line 340) `def classify(self, key, shape)`
+  - `__init__` (method, line 388) `def __init__(self, cfg)`
+  - `interpolate_2d` (method, line 391) `def interpolate_2d(self, W, tgt_rows, tgt_cols)`
+  - `interpolate_1d` (method, line 421) `def interpolate_1d(self, v, tgt_len)`
+  - `_resize_spectrum_2d` (method, line 452) `def _resize_spectrum_2d(self, W_f, tgt_rows, tgt_cols)`
+  - `__init__` (method, line 499) `def __init__(self, interp, role_clf, logger)`
+  - `scale` (method, line 509) `def scale(self, src_state, src_cfg, tgt_cfg, mod)`
+  - `_dispatch` (method, line 567) `def _dispatch(self, src, tgt_shape, role, key)`
+  - `_scale_spectral_2d_to` (method, line 598) `def _scale_spectral_2d_to(self, t, tgt_shape, key)`
+  - `_bilinear_fallback` (method, line 626) `def _bilinear_fallback(self, src, tgt_shape)`
+  - `__init__` (method, line 638) `def __init__(self, cfg)`
+  - `compute` (method, line 641) `def compute(self, state, d_model)`
+  - `check_degradation` (method, line 656) `def check_degradation(self, before, after, logger)`
+  - `_spectral_concentration` (method, line 690) `def _spectral_concentration(self, sd)`
+  - `_phase_coherence` (method, line 708) `def _phase_coherence(self, sd)`
+  - `assemble` (method, line 726) `def assemble(self, mod, tgt_cfg, scaled_state, logger)`
+  - `save` (method, line 754) `def save(self, model, tgt_cfg, src_cfg, metrics_before, metrics_after, out_cfg, step_tag, logger)`
+  - `_write_report` (method, line 815) `def _write_report(self, path, src_cfg, tgt_cfg, before, after, ckpt)`
+  - `__init__` (method, line 872) `def __init__(self, cfg)`
+  - `run` (method, line 888) `def run(self)`
+  - `_build_target_config` (method, line 1001) `def _build_target_config(self, mod, src_cfg, tgt_d)`
+  - `_infer_n_heads` (method, line 1018) `def _infer_n_heads(tgt_d, src_n_heads)`
+  - `_infer_n_kv_heads` (method, line 1033) `def _infer_n_kv_heads(tgt_d, tgt_n_heads, src_n_heads, src_n_kv)`
+  - `_print_summary` (method, line 1047) `def _print_summary(self, results, src_cfg)`
+  - `_cfg_dict` (method, line 770) `def _cfg_dict(c)`
+
+## topogpt2_multi_inference.py
+- Layer: utility
+- Language: py
+- Symbols:
+  - `SamplingConfig` (class, line 60) `class SamplingConfig`
+  - `RunConfig` (class, line 72) `class RunConfig`
+  - `_setup_logger` (method, line 85) `def _setup_logger(name, level)`
+  - `ModuleImporter` (class, line 95) `class ModuleImporter`
+  - `CheckpointDiscovery` (class, line 122) `class CheckpointDiscovery`
+  - `CheckpointLoader` (class, line 164) `class CheckpointLoader`
+  - `ConfigReconstructor` (class, line 219) `class ConfigReconstructor`
+  - `TokenizerFactory` (class, line 315) `class TokenizerFactory`
+  - `GenerationEngine` (class, line 327) `class GenerationEngine`
+  - `ModelResult` (class, line 433) `class ModelResult`
+  - `MultiInferenceRunner` (class, line 450) `class MultiInferenceRunner`
+  - `ResultRenderer` (class, line 584) `class ResultRenderer`
+  - `_fmt_params` (method, line 666) `def _fmt_params(n)`
+  - `JsonExporter` (class, line 677) `class JsonExporter`
+  - `build_parser` (method, line 707) `def build_parser()`
+  - `config_from_args` (method, line 780) `def config_from_args(args)`
+  - `main` (method, line 800) `def main()`
+  - `load` (method, line 100) `def load(self, path)`
+  - `resolve` (method, line 127) `def resolve(self, sources)`
+  - `load` (method, line 167) `def load(self, path, device)`
+  - `_load_safetensors` (method, line 183) `def _load_safetensors(self, path, device)`
+  - `_load_torch` (method, line 191) `def _load_torch(self, path, device)`
+  - `reconstruct` (method, line 222) `def reconstruct(self, mod, state_dict, embedded)`
+  - `_infer` (method, line 243) `def _infer(self, mod, sd)`
+  - `_infer_d_head` (method, line 278) `def _infer_d_head(sd)`
+  - `_infer_n_kv` (method, line 285) `def _infer_n_kv(sd, d_head, n_heads)`
+  - `_infer_max_seq` (method, line 295) `def _infer_max_seq(sd)`
+  - `_infer_torus` (method, line 302) `def _infer_torus(sd)`
+  - `get` (method, line 320) `def get(self, mod)`
+  - `__init__` (method, line 330) `def __init__(self, cfg, device)`
+  - `generate` (method, line 334) `def generate(self, model, tokenizer, prompt)`
+  - `_fast_generate` (method, line 361) `def _fast_generate(self, model, input_ids)`
+  - `_manual_generate` (method, line 372) `def _manual_generate(self, model, input_ids)`
+  - `_apply_repetition_penalty` (method, line 412) `def _apply_repetition_penalty(logits, generated, penalty)`
+  - `_apply_top_p` (method, line 424) `def _apply_top_p(logits, p)`
+  - `__init__` (method, line 453) `def __init__(self, cfg)`
+  - `run` (method, line 462) `def run(self)`
+  - `_run_one` (method, line 499) `def _run_one(self, ckpt_path, mod, tokenizer, engine)`
+  - `_make_label` (method, line 570) `def _make_label(path)`
+  - `render` (method, line 590) `def render(self, results, prompt)`
+  - `_print_prompt_header` (method, line 597) `def _print_prompt_header(self, prompt)`
+  - `_print_model_output` (method, line 605) `def _print_model_output(self, r)`
+  - `_print_comparison_table` (method, line 628) `def _print_comparison_table(self, results)`
+  - `export` (method, line 680) `def export(self, results, path, prompt)`
+
+## zeroshot.py
+- Layer: utility
+- Language: py
+- Symbols:
+  - `build_logger` (function, line 69) `def build_logger(name, level)`
+  - `ExpansionConfig` (class, line 87) `class ExpansionConfig`
+  - `TopoGPT2Config` (class, line 169) `class TopoGPT2Config`
+  - `QuaternionOps` (class, line 254) `class QuaternionOps`
+  - `QuaternionLinear` (class, line 287) `class QuaternionLinear(Module)`
+  - `QuaternionSpectralLayer` (class, line 321) `class QuaternionSpectralLayer(Module)`
+  - `SpectralAutoencoder` (class, line 373) `class SpectralAutoencoder(Module)`
+  - `QuaternionTorusBrain` (class, line 427) `class QuaternionTorusBrain(Module)`
+  - `SwiGLU` (class, line 534) `class SwiGLU(Module)`
+  - `TopoMoEBrain` (class, line 556) `class TopoMoEBrain(Module)`
+  - `RotaryEmbedding` (class, line 613) `class RotaryEmbedding(Module)`
+  - `RMSNorm` (class, line 652) `class RMSNorm(Module)`
+  - `MultiHeadAttention` (class, line 665) `class MultiHeadAttention(Module)`
+  - `TopoGPT2Layer` (class, line 719) `class TopoGPT2Layer(Module)`
+  - `TopoGPT2` (class, line 749) `class TopoGPT2(Module)`
+  - `SpectralKernelInterpolator` (class, line 828) `class SpectralKernelInterpolator`
+  - `NodeEmbedInterpolator` (class, line 876) `class NodeEmbedInterpolator`
+  - `TorusBrainExpander` (class, line 917) `class TorusBrainExpander`
+  - `TopoMoEBrainExpander` (class, line 1009) `class TopoMoEBrainExpander`
+  - `TopoGPT2Expander` (class, line 1052) `class TopoGPT2Expander`
+  - `CheckpointIO` (class, line 1120) `class CheckpointIO`
+  - `CheckpointArch` (class, line 1216) `class CheckpointArch`
+  - `CheckpointArchProber` (class, line 1239) `class CheckpointArchProber`
+  - `ExpansionValidator` (class, line 1463) `class ExpansionValidator`
+  - `ZeroShotExpansionPipeline` (class, line 1550) `class ZeroShotExpansionPipeline`
+  - `build_arg_parser` (method, line 1709) `def build_arg_parser()`
+  - `main` (method, line 1774) `def main()`
+  - `validate_geometry` (method, line 140) `def validate_geometry(self)`
+  - `src_nodes` (method, line 154) `def src_nodes(self)`
+  - `tgt_nodes` (method, line 158) `def tgt_nodes(self)`
+  - `__post_init__` (method, line 222) `def __post_init__(self)`
+  - `hamilton_product` (method, line 258) `def hamilton_product(q1, q2)`
+  - `normalize` (method, line 269) `def normalize(q, eps)`
+  - `conjugate` (method, line 273) `def conjugate(q)`
+  - `rotate_vector` (method, line 278) `def rotate_vector(v, q)`
+  - `__init__` (method, line 296) `def __init__(self, in_features, out_features, bias)`
+  - `forward` (method, line 310) `def forward(self, x)`
+  - `__init__` (method, line 329) `def __init__(self, in_q, out_q, grid_h, grid_w, init_scale)`
+  - `_kernel` (method, line 344) `def _kernel(self, c)`
+  - `_contract` (method, line 347) `def _contract(self, W, X)`
+  - `forward` (method, line 350) `def forward(self, x)`
+  - `__init__` (method, line 382) `def __init__(self, config)`
+  - `_filter1d` (method, line 404) `def _filter1d(self, x, kr, ki)`
+  - `encode` (method, line 409) `def encode(self, x)`
+  - `decode` (method, line 412) `def decode(self, z)`
+  - `forward` (method, line 415) `def forward(self, x)`
+  - `process_torus_grid` (method, line 420) `def process_torus_grid(self, grid)`
+  - `__init__` (method, line 443) `def __init__(self, d_model, config)`
+  - `_build_torus_graph` (method, line 468) `def _build_torus_graph(self)`
+  - `_torus_soft_assign` (method, line 484) `def _torus_soft_assign(self, phi1, phi2)`
+  - `_message_passing` (method, line 495) `def _message_passing(self, node_feat)`
+  - `forward` (method, line 509) `def forward(self, x)`
+  - `__init__` (method, line 540) `def __init__(self, d_model, expansion, dropout)`
+  - `forward` (method, line 552) `def forward(self, x)`
+  - `__init__` (method, line 565) `def __init__(self, d_model, config)`
+  - `_route` (method, line 581) `def _route(self, x)`
+  - `forward` (method, line 604) `def forward(self, x)`
+  - `__init__` (method, line 618) `def __init__(self, d_head, max_seq_len)`
+  - `_build_cache` (method, line 626) `def _build_cache(self, seq_len)`
+  - `_rotate_half` (method, line 633) `def _rotate_half(x)`
+  - `forward` (method, line 637) `def forward(self, q, k, seq_len, offset)`
+  - `__init__` (method, line 655) `def __init__(self, d_model, eps)`
+  - `forward` (method, line 660) `def forward(self, x)`
+  - `__init__` (method, line 671) `def __init__(self, d_model, n_heads, config)`
+  - `forward` (method, line 686) `def forward(self, x, is_causal, past_kv)`
+  - `__init__` (method, line 725) `def __init__(self, d_model, n_heads, config)`
+  - `_forward_impl` (method, line 734) `def _forward_impl(self, x, past_kv)`
+  - `forward` (method, line 743) `def forward(self, x, past_kv)`
+  - `__init__` (method, line 757) `def __init__(self, config)`
+  - `_init_weights` (method, line 771) `def _init_weights(self)`
+  - `forward` (method, line 778) `def forward(self, token_ids, past_kvs)`
+  - `generate` (method, line 795) `def generate(self, token_ids, max_new_tokens, temperature, top_k)`
+  - `__init__` (method, line 837) `def __init__(self, mode)`
+  - `_interp2d` (method, line 840) `def _interp2d(self, tensor, tgt_h, tgt_w)`
+  - `transfer` (method, line 856) `def transfer(self, src_layer, tgt_layer)`
+  - `__init__` (method, line 886) `def __init__(self, mode)`
+  - `transfer` (method, line 889) `def transfer(self, src_embed, src_radial, src_angular, tgt_embed, tgt_radial, tgt_angular)`
+  - `__init__` (method, line 936) `def __init__(self, spec_interp_mode, node_interp_mode, logger)`
+  - `expand` (method, line 946) `def expand(self, src, tgt)`
+  - `__init__` (method, line 1018) `def __init__(self, spec_interp_mode, node_interp_mode, logger)`
+  - `expand` (method, line 1031) `def expand(self, src, tgt)`
+  - `__init__` (method, line 1072) `def __init__(self, spec_interp_mode, node_interp_mode, logger)`
+  - `expand` (method, line 1085) `def expand(self, src, tgt)`
+  - `__init__` (method, line 1126) `def __init__(self, logger)`
+  - `load` (method, line 1133) `def load(self, path, model, device)`
+  - `save` (method, line 1177) `def save(self, path, model, metadata)`
+  - `__init__` (method, line 1286) `def __init__(self, logger)`
+  - `_load_shapes` (method, line 1289) `def _load_shapes(self, path)`
+  - `_load_metadata` (method, line 1304) `def _load_metadata(self, path)`
+  - `probe` (method, line 1315) `def probe(self, path, fallback_radial, fallback_angular)`
+  - `_infer_d_head_fallback` (method, line 1433) `def _infer_d_head_fallback(d_model, q_out, k_out)`
+  - `__init__` (method, line 1474) `def __init__(self, logger)`
+  - `validate` (method, line 1477) `def validate(self, model, prompt)`
+  - `__init__` (method, line 1565) `def __init__(self, exp_cfg, logger)`
+  - `_config_from_arch` (method, line 1570) `def _config_from_arch(self, arch, torus_radial, torus_angular)`
+  - `_build_metadata_for_save` (method, line 1609) `def _build_metadata_for_save(self, src_meta, arch, tgt_radial, tgt_angular)`
+  - `run` (method, line 1631) `def run(self)`
