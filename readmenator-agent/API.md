@@ -1,483 +1,2636 @@
-# API (page 1 of 2)
-Pages: [API.md](API.md), [API_p2.md](API_p2.md)
+# API
 
 ## app.py
-- `TopoGPT2Config.setup_logger` (method) `app.py:155` `def setup_logger(name, level)`
-- `TopoGPT2Config.set_seed` (method) `app.py:165` `def set_seed(seed, device)`
-- `QuaternionOps.hamilton_product` (method) `app.py:185` `def hamilton_product(q1, q2)` -- Producto de Hamilton q1 ⊗ q2.
-- `QuaternionOps.normalize` (method) `app.py:197` `def normalize(q, eps)`
-- `QuaternionOps.conjugate` (method) `app.py:201` `def conjugate(q)`
-- `QuaternionOps.rotate_vector` (method) `app.py:206` `def rotate_vector(v, q)` -- Rota vector 3D v por cuaternión unitario q. v:[...,3] q:[...,4]
-- `QuaternionLinear.__init__` (method) `app.py:228` `def __init__(self, in_features, out_features, bias)`
-- `QuaternionLinear.forward` (method) `app.py:244` `def forward(self, x)` -- x: [..., in_features] → [..., out_features]
-- `QuaternionSpectralLayer.__init__` (method) `app.py:281` `def __init__(self, in_q, out_q, grid_h, grid_w, init_scale)`
-- `QuaternionSpectralLayer.forward` (method) `app.py:307` `def forward(self, x)` -- x: [B, 4*in_q, H, W]  (4 canales cuaterniones sobre grid espacial) → [B, 4*out_q, H, W]
-- `SpectralAutoencoder.__init__` (method) `app.py:361` `def __init__(self, config)`
-- `SpectralAutoencoder.encode` (method) `app.py:399` `def encode(self, x)` -- x: [..., D_MODEL] → latent: [..., D_LAT]
-- `SpectralAutoencoder.decode` (method) `app.py:404` `def decode(self, z)` -- z: [..., D_LAT] → recon: [..., D_MODEL]
-- `SpectralAutoencoder.forward` (method) `app.py:409` `def forward(self, x)` -- Devuelve (latent, recon_loss)
-- `SpectralAutoencoder.process_torus_grid` (method) `app.py:416` `def process_torus_grid(self, grid)` -- Procesa el grid del toro con QuaternionSpectralLayer. grid: [B, 4*D_QUAT, RADIAL, ANGULAR]  →  [B, 4*D_QUAT, RADIAL...
-- `QuaternionTorusBrain.__init__` (method) `app.py:449` `def __init__(self, d_model, config)`
-- `QuaternionTorusBrain.forward` (method) `app.py:587` `def forward(self, x)` -- x: [B, S, D_MODEL] → output: [B, S, D_MODEL], recon_loss: scalar
-- `RotaryEmbedding.__init__` (method) `app.py:655` `def __init__(self, d_head, max_seq_len, base)`
-- `RotaryEmbedding.forward` (method) `app.py:672` `def forward(self, q, k, seq_len, offset)` -- q, k: [B, n_heads, S_q/S_k, d_head] offset: posicion inicial (para KV cache: longitud del cache existente) Aplica...
-- `RMSNorm.__init__` (method) `app.py:699` `def __init__(self, d_model, eps)`
-- `RMSNorm.forward` (method) `app.py:704` `def forward(self, x)`
-- `SwiGLU.__init__` (method) `app.py:720` `def __init__(self, d_model, expansion, dropout)`
-- `SwiGLU.forward` (method) `app.py:734` `def forward(self, x)`
-- `TopoMoEBrain.__init__` (method) `app.py:757` `def __init__(self, d_model, config)`
-- `TopoMoEBrain.forward` (method) `app.py:820` `def forward(self, x)` -- → output: [B, S, D], aux_loss: escalar
-- `MultiHeadAttention.__init__` (method) `app.py:857` `def __init__(self, d_model, n_heads, config)`
-- `MultiHeadAttention.forward` (method) `app.py:875` `def forward(self, x, is_causal, past_kv)` -- Args: is_causal: usar mascara causal past_kv:  (K_cache, V_cache) de pasos anteriores o None Returns: out:      [B...
-- `TopoGPT2Layer.__init__` (method) `app.py:938` `def __init__(self, d_model, n_heads, config)`
-- `TopoGPT2Layer.forward` (method) `app.py:956` `def forward(self, x, past_kv)` -- Retorna (x_out, aux_loss, kv_cache).
-- `TopoGPT2Layer.ckpt_fn` (method) `app.py:964` `def ckpt_fn(x_in)`
-- `TopoGPT2.__init__` (method) `app.py:987` `def __init__(self, config)`
-- `TopoGPT2.forward` (method) `app.py:1013` `def forward(self, token_ids, past_kvs)` -- token_ids: [B, S]  (enteros) past_kvs:  lista de (K, V) por capa, o None para entrenamiento → logits: [B, S...
-- `TopoGPT2.count_params` (method) `app.py:1036` `def count_params(self)`
-- `TopoGPT2.generate` (method) `app.py:1042` `def generate(self, token_ids, max_new_tokens, temperature, top_k)` -- Generacion autoregresiva con KV cache y muestreo top-k.
-- `BPETokenizer.__init__` (method) `app.py:1085` `def __init__(self, encoding)`
-- `BPETokenizer.encode` (method) `app.py:1093` `def encode(self, text)`
-- `BPETokenizer.decode` (method) `app.py:1096` `def decode(self, tokens)`
-- `BPETokenizer.eot_token` (method) `app.py:1099` `def eot_token(self)`
-- `CorpusDownloader.__init__` (method) `app.py:1119` `def __init__(self, corpus, data_dir, logger)`
-- `CorpusDownloader.get_text` (method) `app.py:1125` `def get_text(self, split)` -- Devuelve el texto del corpus.
-- `TokenizedDataset.__init__` (method) `app.py:1179` `def __init__(self, text, tokenizer, seq_len, max_tokens, cache_dir, split_tag)`
-- `CheckpointManager.__init__` (method) `app.py:1245` `def __init__(self, config, logger)`
-- `CheckpointManager.patch_config_for_resume` (method) `app.py:1255` `def patch_config_for_resume(self, cfg)` -- Lee el checkpoint 'latest' y ajusta cfg.N_KV_HEADS / cfg.GQA_GROUPS para que coincidan con la arquitectura guardada.
-- `CheckpointManager.should_save` (method) `app.py:1356` `def should_save(self)`
-- `CheckpointManager.save` (method) `app.py:1359` `def save(self, model, optimizer, state, is_best)` -- Guarda checkpoint completo.
-- `CheckpointManager.load_latest` (method) `app.py:1404` `def load_latest(self, model, optimizer)` -- Carga el ultimo checkpoint guardado.
-- `CheckpointManager.load_best` (method) `app.py:1431` `def load_best(self, model)` -- Carga el mejor modelo guardado (solo pesos, sin optimizador).
-- `CheckpointManager.has_checkpoint` (method) `app.py:1443` `def has_checkpoint(self)`
-- `TopoGPT2Trainer.__init__` (method) `app.py:1465` `def __init__(self, model, config, tokenizer)`
-- `TopoGPT2Trainer.resume` (method) `app.py:1500` `def resume(self)` -- Carga el ultimo checkpoint disponible.
-- `TopoGPT2Trainer.train` (method) `app.py:1548` `def train(self, train_dl, val_dl)` -- Entrena cfg.EPOCHS epocas adicionales a partir de completed_epochs.
-- `TopoGPT2Trainer.evaluate` (method) `app.py:1716` `def evaluate(self, dataloader)`
-- `MechanisticMetrics.__init__` (method) `app.py:1766` `def __init__(self, config)`
-- `MechanisticMetrics.compute_delta` (method) `app.py:1774` `def compute_delta(self, model)`
-- `MechanisticMetrics.compute_alpha` (method) `app.py:1781` `def compute_alpha(self, delta)`
-- `MechanisticMetrics.update_grad_buffer` (method) `app.py:1786` `def update_grad_buffer(self, model)` -- Captura gradientes de forma segura, ignorando tensores corruptos.
-- `MechanisticMetrics.compute_t_eff` (method) `app.py:1812` `def compute_t_eff(self, lr)` -- T_eff = lr/2 * Var(gradiente).
-- `MechanisticMetrics.compute_kappa` (method) `app.py:1820` `def compute_kappa(self, model, dataloader, n_batches)` -- κ = λ_max / λ_min de la covarianza del gradiente.
-- `MechanisticMetrics.compute_berry_phase` (method) `app.py:1878` `def compute_berry_phase(self, model)` -- Fase de Berry de los kernels espectrales imaginarios.
-- `MechanisticMetrics.compute_lc` (method) `app.py:1891` `def compute_lc(self, model)` -- Complejidad local: 1 - similitud coseno promedio entre filas de pesos.
-- `MechanisticMetrics.compute_sp` (method) `app.py:1905` `def compute_sp(self, model)` -- Superposicion: correlacion inter-fila promedio (entrelazamiento de features).
-- `MechanisticMetrics.classify_phase` (method) `app.py:1921` `def classify_phase(self, delta, kappa, berry)` -- Clasificacion de fase segun Book.md:
-- `MechanisticMetrics.compute_all` (method) `app.py:1940` `def compute_all(self, model, lr, dataloader, compute_kappa)` -- Calcula todas las metricas. compute_kappa=True hace pasadas backward adicionales (caro, usar cada N epochs).
-- `MechanisticMetrics.format_log` (method) `app.py:1965` `def format_log(self, m)`
-- `Phase0_KernelOptimizer.__init__` (method) `app.py:2001` `def __init__(self, config, logger)`
-- `Phase0_KernelOptimizer.optimize` (method) `app.py:2034` `def optimize(self, dataloader)` -- Retorna el mejor ratio de inicializacion de kernels espectrales.
-- `Phase1_BatchProspector.__init__` (method) `app.py:2074` `def __init__(self, config, logger)`
-- `Phase1_BatchProspector.prospect` (method) `app.py:2078` `def prospect(self, candidates, train_dataset, prospect_steps)` -- Retorna el mejor batch size segun delta y T_eff.
-- `Phase2_SeedMiner.__init__` (method) `app.py:2157` `def __init__(self, config, logger)`
-- `Phase2_SeedMiner.mine` (method) `app.py:2161` `def mine(self, seed_start, n_seeds, train_dataset, prospect_steps)` -- Retorna la semilla con la mejor trayectoria de delta.
-- `Phase4_AnnealingRefiner.__init__` (method) `app.py:2243` `def __init__(self, trainer, t0, cooling_rate, stagnation_patience)`
-- `Phase4_AnnealingRefiner.refine` (method) `app.py:2252` `def refine(self, train_dl, val_dl, refine_epochs)` -- Ejecuta refine_epochs epocas de recocido simulado.
-- `TopoPhasePipeline.__init__` (method) `app.py:2404` `def __init__(self, config, train_dataset, val_dataset, tokenizer, logger)`
-- `TopoPhasePipeline.run` (method) `app.py:2426` `def run(self, run_prospect, refine_epochs, resume, prospect_steps, probe_seeds, seed_start)` -- Ejecuta el pipeline completo.
-- `TopoPhasePipeline.main` (method) `app.py:2506` `def main()`
+
+### setup_logger (method) `def setup_logger(name, level)`
+- Defined: `app.py:155`
+
+### set_seed (method) `def set_seed(seed, device)`
+- Defined: `app.py:165`
+
+### main (method) `def main()`
+- Defined: `app.py:2506`
+
+### __post_init__ (method) `def __post_init__(self)`
+- Defined: `app.py:124`
+
+### hamilton_product (method) `def hamilton_product(q1, q2)`
+- Defined: `app.py:185`
+- Doc: Producto de Hamilton q1 ⊗ q2. Ambos [..., 4].
+
+### normalize (method) `def normalize(q, eps)`
+- Defined: `app.py:197`
+
+### conjugate (method) `def conjugate(q)`
+- Defined: `app.py:201`
+
+### rotate_vector (method) `def rotate_vector(v, q)`
+- Defined: `app.py:206`
+- Doc: Rota vector 3D v por cuaternión unitario q. v:[...,3] q:[...,4]
+
+### __init__ (method) `def __init__(self, in_features, out_features, bias)`
+- Defined: `app.py:228`
+
+### forward (method) `def forward(self, x)`
+- Defined: `app.py:244`
+- Doc: x: [..., in_features] → [..., out_features]
+
+### __init__ (method) `def __init__(self, in_q, out_q, grid_h, grid_w, init_scale)`
+- Defined: `app.py:281`
+
+### _kernel (method) `def _kernel(self, c)`
+- Defined: `app.py:300`
+
+### _contract (method) `def _contract(self, W, X)`
+- Defined: `app.py:303`
+- Doc: Suma sobre canales in_q: Y[b,o,h,w] = Σ_i W[i,o,h,w]·X[b,i,h,w]
+
+### forward (method) `def forward(self, x)`
+- Defined: `app.py:307`
+- Doc: x: [B, 4*in_q, H, W]  (4 canales cuaterniones sobre grid espacial)
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `app.py:361`
+
+### _filter1d (method) `def _filter1d(self, x, kr, ki)`
+- Defined: `app.py:393`
+- Doc: Filtro espectral 1D: x[..., D] → filtrado[..., D]
+
+### encode (method) `def encode(self, x)`
+- Defined: `app.py:399`
+- Doc: x: [..., D_MODEL] → latent: [..., D_LAT]
+
+### decode (method) `def decode(self, z)`
+- Defined: `app.py:404`
+- Doc: z: [..., D_LAT] → recon: [..., D_MODEL]
+
+### forward (method) `def forward(self, x)`
+- Defined: `app.py:409`
+- Doc: Devuelve (latent, recon_loss)
+
+### process_torus_grid (method) `def process_torus_grid(self, grid)`
+- Defined: `app.py:416`
+- Doc: Procesa el grid del toro con QuaternionSpectralLayer.
+
+### __init__ (method) `def __init__(self, d_model, config)`
+- Defined: `app.py:449`
+
+### _build_torus_graph (method) `def _build_torus_graph(self)`
+- Defined: `app.py:489`
+- Doc: Construye las aristas del grafo toro 2×4.
+
+### _torus_soft_assign (method) `def _torus_soft_assign(self, phi1, phi2)`
+- Defined: `app.py:523`
+- Doc: Asignación blanda de tokens a los 8 nodos del toro via distancia circular.
+
+### _message_passing (method) `def _message_passing(self, node_feat)`
+- Defined: `app.py:550`
+- Doc: Message-passing VECTORIZADO con rotaciones cuaterniones.
+
+### forward (method) `def forward(self, x)`
+- Defined: `app.py:587`
+- Doc: x: [B, S, D_MODEL]
+
+### __init__ (method) `def __init__(self, d_head, max_seq_len, base)`
+- Defined: `app.py:655`
+
+### _build_cache (method) `def _build_cache(self, seq_len)`
+- Defined: `app.py:661`
+
+### _rotate_half (method) `def _rotate_half(self, x)`
+- Defined: `app.py:668`
+
+### forward (method) `def forward(self, q, k, seq_len, offset)`
+- Defined: `app.py:672`
+- Doc: q, k: [B, n_heads, S_q/S_k, d_head]
+
+### __init__ (method) `def __init__(self, d_model, eps)`
+- Defined: `app.py:699`
+
+### forward (method) `def forward(self, x)`
+- Defined: `app.py:704`
+
+### __init__ (method) `def __init__(self, d_model, expansion, dropout)`
+- Defined: `app.py:720`
+
+### forward (method) `def forward(self, x)`
+- Defined: `app.py:734`
+
+### __init__ (method) `def __init__(self, d_model, config)`
+- Defined: `app.py:757`
+
+### _route (method) `def _route(self, x)`
+- Defined: `app.py:778`
+- Doc: x: [N, D] donde N = B*S (tokens aplanados)
+
+### forward (method) `def forward(self, x)`
+- Defined: `app.py:820`
+- Doc: x: [B, S, D]
+
+### __init__ (method) `def __init__(self, d_model, n_heads, config)`
+- Defined: `app.py:857`
+
+### forward (method) `def forward(self, x, is_causal, past_kv)`
+- Defined: `app.py:875`
+- Doc: Args:
+
+### __init__ (method) `def __init__(self, d_model, n_heads, config)`
+- Defined: `app.py:938`
+
+### _forward_impl (method) `def _forward_impl(self, x, past_kv)`
+- Defined: `app.py:947`
+
+### forward (method) `def forward(self, x, past_kv)`
+- Defined: `app.py:956`
+- Doc: Retorna (x_out, aux_loss, kv_cache).
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `app.py:987`
+
+### _init_weights (method) `def _init_weights(self)`
+- Defined: `app.py:1006`
+
+### forward (method) `def forward(self, token_ids, past_kvs)`
+- Defined: `app.py:1013`
+- Doc: token_ids: [B, S]  (enteros)
+
+### count_params (method) `def count_params(self)`
+- Defined: `app.py:1036`
+
+### generate (method) `def generate(self, token_ids, max_new_tokens, temperature, top_k)`
+- Defined: `app.py:1042`
+- Doc: Generacion autoregresiva con KV cache y muestreo top-k.
+
+### __init__ (method) `def __init__(self, encoding)`
+- Defined: `app.py:1085`
+
+### encode (method) `def encode(self, text)`
+- Defined: `app.py:1093`
+
+### decode (method) `def decode(self, tokens)`
+- Defined: `app.py:1096`
+
+### eot_token (method) `def eot_token(self)`
+- Defined: `app.py:1099`
+
+### __init__ (method) `def __init__(self, corpus, data_dir, logger)`
+- Defined: `app.py:1119`
+
+### get_text (method) `def get_text(self, split)`
+- Defined: `app.py:1125`
+- Doc: Devuelve el texto del corpus. Descarga si es necesario.
+
+### _download_hf (method) `def _download_hf(self, dataset_name, split, text_column, name)`
+- Defined: `app.py:1150`
+
+### __init__ (method) `def __init__(self, text, tokenizer, seq_len, max_tokens, cache_dir, split_tag)`
+- Defined: `app.py:1179`
+
+### __len__ (method) `def __len__(self)`
+- Defined: `app.py:1206`
+
+### __getitem__ (method) `def __getitem__(self, idx)`
+- Defined: `app.py:1209`
+
+### __init__ (method) `def __init__(self, config, logger)`
+- Defined: `app.py:1245`
+
+### patch_config_for_resume (method) `def patch_config_for_resume(self, cfg)`
+- Defined: `app.py:1255`
+- Doc: Lee el checkpoint 'latest' y ajusta cfg.N_KV_HEADS / cfg.GQA_GROUPS
+
+### _save_model (method) `def _save_model(self, model, directory)`
+- Defined: `app.py:1284`
+
+### _load_model (method) `def _load_model(self, model, directory)`
+- Defined: `app.py:1297`
+
+### _save_optimizer (method) `def _save_optimizer(self, optimizer, directory)`
+- Defined: `app.py:1328`
+
+### _load_optimizer (method) `def _load_optimizer(self, optimizer, directory, device)`
+- Defined: `app.py:1331`
+
+### _save_state (method) `def _save_state(self, state, directory)`
+- Defined: `app.py:1340`
+
+### _load_state (method) `def _load_state(self, directory)`
+- Defined: `app.py:1345`
+
+### should_save (method) `def should_save(self)`
+- Defined: `app.py:1356`
+
+### save (method) `def save(self, model, optimizer, state, is_best)`
+- Defined: `app.py:1359`
+- Doc: Guarda checkpoint completo.
+
+### load_latest (method) `def load_latest(self, model, optimizer)`
+- Defined: `app.py:1404`
+- Doc: Carga el ultimo checkpoint guardado.
+
+### load_best (method) `def load_best(self, model)`
+- Defined: `app.py:1431`
+- Doc: Carga el mejor modelo guardado (solo pesos, sin optimizador).
+
+### has_checkpoint (method) `def has_checkpoint(self)`
+- Defined: `app.py:1443`
+
+### __init__ (method) `def __init__(self, model, config, tokenizer)`
+- Defined: `app.py:1465`
+
+### resume (method) `def resume(self)`
+- Defined: `app.py:1500`
+- Doc: Carga el ultimo checkpoint disponible.
+
+### _current_state (method) `def _current_state(self)`
+- Defined: `app.py:1525`
+- Doc: Construye el dict de estado para persistir en state.json.
+
+### _cosine_lr (method) `def _cosine_lr(self, step_in_session, total_steps_session)`
+- Defined: `app.py:1536`
+- Doc: Cosine decay con warmup. El schedule es relativo a la sesion actual.
+
+### _set_lr (method) `def _set_lr(self, lr)`
+- Defined: `app.py:1544`
+
+### train (method) `def train(self, train_dl, val_dl)`
+- Defined: `app.py:1548`
+- Doc: Entrena cfg.EPOCHS epocas adicionales a partir de completed_epochs.
+
+### _sample_text (method) `def _sample_text(self, tokenizer, prompts, max_new, temperature, top_k)`
+- Defined: `app.py:1684`
+- Doc: Genera una muestra de texto al final de cada epoch para monitorear
+
+### evaluate (method) `def evaluate(self, dataloader)`
+- Defined: `app.py:1716`
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `app.py:1766`
+
+### compute_delta (method) `def compute_delta(self, model)`
+- Defined: `app.py:1774`
+
+### compute_alpha (method) `def compute_alpha(self, delta)`
+- Defined: `app.py:1781`
+
+### update_grad_buffer (method) `def update_grad_buffer(self, model)`
+- Defined: `app.py:1786`
+- Doc: Captura gradientes de forma segura, ignorando tensores corruptos.
+
+### compute_t_eff (method) `def compute_t_eff(self, lr)`
+- Defined: `app.py:1812`
+- Doc: T_eff = lr/2 * Var(gradiente). Temperatura termodinamica efectiva.
+
+### compute_kappa (method) `def compute_kappa(self, model, dataloader, n_batches)`
+- Defined: `app.py:1820`
+- Doc: κ = λ_max / λ_min de la covarianza del gradiente.
+
+### compute_berry_phase (method) `def compute_berry_phase(self, model)`
+- Defined: `app.py:1878`
+- Doc: Fase de Berry de los kernels espectrales imaginarios.
+
+### compute_lc (method) `def compute_lc(self, model)`
+- Defined: `app.py:1891`
+- Doc: Complejidad local: 1 - similitud coseno promedio entre filas de pesos.
+
+### compute_sp (method) `def compute_sp(self, model)`
+- Defined: `app.py:1905`
+- Doc: Superposicion: correlacion inter-fila promedio (entrelazamiento de features).
+
+### classify_phase (method) `def classify_phase(self, delta, kappa, berry)`
+- Defined: `app.py:1921`
+- Doc: Clasificacion de fase segun Book.md:
+
+### compute_all (method) `def compute_all(self, model, lr, dataloader, compute_kappa)`
+- Defined: `app.py:1940`
+- Doc: Calcula todas las metricas.
+
+### format_log (method) `def format_log(self, m)`
+- Defined: `app.py:1965`
+
+### __init__ (method) `def __init__(self, config, logger)`
+- Defined: `app.py:2001`
+
+### _measure_ratio (method) `def _measure_ratio(self, ratio, sample_batch)`
+- Defined: `app.py:2005`
+- Doc: Mide la coherencia espectral para un ratio dado.
+
+### optimize (method) `def optimize(self, dataloader)`
+- Defined: `app.py:2034`
+- Doc: Retorna el mejor ratio de inicializacion de kernels espectrales.
+
+### __init__ (method) `def __init__(self, config, logger)`
+- Defined: `app.py:2074`
+
+### prospect (method) `def prospect(self, candidates, train_dataset, prospect_steps)`
+- Defined: `app.py:2078`
+- Doc: Retorna el mejor batch size segun delta y T_eff.
+
+### __init__ (method) `def __init__(self, config, logger)`
+- Defined: `app.py:2157`
+
+### mine (method) `def mine(self, seed_start, n_seeds, train_dataset, prospect_steps)`
+- Defined: `app.py:2161`
+- Doc: Retorna la semilla con la mejor trayectoria de delta.
+
+### __init__ (method) `def __init__(self, trainer, t0, cooling_rate, stagnation_patience)`
+- Defined: `app.py:2243`
+
+### refine (method) `def refine(self, train_dl, val_dl, refine_epochs)`
+- Defined: `app.py:2252`
+- Doc: Ejecuta refine_epochs epocas de recocido simulado.
+
+### __init__ (method) `def __init__(self, config, train_dataset, val_dataset, tokenizer, logger)`
+- Defined: `app.py:2404`
+
+### _make_dataloaders (method) `def _make_dataloaders(self, batch_size)`
+- Defined: `app.py:2414`
+
+### run (method) `def run(self, run_prospect, refine_epochs, resume, prospect_steps, probe_seeds, seed_start)`
+- Defined: `app.py:2426`
+- Doc: Ejecuta el pipeline completo.
+
+### ckpt_fn (method) `def ckpt_fn(x_in)`
+- Defined: `app.py:964`
 
 ## inference.py
-- `CheckpointInspector.__init__` (method) `inference.py:47` `def __init__(self, logger)`
-- `CheckpointInspector.inspect_kq_head_count` (method) `inference.py:50` `def inspect_kq_head_count(self, checkpoint_path, d_model, n_heads)`
-- `CheckpointInspector.patch_config` (method) `inference.py:62` `def patch_config(self, config, source_module)`
-- `ModelLoader.__init__` (method) `inference.py:92` `def __init__(self, checkpoint_name, logger)`
-- `ModelLoader.load_model` (method) `inference.py:96` `def load_model(self, config, source_module)`
-- `GenerationEngine.__init__` (method) `inference.py:117` `def __init__(self, config, logger)`
-- `GenerationEngine.generate` (method) `inference.py:121` `def generate(self, model, tokenizer, prompt_text)`
-- `GenerationEngine.sample_logits` (method) `inference.py:132` `def sample_logits(self, logits)`
-- `InferenceRunner.__init__` (method) `inference.py:142` `def __init__(self, config)`
-- `InferenceRunner.run` (method) `inference.py:155` `def run(self)`
-- `InferenceRunner.parse_arguments` (method) `inference.py:178` `def parse_arguments()`
+
+### _load_source_module (function) `def _load_source_module(path)`
+- Defined: `inference.py:19`
+
+### parse_arguments (method) `def parse_arguments()`
+- Defined: `inference.py:178`
+
+### __init__ (method) `def __init__(self, logger)`
+- Defined: `inference.py:47`
+
+### inspect_kq_head_count (method) `def inspect_kq_head_count(self, checkpoint_path, d_model, n_heads)`
+- Defined: `inference.py:50`
+
+### patch_config (method) `def patch_config(self, config, source_module)`
+- Defined: `inference.py:62`
+
+### _resolve_preset (method) `def _resolve_preset(self, scale)`
+- Defined: `inference.py:81`
+
+### __init__ (method) `def __init__(self, checkpoint_name, logger)`
+- Defined: `inference.py:92`
+
+### load_model (method) `def load_model(self, config, source_module)`
+- Defined: `inference.py:96`
+
+### __init__ (method) `def __init__(self, config, logger)`
+- Defined: `inference.py:117`
+
+### generate (method) `def generate(self, model, tokenizer, prompt_text)`
+- Defined: `inference.py:121`
+
+### sample_logits (method) `def sample_logits(self, logits)`
+- Defined: `inference.py:132`
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `inference.py:142`
+
+### _setup_logger (method) `def _setup_logger(self)`
+- Defined: `inference.py:146`
+
+### run (method) `def run(self)`
+- Defined: `inference.py:155`
+
+### _print_result (method) `def _print_result(self, prompt, output)`
+- Defined: `inference.py:170`
 
 ## inference2.py
-- `build_logger` (function) `inference2.py:79` `def build_logger(name, level)` -- Stderr logger with timestamp formatting.
-- `InferenceConfig.validate` (method) `inference2.py:148` `def validate(self)` -- Raise ValueError for impossible parameter combinations.
-- `BPETokenizer.__init__` (method) `inference2.py:175` `def __init__(self)`
-- `BPETokenizer.encode` (method) `inference2.py:182` `def encode(self, text)`
-- `BPETokenizer.decode` (method) `inference2.py:185` `def decode(self, token_ids)`
-- `BPETokenizer.decode_single` (method) `inference2.py:188` `def decode_single(self, token_id)`
-- `QuaternionOps.hamilton_product` (method) `inference2.py:200` `def hamilton_product(q1, q2)`
-- `QuaternionOps.normalize` (method) `inference2.py:211` `def normalize(q, eps)`
-- `QuaternionOps.conjugate` (method) `inference2.py:215` `def conjugate(q)`
-- `QuaternionLinear.__init__` (method) `inference2.py:227` `def __init__(self, in_features, out_features, bias)`
-- `QuaternionLinear.forward` (method) `inference2.py:241` `def forward(self, x)`
-- `QuaternionSpectralLayer.__init__` (method) `inference2.py:259` `def __init__(self, in_q, out_q, grid_h, grid_w, init_scale)`
-- `QuaternionSpectralLayer.forward` (method) `inference2.py:282` `def forward(self, x)`
-- `SpectralAutoencoder.__init__` (method) `inference2.py:312` `def __init__(self, cfg)`
-- `SpectralAutoencoder.encode` (method) `inference2.py:341` `def encode(self, x)`
-- `SpectralAutoencoder.decode` (method) `inference2.py:344` `def decode(self, z)`
-- `SpectralAutoencoder.forward` (method) `inference2.py:347` `def forward(self, x)`
-- `SpectralAutoencoder.process_torus_grid` (method) `inference2.py:351` `def process_torus_grid(self, grid)`
-- `QuaternionTorusBrain.__init__` (method) `inference2.py:370` `def __init__(self, d_model, cfg)`
-- `QuaternionTorusBrain.forward` (method) `inference2.py:437` `def forward(self, x)`
-- `SwiGLU.__init__` (method) `inference2.py:465` `def __init__(self, d_model, expansion, dropout)`
-- `SwiGLU.forward` (method) `inference2.py:475` `def forward(self, x)`
-- `TopoMoEBrain.__init__` (method) `inference2.py:488` `def __init__(self, d_model, cfg)`
-- `TopoMoEBrain.forward` (method) `inference2.py:528` `def forward(self, x)`
-- `RotaryEmbedding.__init__` (method) `inference2.py:542` `def __init__(self, d_head, max_seq_len)`
-- `RotaryEmbedding.forward` (method) `inference2.py:561` `def forward(self, q, k, seq_len, offset)`
-- `RMSNorm.__init__` (method) `inference2.py:580` `def __init__(self, d_model, eps)`
-- `RMSNorm.forward` (method) `inference2.py:585` `def forward(self, x)`
-- `MultiHeadAttention.__init__` (method) `inference2.py:594` `def __init__(self, d_model, n_heads, cfg)`
-- `MultiHeadAttention.forward` (method) `inference2.py:609` `def forward(self, x, is_causal, past_kv)`
-- `TopoGPT2Layer.__init__` (method) `inference2.py:641` `def __init__(self, d_model, n_heads, cfg)`
-- `TopoGPT2Layer.forward` (method) `inference2.py:649` `def forward(self, x, past_kv)`
-- `TopoGPT2.__init__` (method) `inference2.py:666` `def __init__(self, cfg)`
-- `TopoGPT2.forward` (method) `inference2.py:678` `def forward(self, token_ids, past_kvs)`
-- `ModelConfig.d_quat` (method) `inference2.py:723` `def d_quat(self)`
-- `ModelConfig.gqa_groups` (method) `inference2.py:727` `def gqa_groups(self)`
-- `CheckpointArchProber.__init__` (method) `inference2.py:768` `def __init__(self, logger)`
-- `CheckpointArchProber.probe` (method) `inference2.py:786` `def probe(self, path)` -- Return a ModelConfig whose dimensions exactly match the checkpoint.
-- `CheckpointLoader.__init__` (method) `inference2.py:896` `def __init__(self, logger)`
-- `CheckpointLoader.load` (method) `inference2.py:899` `def load(self, path, model, device)` -- Load weights into model in-place.
-- `Sampler.__init__` (method) `inference2.py:950` `def __init__(self, cfg)`
-- `Sampler.__call__` (method) `inference2.py:953` `def __call__(self, logits, generated_ids)` -- Sample one token from logits.
-- `GenerationEngine.__init__` (method) `inference2.py:1013` `def __init__(self, model, tokenizer, cfg, logger)`
-- `GenerationEngine.generate` (method) `inference2.py:1027` `def generate(self, prompt)` -- Generate text from prompt.
-- `ResultPrinter.print_single` (method) `inference2.py:1087` `def print_single(self, prompt, full_text, tps, show_timing)`
-- `ResultPrinter.print_benchmark` (method) `inference2.py:1100` `def print_benchmark(self, runs, tps_list)`
-- `InferencePipeline.__init__` (method) `inference2.py:1127` `def __init__(self, cfg, logger)`
-- `InferencePipeline.run` (method) `inference2.py:1149` `def run(self)`
-- `InferencePipeline.build_arg_parser` (method) `inference2.py:1217` `def build_arg_parser()` -- Construct and return the CLI argument parser.
-- `InferencePipeline.main` (method) `inference2.py:1288` `def main()` -- CLI entry point.
+
+### build_logger (function) `def build_logger(name, level)`
+- Defined: `inference2.py:79`
+- Doc: Stderr logger with timestamp formatting.
+
+### build_arg_parser (method) `def build_arg_parser()`
+- Defined: `inference2.py:1217`
+- Doc: Construct and return the CLI argument parser.
+
+### main (method) `def main()`
+- Defined: `inference2.py:1288`
+- Doc: CLI entry point.
+
+### validate (method) `def validate(self)`
+- Defined: `inference2.py:148`
+- Doc: Raise ValueError for impossible parameter combinations.
+
+### __init__ (method) `def __init__(self)`
+- Defined: `inference2.py:175`
+
+### encode (method) `def encode(self, text)`
+- Defined: `inference2.py:182`
+
+### decode (method) `def decode(self, token_ids)`
+- Defined: `inference2.py:185`
+
+### decode_single (method) `def decode_single(self, token_id)`
+- Defined: `inference2.py:188`
+
+### hamilton_product (method) `def hamilton_product(q1, q2)`
+- Defined: `inference2.py:200`
+
+### normalize (method) `def normalize(q, eps)`
+- Defined: `inference2.py:211`
+
+### conjugate (method) `def conjugate(q)`
+- Defined: `inference2.py:215`
+
+### __init__ (method) `def __init__(self, in_features, out_features, bias)`
+- Defined: `inference2.py:227`
+
+### forward (method) `def forward(self, x)`
+- Defined: `inference2.py:241`
+
+### __init__ (method) `def __init__(self, in_q, out_q, grid_h, grid_w, init_scale)`
+- Defined: `inference2.py:259`
+
+### _kernel (method) `def _kernel(self, c)`
+- Defined: `inference2.py:276`
+
+### _contract (method) `def _contract(self, W, X)`
+- Defined: `inference2.py:279`
+
+### forward (method) `def forward(self, x)`
+- Defined: `inference2.py:282`
+
+### __init__ (method) `def __init__(self, cfg)`
+- Defined: `inference2.py:312`
+
+### _filter1d (method) `def _filter1d(self, x, kr, ki)`
+- Defined: `inference2.py:334`
+
+### encode (method) `def encode(self, x)`
+- Defined: `inference2.py:341`
+
+### decode (method) `def decode(self, z)`
+- Defined: `inference2.py:344`
+
+### forward (method) `def forward(self, x)`
+- Defined: `inference2.py:347`
+
+### process_torus_grid (method) `def process_torus_grid(self, grid)`
+- Defined: `inference2.py:351`
+
+### __init__ (method) `def __init__(self, d_model, cfg)`
+- Defined: `inference2.py:370`
+
+### _build_torus_graph (method) `def _build_torus_graph(self)`
+- Defined: `inference2.py:395`
+
+### _torus_soft_assign (method) `def _torus_soft_assign(self, phi1, phi2)`
+- Defined: `inference2.py:411`
+
+### _message_passing (method) `def _message_passing(self, node_feat)`
+- Defined: `inference2.py:423`
+
+### forward (method) `def forward(self, x)`
+- Defined: `inference2.py:437`
+
+### __init__ (method) `def __init__(self, d_model, expansion, dropout)`
+- Defined: `inference2.py:465`
+
+### forward (method) `def forward(self, x)`
+- Defined: `inference2.py:475`
+
+### __init__ (method) `def __init__(self, d_model, cfg)`
+- Defined: `inference2.py:488`
+
+### _route (method) `def _route(self, x)`
+- Defined: `inference2.py:503`
+
+### forward (method) `def forward(self, x)`
+- Defined: `inference2.py:528`
+
+### __init__ (method) `def __init__(self, d_head, max_seq_len)`
+- Defined: `inference2.py:542`
+
+### _build_cache (method) `def _build_cache(self, seq_len)`
+- Defined: `inference2.py:550`
+
+### _rotate_half (method) `def _rotate_half(x)`
+- Defined: `inference2.py:557`
+
+### forward (method) `def forward(self, q, k, seq_len, offset)`
+- Defined: `inference2.py:561`
+
+### __init__ (method) `def __init__(self, d_model, eps)`
+- Defined: `inference2.py:580`
+
+### forward (method) `def forward(self, x)`
+- Defined: `inference2.py:585`
+
+### __init__ (method) `def __init__(self, d_model, n_heads, cfg)`
+- Defined: `inference2.py:594`
+
+### forward (method) `def forward(self, x, is_causal, past_kv)`
+- Defined: `inference2.py:609`
+
+### __init__ (method) `def __init__(self, d_model, n_heads, cfg)`
+- Defined: `inference2.py:641`
+
+### forward (method) `def forward(self, x, past_kv)`
+- Defined: `inference2.py:649`
+
+### __init__ (method) `def __init__(self, cfg)`
+- Defined: `inference2.py:666`
+
+### forward (method) `def forward(self, token_ids, past_kvs)`
+- Defined: `inference2.py:678`
+
+### d_quat (method) `def d_quat(self)`
+- Defined: `inference2.py:723`
+
+### gqa_groups (method) `def gqa_groups(self)`
+- Defined: `inference2.py:727`
+
+### __init__ (method) `def __init__(self, logger)`
+- Defined: `inference2.py:768`
+
+### _load_shapes (method) `def _load_shapes(self, path)`
+- Defined: `inference2.py:771`
+
+### probe (method) `def probe(self, path)`
+- Defined: `inference2.py:786`
+- Doc: Return a ModelConfig whose dimensions exactly match the checkpoint.
+
+### _fallback_d_head (method) `def _fallback_d_head(d_model, q_out, k_out)`
+- Defined: `inference2.py:871`
+
+### __init__ (method) `def __init__(self, logger)`
+- Defined: `inference2.py:896`
+
+### load (method) `def load(self, path, model, device)`
+- Defined: `inference2.py:899`
+- Doc: Load weights into model in-place.
+
+### __init__ (method) `def __init__(self, cfg)`
+- Defined: `inference2.py:950`
+
+### __call__ (method) `def __call__(self, logits, generated_ids)`
+- Defined: `inference2.py:953`
+- Doc: Sample one token from logits.
+
+### __init__ (method) `def __init__(self, model, tokenizer, cfg, logger)`
+- Defined: `inference2.py:1013`
+
+### generate (method) `def generate(self, prompt)`
+- Defined: `inference2.py:1027`
+- Doc: Generate text from prompt.
+
+### _maybe_stream (method) `def _maybe_stream(self, token_id)`
+- Defined: `inference2.py:1071`
+
+### print_single (method) `def print_single(self, prompt, full_text, tps, show_timing)`
+- Defined: `inference2.py:1087`
+
+### print_benchmark (method) `def print_benchmark(self, runs, tps_list)`
+- Defined: `inference2.py:1100`
+
+### __init__ (method) `def __init__(self, cfg, logger)`
+- Defined: `inference2.py:1127`
+
+### _build_model (method) `def _build_model(self)`
+- Defined: `inference2.py:1131`
+
+### run (method) `def run(self)`
+- Defined: `inference2.py:1149`
+
+### _run_single (method) `def _run_single(self, engine, printer)`
+- Defined: `inference2.py:1164`
+
+### _run_interactive (method) `def _run_interactive(self, engine, printer)`
+- Defined: `inference2.py:1176`
+
+### _run_benchmark (method) `def _run_benchmark(self, engine, printer)`
+- Defined: `inference2.py:1199`
 
 ## quantize.py
-- `InferenceConfig.resolve_gqa` (method) `quantize.py:86` `def resolve_gqa(self)`
-- `CheckpointInspector.inspect_and_patch` (method) `quantize.py:108` `def inspect_and_patch(path, config)`
-- `QuaternionOps.hamilton_product` (method) `quantize.py:165` `def hamilton_product(q1, q2)`
-- `QuaternionOps.normalize` (method) `quantize.py:176` `def normalize(q, eps)`
-- `QuaternionOps.conjugate` (method) `quantize.py:180` `def conjugate(q)`
-- `QuaternionOps.rotate_vector` (method) `quantize.py:185` `def rotate_vector(v, q)`
-- `QuaternionLinear.__init__` (method) `quantize.py:196` `def __init__(self, in_features, out_features, bias)`
-- `QuaternionLinear.forward` (method) `quantize.py:209` `def forward(self, x)`
-- `QuaternionSpectralLayer.__init__` (method) `quantize.py:221` `def __init__(self, in_q, out_q, grid_h, grid_w, init_scale)`
-- `QuaternionSpectralLayer.forward` (method) `quantize.py:239` `def forward(self, x)`
-- `SpectralAutoencoder.__init__` (method) `quantize.py:263` `def __init__(self, config)`
-- `SpectralAutoencoder.encode` (method) `quantize.py:291` `def encode(self, x)`
-- `SpectralAutoencoder.decode` (method) `quantize.py:295` `def decode(self, z)`
-- `SpectralAutoencoder.forward` (method) `quantize.py:299` `def forward(self, x)`
-- `SpectralAutoencoder.process_torus_grid` (method) `quantize.py:305` `def process_torus_grid(self, grid)`
-- `QuaternionTorusBrain.__init__` (method) `quantize.py:313` `def __init__(self, d_model, config)`
-- `QuaternionTorusBrain.forward` (method) `quantize.py:380` `def forward(self, x)`
-- `RotaryEmbedding.__init__` (method) `quantize.py:409` `def __init__(self, d_head, max_seq_len, base)`
-- `RotaryEmbedding.forward` (method) `quantize.py:426` `def forward(self, q, k, seq_len, offset)`
-- `RMSNorm.__init__` (method) `quantize.py:441` `def __init__(self, d_model, eps)`
-- `RMSNorm.forward` (method) `quantize.py:446` `def forward(self, x)`
-- `SwiGLU.__init__` (method) `quantize.py:452` `def __init__(self, d_model, expansion, dropout)`
-- `SwiGLU.forward` (method) `quantize.py:464` `def forward(self, x)`
-- `TopoMoEBrain.__init__` (method) `quantize.py:469` `def __init__(self, d_model, config)`
-- `TopoMoEBrain.forward` (method) `quantize.py:509` `def forward(self, x)`
-- `MultiHeadAttention.__init__` (method) `quantize.py:523` `def __init__(self, d_model, n_heads, config)`
-- `MultiHeadAttention.forward` (method) `quantize.py:539` `def forward(self, x, is_causal, past_kv)`
-- `TopoGPT2Layer.__init__` (method) `quantize.py:569` `def __init__(self, d_model, n_heads, config)`
-- `TopoGPT2Layer.forward` (method) `quantize.py:586` `def forward(self, x, past_kv)`
-- `TopoGPT2.__init__` (method) `quantize.py:591` `def __init__(self, config)`
-- `TopoGPT2.forward` (method) `quantize.py:613` `def forward(self, token_ids, past_kvs)`
-- `TopoGPT2.generate` (method) `quantize.py:627` `def generate(self, token_ids, max_new_tokens, temperature, top_k, eos_token_id)`
-- `BPETokenizer.__init__` (method) `quantize.py:652` `def __init__(self, encoding)`
-- `BPETokenizer.encode` (method) `quantize.py:658` `def encode(self, text)`
-- `BPETokenizer.decode` (method) `quantize.py:661` `def decode(self, tokens)`
-- `BPETokenizer.eot_token` (method) `quantize.py:664` `def eot_token(self)`
-- `IQuantizer.quantize` (method) `quantize.py:680` `def quantize(self, model)`
-- `IQuantizer.get_format_name` (method) `quantize.py:684` `def get_format_name(self)`
-- `IQuantizer.get_bits_per_weight` (method) `quantize.py:688` `def get_bits_per_weight(self)`
-- `BitNetQuantizer.__init__` (method) `quantize.py:693` `def __init__(self, config)`
-- `BitNetQuantizer.quantize` (method) `quantize.py:696` `def quantize(self, model)`
-- `BitNetQuantizer.get_format_name` (method) `quantize.py:714` `def get_format_name(self)`
-- `BitNetQuantizer.get_bits_per_weight` (method) `quantize.py:717` `def get_bits_per_weight(self)`
-- `INT4Quantizer.__init__` (method) `quantize.py:722` `def __init__(self, config)`
-- `INT4Quantizer.quantize` (method) `quantize.py:725` `def quantize(self, model)`
-- `INT4Quantizer.get_format_name` (method) `quantize.py:739` `def get_format_name(self)`
-- `INT4Quantizer.get_bits_per_weight` (method) `quantize.py:742` `def get_bits_per_weight(self)`
-- `INT8Quantizer.__init__` (method) `quantize.py:747` `def __init__(self, config)`
-- `INT8Quantizer.quantize` (method) `quantize.py:750` `def quantize(self, model)`
-- `INT8Quantizer.get_format_name` (method) `quantize.py:753` `def get_format_name(self)`
-- `INT8Quantizer.get_bits_per_weight` (method) `quantize.py:756` `def get_bits_per_weight(self)`
-- `Float16Quantizer.__init__` (method) `quantize.py:761` `def __init__(self, config)`
-- `Float16Quantizer.quantize` (method) `quantize.py:764` `def quantize(self, model)`
-- `Float16Quantizer.get_format_name` (method) `quantize.py:767` `def get_format_name(self)`
-- `Float16Quantizer.get_bits_per_weight` (method) `quantize.py:770` `def get_bits_per_weight(self)`
-- `BFloat16Quantizer.__init__` (method) `quantize.py:775` `def __init__(self, config)`
-- `BFloat16Quantizer.quantize` (method) `quantize.py:778` `def quantize(self, model)`
-- `BFloat16Quantizer.get_format_name` (method) `quantize.py:781` `def get_format_name(self)`
-- `BFloat16Quantizer.get_bits_per_weight` (method) `quantize.py:784` `def get_bits_per_weight(self)`
-- `Float32Quantizer.__init__` (method) `quantize.py:789` `def __init__(self, config)`
-- `Float32Quantizer.quantize` (method) `quantize.py:792` `def quantize(self, model)`
-- `Float32Quantizer.get_format_name` (method) `quantize.py:795` `def get_format_name(self)`
-- `Float32Quantizer.get_bits_per_weight` (method) `quantize.py:798` `def get_bits_per_weight(self)`
-- `Float64Quantizer.__init__` (method) `quantize.py:803` `def __init__(self, config)`
-- `Float64Quantizer.quantize` (method) `quantize.py:806` `def quantize(self, model)`
-- `Float64Quantizer.get_format_name` (method) `quantize.py:809` `def get_format_name(self)`
-- `Float64Quantizer.get_bits_per_weight` (method) `quantize.py:812` `def get_bits_per_weight(self)`
-- `QuantizerFactory.create_quantizer` (method) `quantize.py:818` `def create_quantizer(fmt, config)`
-- `ModelLoader.__init__` (method) `quantize.py:835` `def __init__(self, config, logger)`
-- `ModelLoader.load_checkpoint` (method) `quantize.py:839` `def load_checkpoint(self)`
-- `InferenceEngine.__init__` (method) `quantize.py:884` `def __init__(self, config, model, tokenizer)`
-- `InferenceEngine.run_inference` (method) `quantize.py:891` `def run_inference(self, prompt)`
-- `QuantizationInferencePipeline.__init__` (method) `quantize.py:908` `def __init__(self, config)`
-- `QuantizationInferencePipeline.execute` (method) `quantize.py:919` `def execute(self)`
-- `QuantizationInferencePipeline.parse_arguments` (method) `quantize.py:939` `def parse_arguments()`
-- `QuantizationInferencePipeline.main` (method) `quantize.py:965` `def main()`
+
+### parse_arguments (method) `def parse_arguments()`
+- Defined: `quantize.py:939`
+
+### main (method) `def main()`
+- Defined: `quantize.py:965`
+
+### resolve_gqa (method) `def resolve_gqa(self)`
+- Defined: `quantize.py:86`
+
+### inspect_and_patch (method) `def inspect_and_patch(path, config)`
+- Defined: `quantize.py:108`
+
+### hamilton_product (method) `def hamilton_product(q1, q2)`
+- Defined: `quantize.py:165`
+
+### normalize (method) `def normalize(q, eps)`
+- Defined: `quantize.py:176`
+
+### conjugate (method) `def conjugate(q)`
+- Defined: `quantize.py:180`
+
+### rotate_vector (method) `def rotate_vector(v, q)`
+- Defined: `quantize.py:185`
+
+### __init__ (method) `def __init__(self, in_features, out_features, bias)`
+- Defined: `quantize.py:196`
+
+### forward (method) `def forward(self, x)`
+- Defined: `quantize.py:209`
+
+### __init__ (method) `def __init__(self, in_q, out_q, grid_h, grid_w, init_scale)`
+- Defined: `quantize.py:221`
+
+### _kernel (method) `def _kernel(self, c)`
+- Defined: `quantize.py:233`
+
+### _contract (method) `def _contract(self, W, X)`
+- Defined: `quantize.py:236`
+
+### forward (method) `def forward(self, x)`
+- Defined: `quantize.py:239`
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `quantize.py:263`
+
+### _filter1d (method) `def _filter1d(self, x, kr, ki)`
+- Defined: `quantize.py:286`
+
+### encode (method) `def encode(self, x)`
+- Defined: `quantize.py:291`
+
+### decode (method) `def decode(self, z)`
+- Defined: `quantize.py:295`
+
+### forward (method) `def forward(self, x)`
+- Defined: `quantize.py:299`
+
+### process_torus_grid (method) `def process_torus_grid(self, grid)`
+- Defined: `quantize.py:305`
+
+### __init__ (method) `def __init__(self, d_model, config)`
+- Defined: `quantize.py:313`
+
+### _build_torus_graph (method) `def _build_torus_graph(self)`
+- Defined: `quantize.py:338`
+
+### _torus_soft_assign (method) `def _torus_soft_assign(self, phi1, phi2)`
+- Defined: `quantize.py:354`
+
+### _message_passing (method) `def _message_passing(self, node_feat)`
+- Defined: `quantize.py:365`
+
+### forward (method) `def forward(self, x)`
+- Defined: `quantize.py:380`
+
+### __init__ (method) `def __init__(self, d_head, max_seq_len, base)`
+- Defined: `quantize.py:409`
+
+### _build_cache (method) `def _build_cache(self, seq_len)`
+- Defined: `quantize.py:415`
+
+### _rotate_half (method) `def _rotate_half(self, x)`
+- Defined: `quantize.py:422`
+
+### forward (method) `def forward(self, q, k, seq_len, offset)`
+- Defined: `quantize.py:426`
+
+### __init__ (method) `def __init__(self, d_model, eps)`
+- Defined: `quantize.py:441`
+
+### forward (method) `def forward(self, x)`
+- Defined: `quantize.py:446`
+
+### __init__ (method) `def __init__(self, d_model, expansion, dropout)`
+- Defined: `quantize.py:452`
+
+### forward (method) `def forward(self, x)`
+- Defined: `quantize.py:464`
+
+### __init__ (method) `def __init__(self, d_model, config)`
+- Defined: `quantize.py:469`
+
+### _route (method) `def _route(self, x)`
+- Defined: `quantize.py:486`
+
+### forward (method) `def forward(self, x)`
+- Defined: `quantize.py:509`
+
+### __init__ (method) `def __init__(self, d_model, n_heads, config)`
+- Defined: `quantize.py:523`
+
+### forward (method) `def forward(self, x, is_causal, past_kv)`
+- Defined: `quantize.py:539`
+
+### __init__ (method) `def __init__(self, d_model, n_heads, config)`
+- Defined: `quantize.py:569`
+
+### _forward_impl (method) `def _forward_impl(self, x, past_kv)`
+- Defined: `quantize.py:579`
+
+### forward (method) `def forward(self, x, past_kv)`
+- Defined: `quantize.py:586`
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `quantize.py:591`
+
+### _init_weights (method) `def _init_weights(self)`
+- Defined: `quantize.py:606`
+
+### forward (method) `def forward(self, token_ids, past_kvs)`
+- Defined: `quantize.py:613`
+
+### generate (method) `def generate(self, token_ids, max_new_tokens, temperature, top_k, eos_token_id)`
+- Defined: `quantize.py:627`
+
+### __init__ (method) `def __init__(self, encoding)`
+- Defined: `quantize.py:652`
+
+### encode (method) `def encode(self, text)`
+- Defined: `quantize.py:658`
+
+### decode (method) `def decode(self, tokens)`
+- Defined: `quantize.py:661`
+
+### eot_token (method) `def eot_token(self)`
+- Defined: `quantize.py:664`
+
+### quantize (method) `def quantize(self, model)`
+- Defined: `quantize.py:680`
+
+### get_format_name (method) `def get_format_name(self)`
+- Defined: `quantize.py:684`
+
+### get_bits_per_weight (method) `def get_bits_per_weight(self)`
+- Defined: `quantize.py:688`
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `quantize.py:693`
+
+### quantize (method) `def quantize(self, model)`
+- Defined: `quantize.py:696`
+
+### get_format_name (method) `def get_format_name(self)`
+- Defined: `quantize.py:714`
+
+### get_bits_per_weight (method) `def get_bits_per_weight(self)`
+- Defined: `quantize.py:717`
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `quantize.py:722`
+
+### quantize (method) `def quantize(self, model)`
+- Defined: `quantize.py:725`
+
+### get_format_name (method) `def get_format_name(self)`
+- Defined: `quantize.py:739`
+
+### get_bits_per_weight (method) `def get_bits_per_weight(self)`
+- Defined: `quantize.py:742`
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `quantize.py:747`
+
+### quantize (method) `def quantize(self, model)`
+- Defined: `quantize.py:750`
+
+### get_format_name (method) `def get_format_name(self)`
+- Defined: `quantize.py:753`
+
+### get_bits_per_weight (method) `def get_bits_per_weight(self)`
+- Defined: `quantize.py:756`
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `quantize.py:761`
+
+### quantize (method) `def quantize(self, model)`
+- Defined: `quantize.py:764`
+
+### get_format_name (method) `def get_format_name(self)`
+- Defined: `quantize.py:767`
+
+### get_bits_per_weight (method) `def get_bits_per_weight(self)`
+- Defined: `quantize.py:770`
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `quantize.py:775`
+
+### quantize (method) `def quantize(self, model)`
+- Defined: `quantize.py:778`
+
+### get_format_name (method) `def get_format_name(self)`
+- Defined: `quantize.py:781`
+
+### get_bits_per_weight (method) `def get_bits_per_weight(self)`
+- Defined: `quantize.py:784`
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `quantize.py:789`
+
+### quantize (method) `def quantize(self, model)`
+- Defined: `quantize.py:792`
+
+### get_format_name (method) `def get_format_name(self)`
+- Defined: `quantize.py:795`
+
+### get_bits_per_weight (method) `def get_bits_per_weight(self)`
+- Defined: `quantize.py:798`
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `quantize.py:803`
+
+### quantize (method) `def quantize(self, model)`
+- Defined: `quantize.py:806`
+
+### get_format_name (method) `def get_format_name(self)`
+- Defined: `quantize.py:809`
+
+### get_bits_per_weight (method) `def get_bits_per_weight(self)`
+- Defined: `quantize.py:812`
+
+### create_quantizer (method) `def create_quantizer(fmt, config)`
+- Defined: `quantize.py:818`
+
+### __init__ (method) `def __init__(self, config, logger)`
+- Defined: `quantize.py:835`
+
+### load_checkpoint (method) `def load_checkpoint(self)`
+- Defined: `quantize.py:839`
+
+### __init__ (method) `def __init__(self, config, model, tokenizer)`
+- Defined: `quantize.py:884`
+
+### run_inference (method) `def run_inference(self, prompt)`
+- Defined: `quantize.py:891`
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `quantize.py:908`
+
+### execute (method) `def execute(self)`
+- Defined: `quantize.py:919`
 
 ## reinforce.py
-- `CheckpointPatcher.__init__` (method) `reinforce.py:86` `def __init__(self, logger)`
-- `CheckpointPatcher.align_config` (method) `reinforce.py:89` `def align_config(self, model_path, config, source_module)`
-- `MechanisticRewardCalculator.__init__` (method) `reinforce.py:122` `def __init__(self, config, logger)`
-- `MechanisticRewardCalculator.compute_lc_reward` (method) `reinforce.py:129` `def compute_lc_reward(self, lc_value)`
-- `MechanisticRewardCalculator.compute_sp_reward` (method) `reinforce.py:133` `def compute_sp_reward(self, sp_value)`
-- `MechanisticRewardCalculator.compute_delta_reward` (method) `reinforce.py:137` `def compute_delta_reward(self, delta_value)`
-- `MechanisticRewardCalculator.compute_mechanistic_reward` (method) `reinforce.py:142` `def compute_mechanistic_reward(self, metrics)`
-- `RewardModel.__init__` (method) `reinforce.py:154` `def __init__(self, config, vocab_size, d_model)`
-- `RewardModel.forward` (method) `reinforce.py:180` `def forward(self, input_ids, attention_mask)`
-- `ExperienceBuffer.__init__` (method) `reinforce.py:191` `def __init__(self, config, capacity)`
-- `ExperienceBuffer.add` (method) `reinforce.py:198` `def add(self, experience)`
-- `ExperienceBuffer.compute_advantages` (method) `reinforce.py:201` `def compute_advantages(self, values, rewards, masks)`
-- `ExperienceBuffer.sample_minibatches` (method) `reinforce.py:215` `def sample_minibatches(self, batch_size)`
-- `ExperienceBuffer.clear` (method) `reinforce.py:237` `def clear(self)`
-- `ValueHead.__init__` (method) `reinforce.py:242` `def __init__(self, d_model, hidden_dim)`
-- `ValueHead.forward` (method) `reinforce.py:258` `def forward(self, hidden_states)`
-- `PPOTrainer.__init__` (method) `reinforce.py:264` `def __init__(self, policy_model, config, reward_model, ref_model, logger)`
-- `PPOTrainer.generate_with_policy` (method) `reinforce.py:294` `def generate_with_policy(self, prompt_ids, max_new_tokens)`
-- `PPOTrainer.compute_kl_divergence` (method) `reinforce.py:306` `def compute_kl_divergence(self, policy_logits, ref_logits)`
-- `PPOTrainer.compute_reward` (method) `reinforce.py:317` `def compute_reward(self, responses, prompts, metrics)`
-- `PPOTrainer.collect_experience` (method) `reinforce.py:336` `def collect_experience(self, prompts, num_samples)`
-- `PPOTrainer.ppo_update` (method) `reinforce.py:398` `def ppo_update(self, batch)`
-- `PPOTrainer.train_step` (method) `reinforce.py:460` `def train_step(self, prompts)`
-- `PPOTrainer.load_checkpoint` (method) `reinforce.py:498` `def load_checkpoint(self, path)`
-- `ChatAgent.__init__` (method) `reinforce.py:521` `def __init__(self, policy_model, config, tokenizer, logger)`
-- `ChatAgent.attach_trainer` (method) `reinforce.py:530` `def attach_trainer(self, trainer)`
-- `ChatAgent.respond` (method) `reinforce.py:533` `def respond(self, user_message, max_new_tokens)`
-- `ChatAgent.train_on_feedback` (method) `reinforce.py:562` `def train_on_feedback(self, user_message, response, reward_score)`
-- `ChatAgent.reset_conversation` (method) `reinforce.py:594` `def reset_conversation(self)`
-- `ChatAgent.setup_logger` (method) `reinforce.py:597` `def setup_logger(name, level)`
-- `ChatAgent.create_rl_agent_from_checkpoint` (method) `reinforce.py:606` `def create_rl_agent_from_checkpoint(model_path, config, tokenizer, logger)`
+
+### setup_logger (method) `def setup_logger(name, level)`
+- Defined: `reinforce.py:597`
+
+### create_rl_agent_from_checkpoint (method) `def create_rl_agent_from_checkpoint(model_path, config, tokenizer, logger)`
+- Defined: `reinforce.py:606`
+
+### __init__ (method) `def __init__(self, logger)`
+- Defined: `reinforce.py:86`
+
+### align_config (method) `def align_config(self, model_path, config, source_module)`
+- Defined: `reinforce.py:89`
+
+### _resolve_preset (method) `def _resolve_preset(self, scale)`
+- Defined: `reinforce.py:111`
+
+### __init__ (method) `def __init__(self, config, logger)`
+- Defined: `reinforce.py:122`
+
+### compute_lc_reward (method) `def compute_lc_reward(self, lc_value)`
+- Defined: `reinforce.py:129`
+
+### compute_sp_reward (method) `def compute_sp_reward(self, sp_value)`
+- Defined: `reinforce.py:133`
+
+### compute_delta_reward (method) `def compute_delta_reward(self, delta_value)`
+- Defined: `reinforce.py:137`
+
+### compute_mechanistic_reward (method) `def compute_mechanistic_reward(self, metrics)`
+- Defined: `reinforce.py:142`
+
+### __init__ (method) `def __init__(self, config, vocab_size, d_model)`
+- Defined: `reinforce.py:154`
+
+### _init_weights (method) `def _init_weights(self)`
+- Defined: `reinforce.py:173`
+
+### forward (method) `def forward(self, input_ids, attention_mask)`
+- Defined: `reinforce.py:180`
+
+### __init__ (method) `def __init__(self, config, capacity)`
+- Defined: `reinforce.py:191`
+
+### add (method) `def add(self, experience)`
+- Defined: `reinforce.py:198`
+
+### compute_advantages (method) `def compute_advantages(self, values, rewards, masks)`
+- Defined: `reinforce.py:201`
+
+### sample_minibatches (method) `def sample_minibatches(self, batch_size)`
+- Defined: `reinforce.py:215`
+
+### _collate (method) `def _collate(self, batch)`
+- Defined: `reinforce.py:226`
+
+### clear (method) `def clear(self)`
+- Defined: `reinforce.py:237`
+
+### __init__ (method) `def __init__(self, d_model, hidden_dim)`
+- Defined: `reinforce.py:242`
+
+### _init_weights (method) `def _init_weights(self)`
+- Defined: `reinforce.py:251`
+
+### forward (method) `def forward(self, hidden_states)`
+- Defined: `reinforce.py:258`
+
+### __init__ (method) `def __init__(self, policy_model, config, reward_model, ref_model, logger)`
+- Defined: `reinforce.py:264`
+
+### generate_with_policy (method) `def generate_with_policy(self, prompt_ids, max_new_tokens)`
+- Defined: `reinforce.py:294`
+
+### compute_kl_divergence (method) `def compute_kl_divergence(self, policy_logits, ref_logits)`
+- Defined: `reinforce.py:306`
+
+### compute_reward (method) `def compute_reward(self, responses, prompts, metrics)`
+- Defined: `reinforce.py:317`
+
+### collect_experience (method) `def collect_experience(self, prompts, num_samples)`
+- Defined: `reinforce.py:336`
+
+### _extract_mechanistic_metrics (method) `def _extract_mechanistic_metrics(self, tokens)`
+- Defined: `reinforce.py:367`
+
+### ppo_update (method) `def ppo_update(self, batch)`
+- Defined: `reinforce.py:398`
+
+### train_step (method) `def train_step(self, prompts)`
+- Defined: `reinforce.py:460`
+
+### _save_checkpoint (method) `def _save_checkpoint(self)`
+- Defined: `reinforce.py:482`
+
+### load_checkpoint (method) `def load_checkpoint(self, path)`
+- Defined: `reinforce.py:498`
+
+### __init__ (method) `def __init__(self, policy_model, config, tokenizer, logger)`
+- Defined: `reinforce.py:521`
+
+### attach_trainer (method) `def attach_trainer(self, trainer)`
+- Defined: `reinforce.py:530`
+
+### respond (method) `def respond(self, user_message, max_new_tokens)`
+- Defined: `reinforce.py:533`
+
+### _format_conversation (method) `def _format_conversation(self)`
+- Defined: `reinforce.py:553`
+
+### train_on_feedback (method) `def train_on_feedback(self, user_message, response, reward_score)`
+- Defined: `reinforce.py:562`
+
+### reset_conversation (method) `def reset_conversation(self)`
+- Defined: `reinforce.py:594`
 
 ## topogpt2_1.py
-- `TopoGPT2Config.setup_logger` (method) `topogpt2_1.py:155` `def setup_logger(name, level)`
-- `TopoGPT2Config.set_seed` (method) `topogpt2_1.py:165` `def set_seed(seed, device)`
-- `QuaternionOps.hamilton_product` (method) `topogpt2_1.py:185` `def hamilton_product(q1, q2)` -- Producto de Hamilton q1 ⊗ q2.
-- `QuaternionOps.normalize` (method) `topogpt2_1.py:197` `def normalize(q, eps)`
-- `QuaternionOps.conjugate` (method) `topogpt2_1.py:201` `def conjugate(q)`
-- `QuaternionOps.rotate_vector` (method) `topogpt2_1.py:206` `def rotate_vector(v, q)` -- Rota vector 3D v por cuaternión unitario q. v:[...,3] q:[...,4]
-- `QuaternionLinear.__init__` (method) `topogpt2_1.py:228` `def __init__(self, in_features, out_features, bias)`
-- `QuaternionLinear.forward` (method) `topogpt2_1.py:244` `def forward(self, x)` -- x: [..., in_features] → [..., out_features]
-- `QuaternionSpectralLayer.__init__` (method) `topogpt2_1.py:281` `def __init__(self, in_q, out_q, grid_h, grid_w, init_scale)`
-- `QuaternionSpectralLayer.forward` (method) `topogpt2_1.py:307` `def forward(self, x)` -- x: [B, 4*in_q, H, W]  (4 canales cuaterniones sobre grid espacial) → [B, 4*out_q, H, W]
-- `SpectralAutoencoder.__init__` (method) `topogpt2_1.py:361` `def __init__(self, config)`
-- `SpectralAutoencoder.encode` (method) `topogpt2_1.py:399` `def encode(self, x)` -- x: [..., D_MODEL] → latent: [..., D_LAT]
-- `SpectralAutoencoder.decode` (method) `topogpt2_1.py:404` `def decode(self, z)` -- z: [..., D_LAT] → recon: [..., D_MODEL]
-- `SpectralAutoencoder.forward` (method) `topogpt2_1.py:409` `def forward(self, x)` -- Devuelve (latent, recon_loss)
-- `SpectralAutoencoder.process_torus_grid` (method) `topogpt2_1.py:416` `def process_torus_grid(self, grid)` -- Procesa el grid del toro con QuaternionSpectralLayer. grid: [B, 4*D_QUAT, RADIAL, ANGULAR]  →  [B, 4*D_QUAT, RADIAL...
-- `QuaternionTorusBrain.__init__` (method) `topogpt2_1.py:449` `def __init__(self, d_model, config)`
-- `QuaternionTorusBrain.forward` (method) `topogpt2_1.py:587` `def forward(self, x)` -- x: [B, S, D_MODEL] → output: [B, S, D_MODEL], recon_loss: scalar
-- `RotaryEmbedding.__init__` (method) `topogpt2_1.py:655` `def __init__(self, d_head, max_seq_len, base)`
-- `RotaryEmbedding.forward` (method) `topogpt2_1.py:672` `def forward(self, q, k, seq_len, offset)` -- q, k: [B, n_heads, S_q/S_k, d_head] offset: posicion inicial (para KV cache: longitud del cache existente) Aplica...
-- `RMSNorm.__init__` (method) `topogpt2_1.py:699` `def __init__(self, d_model, eps)`
-- `RMSNorm.forward` (method) `topogpt2_1.py:704` `def forward(self, x)`
-- `SwiGLU.__init__` (method) `topogpt2_1.py:720` `def __init__(self, d_model, expansion, dropout)`
-- `SwiGLU.forward` (method) `topogpt2_1.py:734` `def forward(self, x)`
-- `TopoMoEBrain.__init__` (method) `topogpt2_1.py:757` `def __init__(self, d_model, config)`
-- `TopoMoEBrain.forward` (method) `topogpt2_1.py:820` `def forward(self, x)` -- → output: [B, S, D], aux_loss: escalar
-- `MultiHeadAttention.__init__` (method) `topogpt2_1.py:857` `def __init__(self, d_model, n_heads, config)`
-- `MultiHeadAttention.forward` (method) `topogpt2_1.py:875` `def forward(self, x, is_causal, past_kv)` -- Args: is_causal: usar mascara causal past_kv:  (K_cache, V_cache) de pasos anteriores o None Returns: out:      [B...
-- `TopoGPT2Layer.__init__` (method) `topogpt2_1.py:938` `def __init__(self, d_model, n_heads, config)`
-- `TopoGPT2Layer.forward` (method) `topogpt2_1.py:956` `def forward(self, x, past_kv)` -- Retorna (x_out, aux_loss, kv_cache).
-- `TopoGPT2Layer.ckpt_fn` (method) `topogpt2_1.py:964` `def ckpt_fn(x_in)`
-- `TopoGPT2.__init__` (method) `topogpt2_1.py:987` `def __init__(self, config)`
-- `TopoGPT2.forward` (method) `topogpt2_1.py:1013` `def forward(self, token_ids, past_kvs)` -- token_ids: [B, S]  (enteros) past_kvs:  lista de (K, V) por capa, o None para entrenamiento → logits: [B, S...
-- `TopoGPT2.count_params` (method) `topogpt2_1.py:1036` `def count_params(self)`
-- `TopoGPT2.generate` (method) `topogpt2_1.py:1042` `def generate(self, token_ids, max_new_tokens, temperature, top_k)` -- Generacion autoregresiva con KV cache y muestreo top-k.
-- `BPETokenizer.__init__` (method) `topogpt2_1.py:1085` `def __init__(self, encoding)`
-- `BPETokenizer.encode` (method) `topogpt2_1.py:1093` `def encode(self, text)`
-- `BPETokenizer.decode` (method) `topogpt2_1.py:1096` `def decode(self, tokens)`
-- `BPETokenizer.eot_token` (method) `topogpt2_1.py:1099` `def eot_token(self)`
-- `CorpusDownloader.__init__` (method) `topogpt2_1.py:1119` `def __init__(self, corpus, data_dir, logger)`
-- `CorpusDownloader.get_text` (method) `topogpt2_1.py:1125` `def get_text(self, split)` -- Devuelve el texto del corpus.
-- `TokenizedDataset.__init__` (method) `topogpt2_1.py:1179` `def __init__(self, text, tokenizer, seq_len, max_tokens, cache_dir, split_tag)`
-- `CheckpointManager.__init__` (method) `topogpt2_1.py:1245` `def __init__(self, config, logger)`
-- `CheckpointManager.patch_config_for_resume` (method) `topogpt2_1.py:1255` `def patch_config_for_resume(self, cfg)` -- Lee el checkpoint 'latest' y ajusta cfg.N_KV_HEADS / cfg.GQA_GROUPS para que coincidan con la arquitectura guardada.
-- `CheckpointManager.should_save` (method) `topogpt2_1.py:1356` `def should_save(self)`
-- `CheckpointManager.save` (method) `topogpt2_1.py:1359` `def save(self, model, optimizer, state, is_best)` -- Guarda checkpoint completo.
-- `CheckpointManager.load_latest` (method) `topogpt2_1.py:1404` `def load_latest(self, model, optimizer)` -- Carga el ultimo checkpoint guardado.
-- `CheckpointManager.load_best` (method) `topogpt2_1.py:1431` `def load_best(self, model)` -- Carga el mejor modelo guardado (solo pesos, sin optimizador).
-- `CheckpointManager.has_checkpoint` (method) `topogpt2_1.py:1443` `def has_checkpoint(self)`
-- `TopoGPT2Trainer.__init__` (method) `topogpt2_1.py:1465` `def __init__(self, model, config, tokenizer)`
-- `TopoGPT2Trainer.resume` (method) `topogpt2_1.py:1500` `def resume(self)` -- Carga el ultimo checkpoint disponible.
-- `TopoGPT2Trainer.train` (method) `topogpt2_1.py:1548` `def train(self, train_dl, val_dl)` -- Entrena cfg.EPOCHS epocas adicionales a partir de completed_epochs.
-- `TopoGPT2Trainer.evaluate` (method) `topogpt2_1.py:1716` `def evaluate(self, dataloader)`
-- `MechanisticMetrics.__init__` (method) `topogpt2_1.py:1766` `def __init__(self, config)`
-- `MechanisticMetrics.compute_delta` (method) `topogpt2_1.py:1774` `def compute_delta(self, model)`
-- `MechanisticMetrics.compute_alpha` (method) `topogpt2_1.py:1781` `def compute_alpha(self, delta)`
-- `MechanisticMetrics.update_grad_buffer` (method) `topogpt2_1.py:1786` `def update_grad_buffer(self, model)` -- Captura gradientes de forma segura, ignorando tensores corruptos.
-- `MechanisticMetrics.compute_t_eff` (method) `topogpt2_1.py:1812` `def compute_t_eff(self, lr)` -- T_eff = lr/2 * Var(gradiente).
-- `MechanisticMetrics.compute_kappa` (method) `topogpt2_1.py:1820` `def compute_kappa(self, model, dataloader, n_batches)` -- κ = λ_max / λ_min de la covarianza del gradiente.
-- `MechanisticMetrics.compute_berry_phase` (method) `topogpt2_1.py:1878` `def compute_berry_phase(self, model)` -- Fase de Berry de los kernels espectrales imaginarios.
-- `MechanisticMetrics.compute_lc` (method) `topogpt2_1.py:1891` `def compute_lc(self, model)` -- Complejidad local: 1 - similitud coseno promedio entre filas de pesos.
-- `MechanisticMetrics.compute_sp` (method) `topogpt2_1.py:1905` `def compute_sp(self, model)` -- Superposicion: correlacion inter-fila promedio (entrelazamiento de features).
-- `MechanisticMetrics.classify_phase` (method) `topogpt2_1.py:1921` `def classify_phase(self, delta, kappa, berry)` -- Clasificacion de fase segun Book.md:
-- `MechanisticMetrics.compute_all` (method) `topogpt2_1.py:1940` `def compute_all(self, model, lr, dataloader, compute_kappa)` -- Calcula todas las metricas. compute_kappa=True hace pasadas backward adicionales (caro, usar cada N epochs).
-- `MechanisticMetrics.format_log` (method) `topogpt2_1.py:1965` `def format_log(self, m)`
-- `Phase0_KernelOptimizer.__init__` (method) `topogpt2_1.py:2001` `def __init__(self, config, logger)`
-- `Phase0_KernelOptimizer.optimize` (method) `topogpt2_1.py:2034` `def optimize(self, dataloader)` -- Retorna el mejor ratio de inicializacion de kernels espectrales.
-- `Phase1_BatchProspector.__init__` (method) `topogpt2_1.py:2074` `def __init__(self, config, logger)`
-- `Phase1_BatchProspector.prospect` (method) `topogpt2_1.py:2078` `def prospect(self, candidates, train_dataset, prospect_steps)` -- Retorna el mejor batch size segun delta y T_eff.
-- `Phase2_SeedMiner.__init__` (method) `topogpt2_1.py:2157` `def __init__(self, config, logger)`
-- `Phase2_SeedMiner.mine` (method) `topogpt2_1.py:2161` `def mine(self, seed_start, n_seeds, train_dataset, prospect_steps)` -- Retorna la semilla con la mejor trayectoria de delta.
-- `Phase4_AnnealingRefiner.__init__` (method) `topogpt2_1.py:2243` `def __init__(self, trainer, t0, cooling_rate, stagnation_patience)`
-- `Phase4_AnnealingRefiner.refine` (method) `topogpt2_1.py:2252` `def refine(self, train_dl, val_dl, refine_epochs)` -- Ejecuta refine_epochs epocas de recocido simulado.
-- `TopoPhasePipeline.__init__` (method) `topogpt2_1.py:2404` `def __init__(self, config, train_dataset, val_dataset, tokenizer, logger)`
-- `TopoPhasePipeline.run` (method) `topogpt2_1.py:2426` `def run(self, run_prospect, refine_epochs, resume, prospect_steps, probe_seeds, seed_start)` -- Ejecuta el pipeline completo.
-- `TopoPhasePipeline.main` (method) `topogpt2_1.py:2506` `def main()`
+
+### setup_logger (method) `def setup_logger(name, level)`
+- Defined: `topogpt2_1.py:155`
+
+### set_seed (method) `def set_seed(seed, device)`
+- Defined: `topogpt2_1.py:165`
+
+### main (method) `def main()`
+- Defined: `topogpt2_1.py:2506`
+
+### __post_init__ (method) `def __post_init__(self)`
+- Defined: `topogpt2_1.py:124`
+
+### hamilton_product (method) `def hamilton_product(q1, q2)`
+- Defined: `topogpt2_1.py:185`
+- Doc: Producto de Hamilton q1 ⊗ q2. Ambos [..., 4].
+
+### normalize (method) `def normalize(q, eps)`
+- Defined: `topogpt2_1.py:197`
+
+### conjugate (method) `def conjugate(q)`
+- Defined: `topogpt2_1.py:201`
+
+### rotate_vector (method) `def rotate_vector(v, q)`
+- Defined: `topogpt2_1.py:206`
+- Doc: Rota vector 3D v por cuaternión unitario q. v:[...,3] q:[...,4]
+
+### __init__ (method) `def __init__(self, in_features, out_features, bias)`
+- Defined: `topogpt2_1.py:228`
+
+### forward (method) `def forward(self, x)`
+- Defined: `topogpt2_1.py:244`
+- Doc: x: [..., in_features] → [..., out_features]
+
+### __init__ (method) `def __init__(self, in_q, out_q, grid_h, grid_w, init_scale)`
+- Defined: `topogpt2_1.py:281`
+
+### _kernel (method) `def _kernel(self, c)`
+- Defined: `topogpt2_1.py:300`
+
+### _contract (method) `def _contract(self, W, X)`
+- Defined: `topogpt2_1.py:303`
+- Doc: Suma sobre canales in_q: Y[b,o,h,w] = Σ_i W[i,o,h,w]·X[b,i,h,w]
+
+### forward (method) `def forward(self, x)`
+- Defined: `topogpt2_1.py:307`
+- Doc: x: [B, 4*in_q, H, W]  (4 canales cuaterniones sobre grid espacial)
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `topogpt2_1.py:361`
+
+### _filter1d (method) `def _filter1d(self, x, kr, ki)`
+- Defined: `topogpt2_1.py:393`
+- Doc: Filtro espectral 1D: x[..., D] → filtrado[..., D]
+
+### encode (method) `def encode(self, x)`
+- Defined: `topogpt2_1.py:399`
+- Doc: x: [..., D_MODEL] → latent: [..., D_LAT]
+
+### decode (method) `def decode(self, z)`
+- Defined: `topogpt2_1.py:404`
+- Doc: z: [..., D_LAT] → recon: [..., D_MODEL]
+
+### forward (method) `def forward(self, x)`
+- Defined: `topogpt2_1.py:409`
+- Doc: Devuelve (latent, recon_loss)
+
+### process_torus_grid (method) `def process_torus_grid(self, grid)`
+- Defined: `topogpt2_1.py:416`
+- Doc: Procesa el grid del toro con QuaternionSpectralLayer.
+
+### __init__ (method) `def __init__(self, d_model, config)`
+- Defined: `topogpt2_1.py:449`
+
+### _build_torus_graph (method) `def _build_torus_graph(self)`
+- Defined: `topogpt2_1.py:489`
+- Doc: Construye las aristas del grafo toro 2×4.
+
+### _torus_soft_assign (method) `def _torus_soft_assign(self, phi1, phi2)`
+- Defined: `topogpt2_1.py:523`
+- Doc: Asignación blanda de tokens a los 8 nodos del toro via distancia circular.
+
+### _message_passing (method) `def _message_passing(self, node_feat)`
+- Defined: `topogpt2_1.py:550`
+- Doc: Message-passing VECTORIZADO con rotaciones cuaterniones.
+
+### forward (method) `def forward(self, x)`
+- Defined: `topogpt2_1.py:587`
+- Doc: x: [B, S, D_MODEL]
+
+### __init__ (method) `def __init__(self, d_head, max_seq_len, base)`
+- Defined: `topogpt2_1.py:655`
+
+### _build_cache (method) `def _build_cache(self, seq_len)`
+- Defined: `topogpt2_1.py:661`
+
+### _rotate_half (method) `def _rotate_half(self, x)`
+- Defined: `topogpt2_1.py:668`
+
+### forward (method) `def forward(self, q, k, seq_len, offset)`
+- Defined: `topogpt2_1.py:672`
+- Doc: q, k: [B, n_heads, S_q/S_k, d_head]
+
+### __init__ (method) `def __init__(self, d_model, eps)`
+- Defined: `topogpt2_1.py:699`
+
+### forward (method) `def forward(self, x)`
+- Defined: `topogpt2_1.py:704`
+
+### __init__ (method) `def __init__(self, d_model, expansion, dropout)`
+- Defined: `topogpt2_1.py:720`
+
+### forward (method) `def forward(self, x)`
+- Defined: `topogpt2_1.py:734`
+
+### __init__ (method) `def __init__(self, d_model, config)`
+- Defined: `topogpt2_1.py:757`
+
+### _route (method) `def _route(self, x)`
+- Defined: `topogpt2_1.py:778`
+- Doc: x: [N, D] donde N = B*S (tokens aplanados)
+
+### forward (method) `def forward(self, x)`
+- Defined: `topogpt2_1.py:820`
+- Doc: x: [B, S, D]
+
+### __init__ (method) `def __init__(self, d_model, n_heads, config)`
+- Defined: `topogpt2_1.py:857`
+
+### forward (method) `def forward(self, x, is_causal, past_kv)`
+- Defined: `topogpt2_1.py:875`
+- Doc: Args:
+
+### __init__ (method) `def __init__(self, d_model, n_heads, config)`
+- Defined: `topogpt2_1.py:938`
+
+### _forward_impl (method) `def _forward_impl(self, x, past_kv)`
+- Defined: `topogpt2_1.py:947`
+
+### forward (method) `def forward(self, x, past_kv)`
+- Defined: `topogpt2_1.py:956`
+- Doc: Retorna (x_out, aux_loss, kv_cache).
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `topogpt2_1.py:987`
+
+### _init_weights (method) `def _init_weights(self)`
+- Defined: `topogpt2_1.py:1006`
+
+### forward (method) `def forward(self, token_ids, past_kvs)`
+- Defined: `topogpt2_1.py:1013`
+- Doc: token_ids: [B, S]  (enteros)
+
+### count_params (method) `def count_params(self)`
+- Defined: `topogpt2_1.py:1036`
+
+### generate (method) `def generate(self, token_ids, max_new_tokens, temperature, top_k)`
+- Defined: `topogpt2_1.py:1042`
+- Doc: Generacion autoregresiva con KV cache y muestreo top-k.
+
+### __init__ (method) `def __init__(self, encoding)`
+- Defined: `topogpt2_1.py:1085`
+
+### encode (method) `def encode(self, text)`
+- Defined: `topogpt2_1.py:1093`
+
+### decode (method) `def decode(self, tokens)`
+- Defined: `topogpt2_1.py:1096`
+
+### eot_token (method) `def eot_token(self)`
+- Defined: `topogpt2_1.py:1099`
+
+### __init__ (method) `def __init__(self, corpus, data_dir, logger)`
+- Defined: `topogpt2_1.py:1119`
+
+### get_text (method) `def get_text(self, split)`
+- Defined: `topogpt2_1.py:1125`
+- Doc: Devuelve el texto del corpus. Descarga si es necesario.
+
+### _download_hf (method) `def _download_hf(self, dataset_name, split, text_column, name)`
+- Defined: `topogpt2_1.py:1150`
+
+### __init__ (method) `def __init__(self, text, tokenizer, seq_len, max_tokens, cache_dir, split_tag)`
+- Defined: `topogpt2_1.py:1179`
+
+### __len__ (method) `def __len__(self)`
+- Defined: `topogpt2_1.py:1206`
+
+### __getitem__ (method) `def __getitem__(self, idx)`
+- Defined: `topogpt2_1.py:1209`
+
+### __init__ (method) `def __init__(self, config, logger)`
+- Defined: `topogpt2_1.py:1245`
+
+### patch_config_for_resume (method) `def patch_config_for_resume(self, cfg)`
+- Defined: `topogpt2_1.py:1255`
+- Doc: Lee el checkpoint 'latest' y ajusta cfg.N_KV_HEADS / cfg.GQA_GROUPS
+
+### _save_model (method) `def _save_model(self, model, directory)`
+- Defined: `topogpt2_1.py:1284`
+
+### _load_model (method) `def _load_model(self, model, directory)`
+- Defined: `topogpt2_1.py:1297`
+
+### _save_optimizer (method) `def _save_optimizer(self, optimizer, directory)`
+- Defined: `topogpt2_1.py:1328`
+
+### _load_optimizer (method) `def _load_optimizer(self, optimizer, directory, device)`
+- Defined: `topogpt2_1.py:1331`
+
+### _save_state (method) `def _save_state(self, state, directory)`
+- Defined: `topogpt2_1.py:1340`
+
+### _load_state (method) `def _load_state(self, directory)`
+- Defined: `topogpt2_1.py:1345`
+
+### should_save (method) `def should_save(self)`
+- Defined: `topogpt2_1.py:1356`
+
+### save (method) `def save(self, model, optimizer, state, is_best)`
+- Defined: `topogpt2_1.py:1359`
+- Doc: Guarda checkpoint completo.
+
+### load_latest (method) `def load_latest(self, model, optimizer)`
+- Defined: `topogpt2_1.py:1404`
+- Doc: Carga el ultimo checkpoint guardado.
+
+### load_best (method) `def load_best(self, model)`
+- Defined: `topogpt2_1.py:1431`
+- Doc: Carga el mejor modelo guardado (solo pesos, sin optimizador).
+
+### has_checkpoint (method) `def has_checkpoint(self)`
+- Defined: `topogpt2_1.py:1443`
+
+### __init__ (method) `def __init__(self, model, config, tokenizer)`
+- Defined: `topogpt2_1.py:1465`
+
+### resume (method) `def resume(self)`
+- Defined: `topogpt2_1.py:1500`
+- Doc: Carga el ultimo checkpoint disponible.
+
+### _current_state (method) `def _current_state(self)`
+- Defined: `topogpt2_1.py:1525`
+- Doc: Construye el dict de estado para persistir en state.json.
+
+### _cosine_lr (method) `def _cosine_lr(self, step_in_session, total_steps_session)`
+- Defined: `topogpt2_1.py:1536`
+- Doc: Cosine decay con warmup. El schedule es relativo a la sesion actual.
+
+### _set_lr (method) `def _set_lr(self, lr)`
+- Defined: `topogpt2_1.py:1544`
+
+### train (method) `def train(self, train_dl, val_dl)`
+- Defined: `topogpt2_1.py:1548`
+- Doc: Entrena cfg.EPOCHS epocas adicionales a partir de completed_epochs.
+
+### _sample_text (method) `def _sample_text(self, tokenizer, prompts, max_new, temperature, top_k)`
+- Defined: `topogpt2_1.py:1684`
+- Doc: Genera una muestra de texto al final de cada epoch para monitorear
+
+### evaluate (method) `def evaluate(self, dataloader)`
+- Defined: `topogpt2_1.py:1716`
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `topogpt2_1.py:1766`
+
+### compute_delta (method) `def compute_delta(self, model)`
+- Defined: `topogpt2_1.py:1774`
+
+### compute_alpha (method) `def compute_alpha(self, delta)`
+- Defined: `topogpt2_1.py:1781`
+
+### update_grad_buffer (method) `def update_grad_buffer(self, model)`
+- Defined: `topogpt2_1.py:1786`
+- Doc: Captura gradientes de forma segura, ignorando tensores corruptos.
+
+### compute_t_eff (method) `def compute_t_eff(self, lr)`
+- Defined: `topogpt2_1.py:1812`
+- Doc: T_eff = lr/2 * Var(gradiente). Temperatura termodinamica efectiva.
+
+### compute_kappa (method) `def compute_kappa(self, model, dataloader, n_batches)`
+- Defined: `topogpt2_1.py:1820`
+- Doc: κ = λ_max / λ_min de la covarianza del gradiente.
+
+### compute_berry_phase (method) `def compute_berry_phase(self, model)`
+- Defined: `topogpt2_1.py:1878`
+- Doc: Fase de Berry de los kernels espectrales imaginarios.
+
+### compute_lc (method) `def compute_lc(self, model)`
+- Defined: `topogpt2_1.py:1891`
+- Doc: Complejidad local: 1 - similitud coseno promedio entre filas de pesos.
+
+### compute_sp (method) `def compute_sp(self, model)`
+- Defined: `topogpt2_1.py:1905`
+- Doc: Superposicion: correlacion inter-fila promedio (entrelazamiento de features).
+
+### classify_phase (method) `def classify_phase(self, delta, kappa, berry)`
+- Defined: `topogpt2_1.py:1921`
+- Doc: Clasificacion de fase segun Book.md:
+
+### compute_all (method) `def compute_all(self, model, lr, dataloader, compute_kappa)`
+- Defined: `topogpt2_1.py:1940`
+- Doc: Calcula todas las metricas.
+
+### format_log (method) `def format_log(self, m)`
+- Defined: `topogpt2_1.py:1965`
+
+### __init__ (method) `def __init__(self, config, logger)`
+- Defined: `topogpt2_1.py:2001`
+
+### _measure_ratio (method) `def _measure_ratio(self, ratio, sample_batch)`
+- Defined: `topogpt2_1.py:2005`
+- Doc: Mide la coherencia espectral para un ratio dado.
+
+### optimize (method) `def optimize(self, dataloader)`
+- Defined: `topogpt2_1.py:2034`
+- Doc: Retorna el mejor ratio de inicializacion de kernels espectrales.
+
+### __init__ (method) `def __init__(self, config, logger)`
+- Defined: `topogpt2_1.py:2074`
+
+### prospect (method) `def prospect(self, candidates, train_dataset, prospect_steps)`
+- Defined: `topogpt2_1.py:2078`
+- Doc: Retorna el mejor batch size segun delta y T_eff.
+
+### __init__ (method) `def __init__(self, config, logger)`
+- Defined: `topogpt2_1.py:2157`
+
+### mine (method) `def mine(self, seed_start, n_seeds, train_dataset, prospect_steps)`
+- Defined: `topogpt2_1.py:2161`
+- Doc: Retorna la semilla con la mejor trayectoria de delta.
+
+### __init__ (method) `def __init__(self, trainer, t0, cooling_rate, stagnation_patience)`
+- Defined: `topogpt2_1.py:2243`
+
+### refine (method) `def refine(self, train_dl, val_dl, refine_epochs)`
+- Defined: `topogpt2_1.py:2252`
+- Doc: Ejecuta refine_epochs epocas de recocido simulado.
+
+### __init__ (method) `def __init__(self, config, train_dataset, val_dataset, tokenizer, logger)`
+- Defined: `topogpt2_1.py:2404`
+
+### _make_dataloaders (method) `def _make_dataloaders(self, batch_size)`
+- Defined: `topogpt2_1.py:2414`
+
+### run (method) `def run(self, run_prospect, refine_epochs, resume, prospect_steps, probe_seeds, seed_start)`
+- Defined: `topogpt2_1.py:2426`
+- Doc: Ejecuta el pipeline completo.
+
+### ckpt_fn (method) `def ckpt_fn(x_in)`
+- Defined: `topogpt2_1.py:964`
 
 ## topogpt2_embeddings_navigator.py
-- `StyleInjector.__init__` (method) `topogpt2_embeddings_navigator.py:192` `def __init__(self, theme)`
-- `StyleInjector.inject` (method) `topogpt2_embeddings_navigator.py:195` `def inject(self)` -- Render the CSS block in the current Streamlit page.
-- `CheckpointBundle.__init__` (method) `topogpt2_embeddings_navigator.py:266` `def __init__(self, model, config, tokenizer, source_name)`
-- `CheckpointBundle.model` (method) `topogpt2_embeddings_navigator.py:279` `def model(self)` -- Return the underlying nn.Module in eval mode.
-- `CheckpointBundle.config` (method) `topogpt2_embeddings_navigator.py:284` `def config(self)` -- Return the model config object.
-- `CheckpointBundle.tokenizer` (method) `topogpt2_embeddings_navigator.py:289` `def tokenizer(self)` -- Return the BPE tokenizer.
-- `CheckpointBundle.source_name` (method) `topogpt2_embeddings_navigator.py:294` `def source_name(self)` -- Return the original file name of the checkpoint.
-- `CheckpointBundle.device` (method) `topogpt2_embeddings_navigator.py:299` `def device(self)` -- Return the device the model is currently placed on.
-- `CheckpointBundle.num_layers` (method) `topogpt2_embeddings_navigator.py:303` `def num_layers(self)` -- Return the number of transformer layers in the model.
-- `CheckpointBundle.embedding_dim` (method) `topogpt2_embeddings_navigator.py:307` `def embedding_dim(self)` -- Return the model hidden size.
-- `ModelLoader.__init__` (method) `topogpt2_embeddings_navigator.py:315` `def __init__(self, config)`
-- `ModelLoader.load` (method) `topogpt2_embeddings_navigator.py:318` `def load(self, source, topogpt2_module)` -- Load a checkpoint and instantiate the corresponding model.
-- `ActivationCapture.__init__` (method) `topogpt2_embeddings_navigator.py:525` `def __init__(self, config)`
-- `ActivationCapture.run` (method) `topogpt2_embeddings_navigator.py:528` `def run(self, bundle, text)` -- Run a single forward pass and return activations and tokens.
-- `ActivationCapture.hook` (method) `topogpt2_embeddings_navigator.py:561` `def hook(_module, _inputs, output)`
-- `MetricSuite.__init__` (method) `topogpt2_embeddings_navigator.py:603` `def __init__(self, config)`
-- `MetricSuite.compute` (method) `topogpt2_embeddings_navigator.py:606` `def compute(self, points, knn)` -- Compute every metric on a point cloud ``[N, D]``.
-- `MetricSuite.find` (method) `topogpt2_embeddings_navigator.py:818` `def find(x)`
-- `MetricSuite.union` (method) `topogpt2_embeddings_navigator.py:824` `def union(x, y)`
-- `MetricSuite.find` (method) `topogpt2_embeddings_navigator.py:864` `def find(x)`
-- `MetricSuite.union` (method) `topogpt2_embeddings_navigator.py:870` `def union(x, y)`
-- `Projector.__init__` (method) `topogpt2_embeddings_navigator.py:1071` `def __init__(self, config)`
-- `Projector.project` (method) `topogpt2_embeddings_navigator.py:1074` `def project(self, points, method, n_components)` -- Project ``[N, D]`` points to ``n_components`` dims.
-- `FigureStyler.__init__` (method) `topogpt2_embeddings_navigator.py:1198` `def __init__(self, config)`
-- `FigureStyler.style_3d` (method) `topogpt2_embeddings_navigator.py:1201` `def style_3d(self, fig, title, height)` -- Apply 3D styling.
-- `FigureStyler.style_2d` (method) `topogpt2_embeddings_navigator.py:1223` `def style_2d(self, fig, title, height)` -- Apply 2D styling.
-- `BaseEmbeddingView.__init__` (method) `topogpt2_embeddings_navigator.py:1261` `def __init__(self, ctx)`
-- `BaseEmbeddingView.ctx` (method) `topogpt2_embeddings_navigator.py:1265` `def ctx(self)` -- Return the shared render context.
-- `BaseEmbeddingView.render` (method) `topogpt2_embeddings_navigator.py:1270` `def render(self)` -- Render the view into the current Streamlit container.
-- `OverviewView.render` (method) `topogpt2_embeddings_navigator.py:1280` `def render(self)`
-- `CloudView.render` (method) `topogpt2_embeddings_navigator.py:1358` `def render(self)`
-- `MetricsView.render` (method) `topogpt2_embeddings_navigator.py:1481` `def render(self)`
-- `PersistenceView.render` (method) `topogpt2_embeddings_navigator.py:1575` `def render(self)`
-- `BerryPhaseView.render` (method) `topogpt2_embeddings_navigator.py:1672` `def render(self)`
-- `LipschitzView.render` (method) `topogpt2_embeddings_navigator.py:1764` `def render(self)`
-- `NeighborhoodView.render` (method) `topogpt2_embeddings_navigator.py:1840` `def render(self)`
-- `CrossLayerView.render` (method) `topogpt2_embeddings_navigator.py:1939` `def render(self)`
-- `QuaternionView.render` (method) `topogpt2_embeddings_navigator.py:2000` `def render(self)`
-- `RawView.render` (method) `topogpt2_embeddings_navigator.py:2114` `def render(self)`
-- `ViewRegistry.__init__` (method) `topogpt2_embeddings_navigator.py:2148` `def __init__(self, context)`
-- `ViewRegistry.register` (method) `topogpt2_embeddings_navigator.py:2152` `def register(self, factory)` -- Register a view factory.
-- `ViewRegistry.build` (method) `topogpt2_embeddings_navigator.py:2156` `def build(self)` -- Instantiate every registered view.
-- `SidebarController.__init__` (method) `topogpt2_embeddings_navigator.py:2164` `def __init__(self, config)`
-- `SidebarController.render` (method) `topogpt2_embeddings_navigator.py:2167` `def render(self)` -- Render the sidebar and return user selections.
-- `ModuleImporter.load` (method) `topogpt2_embeddings_navigator.py:2220` `def load(self, path)` -- Dynamically import the TopoGPT2 module.
-- `NavigatorApp.__init__` (method) `topogpt2_embeddings_navigator.py:2258` `def __init__(self, config)`
-- `NavigatorApp.run` (method) `topogpt2_embeddings_navigator.py:2269` `def run(self)` -- Entry point for ``streamlit run``.
-- `NavigatorApp.main` (method) `topogpt2_embeddings_navigator.py:2418` `def main()` -- Streamlit script entry point.
+
+### main (method) `def main()`
+- Defined: `topogpt2_embeddings_navigator.py:2418`
+- Doc: Streamlit script entry point.
+
+### __init__ (method) `def __init__(self, theme)`
+- Defined: `topogpt2_embeddings_navigator.py:192`
+
+### inject (method) `def inject(self)`
+- Defined: `topogpt2_embeddings_navigator.py:195`
+- Doc: Render the CSS block in the current Streamlit page.
+
+### __init__ (method) `def __init__(self, model, config, tokenizer, source_name)`
+- Defined: `topogpt2_embeddings_navigator.py:266`
+
+### model (method) `def model(self)`
+- Defined: `topogpt2_embeddings_navigator.py:279`
+- Doc: Return the underlying nn.Module in eval mode.
+
+### config (method) `def config(self)`
+- Defined: `topogpt2_embeddings_navigator.py:284`
+- Doc: Return the model config object.
+
+### tokenizer (method) `def tokenizer(self)`
+- Defined: `topogpt2_embeddings_navigator.py:289`
+- Doc: Return the BPE tokenizer.
+
+### source_name (method) `def source_name(self)`
+- Defined: `topogpt2_embeddings_navigator.py:294`
+- Doc: Return the original file name of the checkpoint.
+
+### device (method) `def device(self)`
+- Defined: `topogpt2_embeddings_navigator.py:299`
+- Doc: Return the device the model is currently placed on.
+
+### num_layers (method) `def num_layers(self)`
+- Defined: `topogpt2_embeddings_navigator.py:303`
+- Doc: Return the number of transformer layers in the model.
+
+### embedding_dim (method) `def embedding_dim(self)`
+- Defined: `topogpt2_embeddings_navigator.py:307`
+- Doc: Return the model hidden size.
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `topogpt2_embeddings_navigator.py:315`
+
+### load (method) `def load(self, source, topogpt2_module)`
+- Defined: `topogpt2_embeddings_navigator.py:318`
+- Doc: Load a checkpoint and instantiate the corresponding model.
+
+### _read_state_dict (method) `def _read_state_dict(self, source)`
+- Defined: `topogpt2_embeddings_navigator.py:344`
+
+### _materialize (method) `def _materialize(self, source)`
+- Defined: `topogpt2_embeddings_navigator.py:366`
+
+### _extract_payload (method) `def _extract_payload(self, obj)`
+- Defined: `topogpt2_embeddings_navigator.py:374`
+
+### _build_config (method) `def _build_config(self, topogpt2_module, embedded_cfg, state_dict)`
+- Defined: `topogpt2_embeddings_navigator.py:391`
+
+### _infer_config (method) `def _infer_config(self, topogpt2_module, state_dict)`
+- Defined: `topogpt2_embeddings_navigator.py:405`
+
+### _infer_d_model (method) `def _infer_d_model(state_dict)`
+- Defined: `topogpt2_embeddings_navigator.py:433`
+
+### _infer_num_layers (method) `def _infer_num_layers(state_dict)`
+- Defined: `topogpt2_embeddings_navigator.py:439`
+
+### _infer_n_heads (method) `def _infer_n_heads(state_dict, d_model)`
+- Defined: `topogpt2_embeddings_navigator.py:450`
+
+### _infer_max_seq_len (method) `def _infer_max_seq_len(state_dict)`
+- Defined: `topogpt2_embeddings_navigator.py:467`
+
+### _infer_n_kv_heads (method) `def _infer_n_kv_heads(state_dict, d_head, n_heads)`
+- Defined: `topogpt2_embeddings_navigator.py:475`
+- Doc: Infer the number of key/value heads for GQA.
+
+### _infer_torus_grid (method) `def _infer_torus_grid(state_dict)`
+- Defined: `topogpt2_embeddings_navigator.py:505`
+
+### _validate_load (method) `def _validate_load(missing, unexpected)`
+- Defined: `topogpt2_embeddings_navigator.py:514`
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `topogpt2_embeddings_navigator.py:525`
+
+### run (method) `def run(self, bundle, text)`
+- Defined: `topogpt2_embeddings_navigator.py:528`
+- Doc: Run a single forward pass and return activations and tokens.
+
+### _decode_pieces (method) `def _decode_pieces(tokenizer, ids)`
+- Defined: `topogpt2_embeddings_navigator.py:589`
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `topogpt2_embeddings_navigator.py:603`
+
+### compute (method) `def compute(self, points, knn)`
+- Defined: `topogpt2_embeddings_navigator.py:606`
+- Doc: Compute every metric on a point cloud ``[N, D]``.
+
+### _sanitize (method) `def _sanitize(self, points)`
+- Defined: `topogpt2_embeddings_navigator.py:642`
+
+### _trivial (method) `def _trivial(self, base)`
+- Defined: `topogpt2_embeddings_navigator.py:645`
+
+### _pairwise (method) `def _pairwise(self, points)`
+- Defined: `topogpt2_embeddings_navigator.py:675`
+
+### _shortest_paths (method) `def _shortest_paths(self, points, knn)`
+- Defined: `topogpt2_embeddings_navigator.py:678`
+
+### _sp_metrics (method) `def _sp_metrics(self, dist_eucl, dist_geo)`
+- Defined: `topogpt2_embeddings_navigator.py:698`
+
+### _kappa (method) `def _kappa(self, dist_eucl, dist_geo)`
+- Defined: `topogpt2_embeddings_navigator.py:718`
+- Doc: Local curvature proxy from the chord-vs-arc ratio.
+
+### _gromov_delta (method) `def _gromov_delta(self, dist_geo)`
+- Defined: `topogpt2_embeddings_navigator.py:759`
+
+### _persistence (method) `def _persistence(self, points, dist_eucl)`
+- Defined: `topogpt2_embeddings_navigator.py:783`
+
+### _h0_from_mst (method) `def _h0_from_mst(self, edges, n)`
+- Defined: `topogpt2_embeddings_navigator.py:810`
+
+### _h1_from_edges (method) `def _h1_from_edges(self, edges, n)`
+- Defined: `topogpt2_embeddings_navigator.py:845`
+- Doc: Estimate H1 persistence bars from a distance-sorted edge list.
+
+### _berry_phases (method) `def _berry_phases(self, points)`
+- Defined: `topogpt2_embeddings_navigator.py:905`
+
+### _winding_numbers (method) `def _winding_numbers(self, points)`
+- Defined: `topogpt2_embeddings_navigator.py:920`
+
+### _planar_winding (method) `def _planar_winding(self, xs, ys)`
+- Defined: `topogpt2_embeddings_navigator.py:936`
+
+### _lipschitz (method) `def _lipschitz(self, points)`
+- Defined: `topogpt2_embeddings_navigator.py:947`
+
+### _trajectory_geometry (method) `def _trajectory_geometry(self, points)`
+- Defined: `topogpt2_embeddings_navigator.py:954`
+- Doc: Frenet-Serret differential geometry of the token trajectory.
+
+### _safe_pca3 (method) `def _safe_pca3(self, points)`
+- Defined: `topogpt2_embeddings_navigator.py:1017`
+
+### _spectral_properties (method) `def _spectral_properties(self, points)`
+- Defined: `topogpt2_embeddings_navigator.py:1030`
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `topogpt2_embeddings_navigator.py:1071`
+
+### project (method) `def project(self, points, method, n_components)`
+- Defined: `topogpt2_embeddings_navigator.py:1074`
+- Doc: Project ``[N, D]`` points to ``n_components`` dims.
+
+### _pca (method) `def _pca(self, points, n_components)`
+- Defined: `topogpt2_embeddings_navigator.py:1105`
+
+### _isomap (method) `def _isomap(self, points, n_components)`
+- Defined: `topogpt2_embeddings_navigator.py:1123`
+
+### _umap (method) `def _umap(self, points, n_components)`
+- Defined: `topogpt2_embeddings_navigator.py:1144`
+
+### _random (method) `def _random(self, points, n_components)`
+- Defined: `topogpt2_embeddings_navigator.py:1171`
+
+### _sphere (method) `def _sphere(self, points, n_components)`
+- Defined: `topogpt2_embeddings_navigator.py:1181`
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `topogpt2_embeddings_navigator.py:1198`
+
+### style_3d (method) `def style_3d(self, fig, title, height)`
+- Defined: `topogpt2_embeddings_navigator.py:1201`
+- Doc: Apply 3D styling.
+
+### style_2d (method) `def style_2d(self, fig, title, height)`
+- Defined: `topogpt2_embeddings_navigator.py:1223`
+- Doc: Apply 2D styling.
+
+### __init__ (method) `def __init__(self, ctx)`
+- Defined: `topogpt2_embeddings_navigator.py:1261`
+
+### ctx (method) `def ctx(self)`
+- Defined: `topogpt2_embeddings_navigator.py:1265`
+- Doc: Return the shared render context.
+
+### render (method) `def render(self)`
+- Defined: `topogpt2_embeddings_navigator.py:1270`
+- Doc: Render the view into the current Streamlit container.
+
+### render (method) `def render(self)`
+- Defined: `topogpt2_embeddings_navigator.py:1280`
+
+### _render_tokens (method) `def _render_tokens(self)`
+- Defined: `topogpt2_embeddings_navigator.py:1284`
+
+### _render_layer_evolution (method) `def _render_layer_evolution(self)`
+- Defined: `topogpt2_embeddings_navigator.py:1310`
+
+### render (method) `def render(self)`
+- Defined: `topogpt2_embeddings_navigator.py:1358`
+
+### _choose (method) `def _choose(self, acts, selection)`
+- Defined: `topogpt2_embeddings_navigator.py:1378`
+
+### _render_trajectory (method) `def _render_trajectory(self, emb, tokens, ids, norms, stage, method, info)`
+- Defined: `topogpt2_embeddings_navigator.py:1386`
+
+### _render_residual_streams (method) `def _render_residual_streams(self, acts, method)`
+- Defined: `topogpt2_embeddings_navigator.py:1442`
+
+### render (method) `def render(self)`
+- Defined: `topogpt2_embeddings_navigator.py:1481`
+
+### _get_metrics (method) `def _get_metrics(self, stage)`
+- Defined: `topogpt2_embeddings_navigator.py:1490`
+
+### _render_card (method) `def _render_card(self, m)`
+- Defined: `topogpt2_embeddings_navigator.py:1496`
+
+### _render_kappa (method) `def _render_kappa(self, m)`
+- Defined: `topogpt2_embeddings_navigator.py:1521`
+
+### _render_path_metrics (method) `def _render_path_metrics(self, m)`
+- Defined: `topogpt2_embeddings_navigator.py:1544`
+
+### render (method) `def render(self)`
+- Defined: `topogpt2_embeddings_navigator.py:1575`
+
+### _stage_metrics (method) `def _stage_metrics(self, stage)`
+- Defined: `topogpt2_embeddings_navigator.py:1583`
+
+### _render_diagram (method) `def _render_diagram(self, m)`
+- Defined: `topogpt2_embeddings_navigator.py:1591`
+
+### _render_barcode (method) `def _render_barcode(self, m)`
+- Defined: `topogpt2_embeddings_navigator.py:1633`
+
+### render (method) `def render(self)`
+- Defined: `topogpt2_embeddings_navigator.py:1672`
+
+### _stage_metrics (method) `def _stage_metrics(self, stage)`
+- Defined: `topogpt2_embeddings_navigator.py:1680`
+
+### _render_berry (method) `def _render_berry(self, m, stage)`
+- Defined: `topogpt2_embeddings_navigator.py:1688`
+
+### _render_winding (method) `def _render_winding(self, m, stage)`
+- Defined: `topogpt2_embeddings_navigator.py:1720`
+
+### render (method) `def render(self)`
+- Defined: `topogpt2_embeddings_navigator.py:1764`
+
+### _stage_metrics (method) `def _stage_metrics(self, stage)`
+- Defined: `topogpt2_embeddings_navigator.py:1772`
+
+### _render_lc (method) `def _render_lc(self, m)`
+- Defined: `topogpt2_embeddings_navigator.py:1780`
+
+### _render_dynamics (method) `def _render_dynamics(self, m)`
+- Defined: `topogpt2_embeddings_navigator.py:1807`
+
+### render (method) `def render(self)`
+- Defined: `topogpt2_embeddings_navigator.py:1840`
+
+### _stage_metrics (method) `def _stage_metrics(self, stage)`
+- Defined: `topogpt2_embeddings_navigator.py:1849`
+
+### _stage_points (method) `def _stage_points(self, stage)`
+- Defined: `topogpt2_embeddings_navigator.py:1857`
+
+### _render_graph (method) `def _render_graph(self, points, m)`
+- Defined: `topogpt2_embeddings_navigator.py:1864`
+
+### _render_coherence (method) `def _render_coherence(self, points)`
+- Defined: `topogpt2_embeddings_navigator.py:1911`
+
+### render (method) `def render(self)`
+- Defined: `topogpt2_embeddings_navigator.py:1939`
+
+### _cosine_diag (method) `def _cosine_diag(self, A, B)`
+- Defined: `topogpt2_embeddings_navigator.py:1962`
+
+### _render_heatmap (method) `def _render_heatmap(self, title, z, xlabels, tokens, diverging)`
+- Defined: `topogpt2_embeddings_navigator.py:1968`
+
+### render (method) `def render(self)`
+- Defined: `topogpt2_embeddings_navigator.py:2000`
+
+### _points (method) `def _points(self, stage)`
+- Defined: `topogpt2_embeddings_navigator.py:2021`
+
+### _render_component_norms (method) `def _render_component_norms(self, comps)`
+- Defined: `topogpt2_embeddings_navigator.py:2029`
+
+### _render_quaternion_norms (method) `def _render_quaternion_norms(self, comps)`
+- Defined: `topogpt2_embeddings_navigator.py:2054`
+
+### _render_sphere (method) `def _render_sphere(self, comps)`
+- Defined: `topogpt2_embeddings_navigator.py:2070`
+
+### render (method) `def render(self)`
+- Defined: `topogpt2_embeddings_navigator.py:2114`
+
+### _points (method) `def _points(self, stage)`
+- Defined: `topogpt2_embeddings_navigator.py:2136`
+
+### __init__ (method) `def __init__(self, context)`
+- Defined: `topogpt2_embeddings_navigator.py:2148`
+
+### register (method) `def register(self, factory)`
+- Defined: `topogpt2_embeddings_navigator.py:2152`
+- Doc: Register a view factory.
+
+### build (method) `def build(self)`
+- Defined: `topogpt2_embeddings_navigator.py:2156`
+- Doc: Instantiate every registered view.
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `topogpt2_embeddings_navigator.py:2164`
+
+### render (method) `def render(self)`
+- Defined: `topogpt2_embeddings_navigator.py:2167`
+- Doc: Render the sidebar and return user selections.
+
+### load (method) `def load(self, path)`
+- Defined: `topogpt2_embeddings_navigator.py:2220`
+- Doc: Dynamically import the TopoGPT2 module.
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `topogpt2_embeddings_navigator.py:2258`
+
+### run (method) `def run(self)`
+- Defined: `topogpt2_embeddings_navigator.py:2269`
+- Doc: Entry point for ``streamlit run``.
+
+### _render_header (method) `def _render_header(self)`
+- Defined: `topogpt2_embeddings_navigator.py:2307`
+
+### _render_landing (method) `def _render_landing(self)`
+- Defined: `topogpt2_embeddings_navigator.py:2324`
+
+### _try_load_bundle (method) `def _try_load_bundle(self, selections)`
+- Defined: `topogpt2_embeddings_navigator.py:2335`
+
+### _compute_all_metrics (method) `def _compute_all_metrics(self, activations, knn)`
+- Defined: `topogpt2_embeddings_navigator.py:2351`
+
+### _render_meta (method) `def _render_meta(self, bundle, activations, knn)`
+- Defined: `topogpt2_embeddings_navigator.py:2367`
+
+### _build_registry (method) `def _build_registry(self, ctx)`
+- Defined: `topogpt2_embeddings_navigator.py:2380`
+
+### _render_tabs (method) `def _render_tabs(self, registry)`
+- Defined: `topogpt2_embeddings_navigator.py:2394`
+
+### _render_footer (method) `def _render_footer(self)`
+- Defined: `topogpt2_embeddings_navigator.py:2408`
+
+### hook (method) `def hook(_module, _inputs, output)`
+- Defined: `topogpt2_embeddings_navigator.py:561`
+
+### find (method) `def find(x)`
+- Defined: `topogpt2_embeddings_navigator.py:818`
+
+### union (method) `def union(x, y)`
+- Defined: `topogpt2_embeddings_navigator.py:824`
+
+### find (method) `def find(x)`
+- Defined: `topogpt2_embeddings_navigator.py:864`
+
+### union (method) `def union(x, y)`
+- Defined: `topogpt2_embeddings_navigator.py:870`
 
 ## topogpt2_explorer.py
-- `StyleInjector.__init__` (method) `topogpt2_explorer.py:171` `def __init__(self, theme)`
-- `StyleInjector.inject` (method) `topogpt2_explorer.py:239` `def inject(self)` -- Render the CSS block inside the current Streamlit page.
-- `TensorClassifier.classify` (method) `topogpt2_explorer.py:258` `def classify(self, name, shape)` -- Return structured metadata for a checkpoint tensor.
-- `CheckpointLoader.__init__` (method) `topogpt2_explorer.py:345` `def __init__(self, config)`
-- `CheckpointLoader.load` (method) `topogpt2_explorer.py:348` `def load(self, source)` -- Load a checkpoint from a file path or an uploaded file-like.
-- `TensorInventory.__init__` (method) `topogpt2_explorer.py:432` `def __init__(self, tensors, classifier)`
-- `TensorInventory.names` (method) `topogpt2_explorer.py:443` `def names(self)` -- Return all tensor names sorted alphabetically.
-- `TensorInventory.tensor` (method) `topogpt2_explorer.py:447` `def tensor(self, name)` -- Retrieve a tensor by name.
-- `TensorInventory.meta` (method) `topogpt2_explorer.py:451` `def meta(self, name)` -- Retrieve structured metadata for a tensor.
-- `TensorInventory.layers` (method) `topogpt2_explorer.py:455` `def layers(self)` -- Return all unique layer indices present in the checkpoint.
-- `TensorInventory.roles` (method) `topogpt2_explorer.py:460` `def roles(self)` -- Return the distinct roles present in the checkpoint.
-- `TensorInventory.filter` (method) `topogpt2_explorer.py:464` `def filter(self, role, layer, component, spectral_only)` -- Return tensor names matching the supplied filters.
-- `TensorInventory.total_parameters` (method) `topogpt2_explorer.py:485` `def total_parameters(self)` -- Total parameter count across the checkpoint.
-- `TensorInventory.summary_rows` (method) `topogpt2_explorer.py:489` `def summary_rows(self)` -- Return a list of per-tensor rows suitable for a Streamlit table.
-- `TensorProjector.__init__` (method) `topogpt2_explorer.py:526` `def __init__(self, config)`
-- `TensorProjector.to_matrix` (method) `topogpt2_explorer.py:531` `def to_matrix(self, tensor)` -- Convert a tensor to a 2D ``float64`` matrix.
-- `TensorProjector.subsample` (method) `topogpt2_explorer.py:553` `def subsample(self, matrix, max_rows, max_cols, seed)` -- Return a row/column subsample bounded by the configured caps.
-- `TensorProjector.project_3d` (method) `topogpt2_explorer.py:575` `def project_3d(self, matrix, method)` -- Project a matrix to 3D using PCA or Gaussian random projection.
-- `MetricCalculator.__init__` (method) `topogpt2_explorer.py:643` `def __init__(self, config)`
-- `MetricCalculator.compute_all` (method) `topogpt2_explorer.py:649` `def compute_all(self, matrix)` -- Compute the full metrics dictionary in one pass.
-- `MetricCalculator.sparsity` (method) `topogpt2_explorer.py:720` `def sparsity(self, matrix, threshold)` -- Fraction of entries whose absolute value is below ``threshold``.
-- `MetricCalculator.entropy` (method) `topogpt2_explorer.py:727` `def entropy(self, matrix)` -- Shannon entropy (nats) of the discrete value histogram.
-- `MetricCalculator.effective_rank` (method) `topogpt2_explorer.py:748` `def effective_rank(self, matrix)` -- Effective rank via the exponential of the entropy of singular values.
-- `MetricCalculator.participation_ratio` (method) `topogpt2_explorer.py:753` `def participation_ratio(self, matrix)` -- Participation ratio of the singular value spectrum.
-- `MetricCalculator.fractal_dimension` (method) `topogpt2_explorer.py:762` `def fractal_dimension(self, matrix)` -- Approximate the effective embedding dimension via PCA.
-- `MetricCalculator.coherence` (method) `topogpt2_explorer.py:781` `def coherence(self, matrix)` -- Maximum and mean absolute cosine similarity between rows.
-- `MetricCalculator.spectral_flatness` (method) `topogpt2_explorer.py:796` `def spectral_flatness(self, matrix)` -- Spectral flatness (Wiener entropy) in dB averaged over rows.
-- `MetricCalculator.dominant_frequency` (method) `topogpt2_explorer.py:814` `def dominant_frequency(self, matrix)` -- Index of the dominant non-zero frequency bin of row 0.
-- `FigureStyler.__init__` (method) `topogpt2_explorer.py:839` `def __init__(self, config)`
-- `FigureStyler.style_3d` (method) `topogpt2_explorer.py:842` `def style_3d(self, fig, title)` -- Apply the standard 3D scene styling.
-- `FigureStyler.style_2d` (method) `topogpt2_explorer.py:864` `def style_2d(self, fig, title, height)` -- Apply the standard 2D figure styling.
-- `BaseVisualizer.__init__` (method) `topogpt2_explorer.py:914` `def __init__(self, context)`
-- `BaseVisualizer.ctx` (method) `topogpt2_explorer.py:918` `def ctx(self)` -- Return the render context bound to this visualizer.
-- `BaseVisualizer.is_applicable` (method) `topogpt2_explorer.py:922` `def is_applicable(self)` -- Return ``True`` if there is data in the inventory to render.
-- `BaseVisualizer.render` (method) `topogpt2_explorer.py:927` `def render(self)` -- Render the visualizer into the current Streamlit container.
-- `OverviewVisualizer.render` (method) `topogpt2_explorer.py:937` `def render(self)`
-- `TensorExplorerVisualizer.render` (method) `topogpt2_explorer.py:1005` `def render(self)`
-- `QuaternionDecompositionVisualizer.is_applicable` (method) `topogpt2_explorer.py:1233` `def is_applicable(self)`
-- `QuaternionDecompositionVisualizer.render` (method) `topogpt2_explorer.py:1237` `def render(self)`
-- `SpectralKernelVisualizer.is_applicable` (method) `topogpt2_explorer.py:1391` `def is_applicable(self)`
-- `SpectralKernelVisualizer.render` (method) `topogpt2_explorer.py:1397` `def render(self)`
-- `TorusTopologyVisualizer.is_applicable` (method) `topogpt2_explorer.py:1544` `def is_applicable(self)`
-- `TorusTopologyVisualizer.render` (method) `topogpt2_explorer.py:1547` `def render(self)`
-- `AttentionVisualizer.is_applicable` (method) `topogpt2_explorer.py:1779` `def is_applicable(self)`
-- `AttentionVisualizer.render` (method) `topogpt2_explorer.py:1785` `def render(self)`
-- `MoEVisualizer.is_applicable` (method) `topogpt2_explorer.py:1922` `def is_applicable(self)`
-- `MoEVisualizer.render` (method) `topogpt2_explorer.py:1927` `def render(self)`
-- `LayerEvolutionVisualizer.is_applicable` (method) `topogpt2_explorer.py:2067` `def is_applicable(self)`
-- `LayerEvolutionVisualizer.render` (method) `topogpt2_explorer.py:2070` `def render(self)`
-- `GlobalGeometryVisualizer.render` (method) `topogpt2_explorer.py:2157` `def render(self)`
-- `VisualizerRegistry.__init__` (method) `topogpt2_explorer.py:2294` `def __init__(self, context)`
-- `VisualizerRegistry.register` (method) `topogpt2_explorer.py:2298` `def register(self, factory)` -- Register a visualizer factory.
-- `VisualizerRegistry.build` (method) `topogpt2_explorer.py:2307` `def build(self)` -- Instantiate all registered visualizers.
-- `VisualizerRegistry.applicable` (method) `topogpt2_explorer.py:2311` `def applicable(self)` -- Return the subset of visualizers whose data is present.
-- `SidebarController.__init__` (method) `topogpt2_explorer.py:2319` `def __init__(self, config)`
-- `SidebarController.render` (method) `topogpt2_explorer.py:2322` `def render(self)` -- Render the sidebar and return the current selections.
-- `ExplorerApp.__init__` (method) `topogpt2_explorer.py:2362` `def __init__(self, config)`
-- `ExplorerApp.run` (method) `topogpt2_explorer.py:2372` `def run(self)` -- Entry point used by ``streamlit run``.
-- `ExplorerApp.main` (method) `topogpt2_explorer.py:2493` `def main()` -- Streamlit script entry point.
+
+### main (method) `def main()`
+- Defined: `topogpt2_explorer.py:2493`
+- Doc: Streamlit script entry point.
+
+### __init__ (method) `def __init__(self, theme)`
+- Defined: `topogpt2_explorer.py:171`
+
+### _build_css (method) `def _build_css(self)`
+- Defined: `topogpt2_explorer.py:174`
+
+### inject (method) `def inject(self)`
+- Defined: `topogpt2_explorer.py:239`
+- Doc: Render the CSS block inside the current Streamlit page.
+
+### classify (method) `def classify(self, name, shape)`
+- Defined: `topogpt2_explorer.py:258`
+- Doc: Return structured metadata for a checkpoint tensor.
+
+### _classify_role (method) `def _classify_role(self, name)`
+- Defined: `topogpt2_explorer.py:286`
+
+### _extract_layer (method) `def _extract_layer(self, name)`
+- Defined: `topogpt2_explorer.py:328`
+
+### _extract_quaternion_component (method) `def _extract_quaternion_component(self, name)`
+- Defined: `topogpt2_explorer.py:332`
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `topogpt2_explorer.py:345`
+
+### load (method) `def load(self, source)`
+- Defined: `topogpt2_explorer.py:348`
+- Doc: Load a checkpoint from a file path or an uploaded file-like.
+
+### _materialize (method) `def _materialize(self, source)`
+- Defined: `topogpt2_explorer.py:373`
+
+### _load_safetensors (method) `def _load_safetensors(self, buffer)`
+- Defined: `topogpt2_explorer.py:382`
+
+### _load_torch (method) `def _load_torch(self, buffer)`
+- Defined: `topogpt2_explorer.py:389`
+
+### _extract_state_dict (method) `def _extract_state_dict(self, obj)`
+- Defined: `topogpt2_explorer.py:399`
+
+### _looks_like_state_dict (method) `def _looks_like_state_dict(obj)`
+- Defined: `topogpt2_explorer.py:413`
+
+### _to_cpu_float32 (method) `def _to_cpu_float32(tensor)`
+- Defined: `topogpt2_explorer.py:420`
+
+### __init__ (method) `def __init__(self, tensors, classifier)`
+- Defined: `topogpt2_explorer.py:432`
+
+### names (method) `def names(self)`
+- Defined: `topogpt2_explorer.py:443`
+- Doc: Return all tensor names sorted alphabetically.
+
+### tensor (method) `def tensor(self, name)`
+- Defined: `topogpt2_explorer.py:447`
+- Doc: Retrieve a tensor by name.
+
+### meta (method) `def meta(self, name)`
+- Defined: `topogpt2_explorer.py:451`
+- Doc: Retrieve structured metadata for a tensor.
+
+### layers (method) `def layers(self)`
+- Defined: `topogpt2_explorer.py:455`
+- Doc: Return all unique layer indices present in the checkpoint.
+
+### roles (method) `def roles(self)`
+- Defined: `topogpt2_explorer.py:460`
+- Doc: Return the distinct roles present in the checkpoint.
+
+### filter (method) `def filter(self, role, layer, component, spectral_only)`
+- Defined: `topogpt2_explorer.py:464`
+- Doc: Return tensor names matching the supplied filters.
+
+### total_parameters (method) `def total_parameters(self)`
+- Defined: `topogpt2_explorer.py:485`
+- Doc: Total parameter count across the checkpoint.
+
+### summary_rows (method) `def summary_rows(self)`
+- Defined: `topogpt2_explorer.py:489`
+- Doc: Return a list of per-tensor rows suitable for a Streamlit table.
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `topogpt2_explorer.py:526`
+
+### to_matrix (method) `def to_matrix(self, tensor)`
+- Defined: `topogpt2_explorer.py:531`
+- Doc: Convert a tensor to a 2D ``float64`` matrix.
+
+### subsample (method) `def subsample(self, matrix, max_rows, max_cols, seed)`
+- Defined: `topogpt2_explorer.py:553`
+- Doc: Return a row/column subsample bounded by the configured caps.
+
+### project_3d (method) `def project_3d(self, matrix, method)`
+- Defined: `topogpt2_explorer.py:575`
+- Doc: Project a matrix to 3D using PCA or Gaussian random projection.
+
+### _pca_3d (method) `def _pca_3d(self, matrix)`
+- Defined: `topogpt2_explorer.py:606`
+
+### _random_3d (method) `def _random_3d(self, matrix)`
+- Defined: `topogpt2_explorer.py:617`
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `topogpt2_explorer.py:643`
+
+### compute_all (method) `def compute_all(self, matrix)`
+- Defined: `topogpt2_explorer.py:649`
+- Doc: Compute the full metrics dictionary in one pass.
+
+### _svd_safe (method) `def _svd_safe(self, matrix)`
+- Defined: `topogpt2_explorer.py:681`
+- Doc: Compute singular values once, reused by rank and participation ratio.
+
+### _effective_rank_from_svd (method) `def _effective_rank_from_svd(self, svd_values, shape)`
+- Defined: `topogpt2_explorer.py:690`
+
+### _participation_from_svd (method) `def _participation_from_svd(self, svd_values, shape)`
+- Defined: `topogpt2_explorer.py:707`
+
+### sparsity (method) `def sparsity(self, matrix, threshold)`
+- Defined: `topogpt2_explorer.py:720`
+- Doc: Fraction of entries whose absolute value is below ``threshold``.
+
+### entropy (method) `def entropy(self, matrix)`
+- Defined: `topogpt2_explorer.py:727`
+- Doc: Shannon entropy (nats) of the discrete value histogram.
+
+### effective_rank (method) `def effective_rank(self, matrix)`
+- Defined: `topogpt2_explorer.py:748`
+- Doc: Effective rank via the exponential of the entropy of singular values.
+
+### participation_ratio (method) `def participation_ratio(self, matrix)`
+- Defined: `topogpt2_explorer.py:753`
+- Doc: Participation ratio of the singular value spectrum.
+
+### fractal_dimension (method) `def fractal_dimension(self, matrix)`
+- Defined: `topogpt2_explorer.py:762`
+- Doc: Approximate the effective embedding dimension via PCA.
+
+### coherence (method) `def coherence(self, matrix)`
+- Defined: `topogpt2_explorer.py:781`
+- Doc: Maximum and mean absolute cosine similarity between rows.
+
+### spectral_flatness (method) `def spectral_flatness(self, matrix)`
+- Defined: `topogpt2_explorer.py:796`
+- Doc: Spectral flatness (Wiener entropy) in dB averaged over rows.
+
+### dominant_frequency (method) `def dominant_frequency(self, matrix)`
+- Defined: `topogpt2_explorer.py:814`
+- Doc: Index of the dominant non-zero frequency bin of row 0.
+
+### _subsample_for_svd (method) `def _subsample_for_svd(self, matrix)`
+- Defined: `topogpt2_explorer.py:824`
+
+### _subsample_for_pca (method) `def _subsample_for_pca(self, matrix)`
+- Defined: `topogpt2_explorer.py:830`
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `topogpt2_explorer.py:839`
+
+### style_3d (method) `def style_3d(self, fig, title)`
+- Defined: `topogpt2_explorer.py:842`
+- Doc: Apply the standard 3D scene styling.
+
+### style_2d (method) `def style_2d(self, fig, title, height)`
+- Defined: `topogpt2_explorer.py:864`
+- Doc: Apply the standard 2D figure styling.
+
+### __init__ (method) `def __init__(self, context)`
+- Defined: `topogpt2_explorer.py:914`
+
+### ctx (method) `def ctx(self)`
+- Defined: `topogpt2_explorer.py:918`
+- Doc: Return the render context bound to this visualizer.
+
+### is_applicable (method) `def is_applicable(self)`
+- Defined: `topogpt2_explorer.py:922`
+- Doc: Return ``True`` if there is data in the inventory to render.
+
+### render (method) `def render(self)`
+- Defined: `topogpt2_explorer.py:927`
+- Doc: Render the visualizer into the current Streamlit container.
+
+### render (method) `def render(self)`
+- Defined: `topogpt2_explorer.py:937`
+
+### _render_headline (method) `def _render_headline(self, total_params, num_tensors, num_layers)`
+- Defined: `topogpt2_explorer.py:950`
+
+### _render_role_breakdown (method) `def _render_role_breakdown(self, role_counts, role_params)`
+- Defined: `topogpt2_explorer.py:957`
+
+### _render_inventory_table (method) `def _render_inventory_table(self, rows)`
+- Defined: `topogpt2_explorer.py:984`
+
+### render (method) `def render(self)`
+- Defined: `topogpt2_explorer.py:1005`
+
+### _render_meta (method) `def _render_meta(self, meta)`
+- Defined: `topogpt2_explorer.py:1042`
+
+### _render_metric_grid (method) `def _render_metric_grid(self, metrics)`
+- Defined: `topogpt2_explorer.py:1050`
+
+### _render_point_cloud (method) `def _render_point_cloud(self, matrix, name, method)`
+- Defined: `topogpt2_explorer.py:1069`
+
+### _render_heatmap (method) `def _render_heatmap(self, matrix, name)`
+- Defined: `topogpt2_explorer.py:1103`
+
+### _render_distribution (method) `def _render_distribution(self, matrix, name)`
+- Defined: `topogpt2_explorer.py:1125`
+
+### _render_spectrum (method) `def _render_spectrum(self, matrix, name)`
+- Defined: `topogpt2_explorer.py:1149`
+
+### _render_singular_spectrum (method) `def _render_singular_spectrum(self, matrix, name)`
+- Defined: `topogpt2_explorer.py:1180`
+
+### is_applicable (method) `def is_applicable(self)`
+- Defined: `topogpt2_explorer.py:1233`
+
+### render (method) `def render(self)`
+- Defined: `topogpt2_explorer.py:1237`
+
+### _group_quaternion_bundles (method) `def _group_quaternion_bundles(self)`
+- Defined: `topogpt2_explorer.py:1249`
+
+### _quaternion_bundle_key (method) `def _quaternion_bundle_key(name, component)`
+- Defined: `topogpt2_explorer.py:1263`
+
+### _render_component_stats (method) `def _render_component_stats(self, components)`
+- Defined: `topogpt2_explorer.py:1278`
+
+### _render_component_heatmaps (method) `def _render_component_heatmaps(self, components)`
+- Defined: `topogpt2_explorer.py:1290`
+
+### _render_component_spectra (method) `def _render_component_spectra(self, components)`
+- Defined: `topogpt2_explorer.py:1315`
+
+### _render_unit_norm_distribution (method) `def _render_unit_norm_distribution(self, components)`
+- Defined: `topogpt2_explorer.py:1346`
+
+### is_applicable (method) `def is_applicable(self)`
+- Defined: `topogpt2_explorer.py:1391`
+
+### render (method) `def render(self)`
+- Defined: `topogpt2_explorer.py:1397`
+
+### _pair_kr_ki (method) `def _pair_kr_ki(self)`
+- Defined: `topogpt2_explorer.py:1413`
+
+### _reshape_to_2d (method) `def _reshape_to_2d(self, magnitude, phase)`
+- Defined: `topogpt2_explorer.py:1428`
+
+### _render_magnitude_phase (method) `def _render_magnitude_phase(self, magnitude, phase, key)`
+- Defined: `topogpt2_explorer.py:1439`
+
+### _render_complex_scatter (method) `def _render_complex_scatter(self, complex_kernel, key)`
+- Defined: `topogpt2_explorer.py:1470`
+
+### _render_radial_profile (method) `def _render_radial_profile(self, magnitude, key)`
+- Defined: `topogpt2_explorer.py:1504`
+
+### is_applicable (method) `def is_applicable(self)`
+- Defined: `topogpt2_explorer.py:1544`
+
+### render (method) `def render(self)`
+- Defined: `topogpt2_explorer.py:1547`
+
+### _infer_grid (method) `def _infer_grid(self, n_nodes)`
+- Defined: `topogpt2_explorer.py:1568`
+
+### _render_headline_metrics (method) `def _render_headline_metrics(self, nodes, edges, radial_bins, angular_bins)`
+- Defined: `topogpt2_explorer.py:1578`
+
+### _render_3d_torus (method) `def _render_3d_torus(self, nodes, edges, radial_bins, angular_bins)`
+- Defined: `topogpt2_explorer.py:1591`
+
+### _torus_positions (method) `def _torus_positions(self, nodes, radial_bins, angular_bins)`
+- Defined: `topogpt2_explorer.py:1605`
+
+### _add_edges (method) `def _add_edges(self, fig, positions, radial_bins, angular_bins, edges)`
+- Defined: `topogpt2_explorer.py:1631`
+
+### _edge_label (method) `def _edge_label(edge_type)`
+- Defined: `topogpt2_explorer.py:1669`
+
+### _build_segments (method) `def _build_segments(positions, radial_bins, angular_bins)`
+- Defined: `topogpt2_explorer.py:1678`
+
+### _add_nodes (method) `def _add_nodes(self, fig, positions, node_colors, n_nodes)`
+- Defined: `topogpt2_explorer.py:1697`
+
+### _render_node_correlation (method) `def _render_node_correlation(self, nodes)`
+- Defined: `topogpt2_explorer.py:1725`
+
+### _render_edge_quaternions (method) `def _render_edge_quaternions(self, edges)`
+- Defined: `topogpt2_explorer.py:1747`
+
+### is_applicable (method) `def is_applicable(self)`
+- Defined: `topogpt2_explorer.py:1779`
+
+### render (method) `def render(self)`
+- Defined: `topogpt2_explorer.py:1785`
+
+### _infer_head_count (method) `def _infer_head_count(self, matrix, proj)`
+- Defined: `topogpt2_explorer.py:1813`
+
+### _render_per_head_norms (method) `def _render_per_head_norms(self, matrix, proj)`
+- Defined: `topogpt2_explorer.py:1822`
+
+### _render_per_head_spectrum (method) `def _render_per_head_spectrum(self, matrix, proj, layer)`
+- Defined: `topogpt2_explorer.py:1849`
+
+### _render_head_similarity (method) `def _render_head_similarity(self, matrix, proj, layer)`
+- Defined: `topogpt2_explorer.py:1881`
+
+### _render_summary_metrics (method) `def _render_summary_metrics(self, metrics)`
+- Defined: `topogpt2_explorer.py:1908`
+
+### is_applicable (method) `def is_applicable(self)`
+- Defined: `topogpt2_explorer.py:1922`
+
+### render (method) `def render(self)`
+- Defined: `topogpt2_explorer.py:1927`
+
+### _render_router_norms (method) `def _render_router_norms(self, router, layer)`
+- Defined: `topogpt2_explorer.py:1949`
+
+### _render_routing_probe (method) `def _render_routing_probe(self, router, layer)`
+- Defined: `topogpt2_explorer.py:1972`
+
+### _render_expert_similarity (method) `def _render_expert_similarity(self, layer)`
+- Defined: `topogpt2_explorer.py:2015`
+
+### _softmax (method) `def _softmax(logits)`
+- Defined: `topogpt2_explorer.py:2055`
+
+### is_applicable (method) `def is_applicable(self)`
+- Defined: `topogpt2_explorer.py:2067`
+
+### render (method) `def render(self)`
+- Defined: `topogpt2_explorer.py:2070`
+
+### _render_metric_grid (method) `def _render_metric_grid(self, role, layers, series)`
+- Defined: `topogpt2_explorer.py:2113`
+
+### render (method) `def render(self)`
+- Defined: `topogpt2_explorer.py:2157`
+
+### _render_scatter (method) `def _render_scatter(self, emb, labels, roles, sizes, pca)`
+- Defined: `topogpt2_explorer.py:2204`
+
+### _render_feature_correlation (method) `def _render_feature_correlation(self, X_std, example)`
+- Defined: `topogpt2_explorer.py:2246`
+
+### _build_palette (method) `def _build_palette(n)`
+- Defined: `topogpt2_explorer.py:2279`
+
+### __init__ (method) `def __init__(self, context)`
+- Defined: `topogpt2_explorer.py:2294`
+
+### register (method) `def register(self, factory)`
+- Defined: `topogpt2_explorer.py:2298`
+- Doc: Register a visualizer factory.
+
+### build (method) `def build(self)`
+- Defined: `topogpt2_explorer.py:2307`
+- Doc: Instantiate all registered visualizers.
+
+### applicable (method) `def applicable(self)`
+- Defined: `topogpt2_explorer.py:2311`
+- Doc: Return the subset of visualizers whose data is present.
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `topogpt2_explorer.py:2319`
+
+### render (method) `def render(self)`
+- Defined: `topogpt2_explorer.py:2322`
+- Doc: Render the sidebar and return the current selections.
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `topogpt2_explorer.py:2362`
+
+### run (method) `def run(self)`
+- Defined: `topogpt2_explorer.py:2372`
+- Doc: Entry point used by ``streamlit run``.
+
+### _configure_page (method) `def _configure_page(self)`
+- Defined: `topogpt2_explorer.py:2394`
+
+### _render_header (method) `def _render_header(self)`
+- Defined: `topogpt2_explorer.py:2401`
+
+### _render_landing (method) `def _render_landing(self)`
+- Defined: `topogpt2_explorer.py:2416`
+
+### _resolve_checkpoint (method) `def _resolve_checkpoint(self, selections)`
+- Defined: `topogpt2_explorer.py:2437`
+
+### _build_registry (method) `def _build_registry(self, context)`
+- Defined: `topogpt2_explorer.py:2452`
+
+### _render_tabs (method) `def _render_tabs(self, registry)`
+- Defined: `topogpt2_explorer.py:2465`
+
+### _render_footer (method) `def _render_footer(self)`
+- Defined: `topogpt2_explorer.py:2483`
 
 ## topogpt2_grid_scaler.py
-- `ModuleImporter.load` (method) `topogpt2_grid_scaler.py:184` `def load(self, path)` -- Import and return the topogpt2 module.
-- `CheckpointReader.read` (method) `topogpt2_grid_scaler.py:208` `def read(self, path, device)` -- Return (state_dict, optional_embedded_config).
-- `ConfigReconstructor.reconstruct` (method) `topogpt2_grid_scaler.py:245` `def reconstruct(self, mod, state_dict, embedded)` -- Return a TopoGPT2Config that matches the loaded weights exactly.
-- `TensorRole.classify` (method) `topogpt2_grid_scaler.py:340` `def classify(self, key, shape)` -- Return a semantic role string.
-- `SpectralInterpolator.__init__` (method) `topogpt2_grid_scaler.py:388` `def __init__(self, cfg)`
-- `SpectralInterpolator.interpolate_2d` (method) `topogpt2_grid_scaler.py:391` `def interpolate_2d(self, W, tgt_rows, tgt_cols)` -- Scale a 2D weight matrix [M, N] to [M', N'] via spectral interpolation.
-- `SpectralInterpolator.interpolate_1d` (method) `topogpt2_grid_scaler.py:421` `def interpolate_1d(self, v, tgt_len)` -- Scale a 1D vector of length L to length L' via spectral interpolation.
-- `StateScaler.__init__` (method) `topogpt2_grid_scaler.py:499` `def __init__(self, interp, role_clf, logger)`
-- `StateScaler.scale` (method) `topogpt2_grid_scaler.py:509` `def scale(self, src_state, src_cfg, tgt_cfg, mod)` -- Produce a complete scaled state dict.
-- `ScalingValidator.__init__` (method) `topogpt2_grid_scaler.py:638` `def __init__(self, cfg)`
-- `ScalingValidator.compute` (method) `topogpt2_grid_scaler.py:641` `def compute(self, state, d_model)` -- Compute all configured validation metrics.
-- `ScalingValidator.check_degradation` (method) `topogpt2_grid_scaler.py:656` `def check_degradation(self, before, after, logger)` -- Return True if any metric dropped beyond its tolerance.
-- `ModelAssembler.assemble` (method) `topogpt2_grid_scaler.py:726` `def assemble(self, mod, tgt_cfg, scaled_state, logger)` -- Instantiate the target model and load scaled weights.
-- `CheckpointSaver.save` (method) `topogpt2_grid_scaler.py:754` `def save(self, model, tgt_cfg, src_cfg, metrics_before, metrics_after, out_cfg, step_tag, logger)` -- Persist scaled checkpoint and metadata.
-- `TopoGPT2DModelScaler.__init__` (method) `topogpt2_grid_scaler.py:872` `def __init__(self, cfg)`
-- `TopoGPT2DModelScaler.run` (method) `topogpt2_grid_scaler.py:888` `def run(self)` -- Execute the full scaling pipeline.
-- `TopoGPT2DModelScaler.build_parser` (method) `topogpt2_grid_scaler.py:1070` `def build_parser()`
-- `TopoGPT2DModelScaler.config_from_args` (method) `topogpt2_grid_scaler.py:1097` `def config_from_args(args)`
-- `TopoGPT2DModelScaler.main` (method) `topogpt2_grid_scaler.py:1119` `def main()`
+
+### _setup_logger (method) `def _setup_logger(name, level)`
+- Defined: `topogpt2_grid_scaler.py:169`
+
+### build_parser (method) `def build_parser()`
+- Defined: `topogpt2_grid_scaler.py:1070`
+
+### config_from_args (method) `def config_from_args(args)`
+- Defined: `topogpt2_grid_scaler.py:1097`
+
+### main (method) `def main()`
+- Defined: `topogpt2_grid_scaler.py:1119`
+
+### __post_init__ (method) `def __post_init__(self)`
+- Defined: `topogpt2_grid_scaler.py:159`
+
+### load (method) `def load(self, path)`
+- Defined: `topogpt2_grid_scaler.py:184`
+- Doc: Import and return the topogpt2 module.
+
+### read (method) `def read(self, path, device)`
+- Defined: `topogpt2_grid_scaler.py:208`
+- Doc: Return (state_dict, optional_embedded_config).
+
+### _extract (method) `def _extract(self, obj)`
+- Defined: `topogpt2_grid_scaler.py:225`
+
+### reconstruct (method) `def reconstruct(self, mod, state_dict, embedded)`
+- Defined: `topogpt2_grid_scaler.py:245`
+- Doc: Return a TopoGPT2Config that matches the loaded weights exactly.
+
+### _infer (method) `def _infer(self, mod, sd)`
+- Defined: `topogpt2_grid_scaler.py:259`
+
+### _infer_d_head (method) `def _infer_d_head(sd)`
+- Defined: `topogpt2_grid_scaler.py:291`
+
+### _infer_n_kv (method) `def _infer_n_kv(sd, d_head, n_heads)`
+- Defined: `topogpt2_grid_scaler.py:298`
+
+### _infer_max_seq (method) `def _infer_max_seq(sd)`
+- Defined: `topogpt2_grid_scaler.py:308`
+
+### _infer_torus (method) `def _infer_torus(sd)`
+- Defined: `topogpt2_grid_scaler.py:315`
+
+### classify (method) `def classify(self, key, shape)`
+- Defined: `topogpt2_grid_scaler.py:340`
+- Doc: Return a semantic role string.
+
+### __init__ (method) `def __init__(self, cfg)`
+- Defined: `topogpt2_grid_scaler.py:388`
+
+### interpolate_2d (method) `def interpolate_2d(self, W, tgt_rows, tgt_cols)`
+- Defined: `topogpt2_grid_scaler.py:391`
+- Doc: Scale a 2D weight matrix [M, N] to [M', N'] via spectral interpolation.
+
+### interpolate_1d (method) `def interpolate_1d(self, v, tgt_len)`
+- Defined: `topogpt2_grid_scaler.py:421`
+- Doc: Scale a 1D vector of length L to length L' via spectral interpolation.
+
+### _resize_spectrum_2d (method) `def _resize_spectrum_2d(self, W_f, tgt_rows, tgt_cols)`
+- Defined: `topogpt2_grid_scaler.py:452`
+- Doc: Zero-pad or centre-crop a 2D complex spectrum.
+
+### __init__ (method) `def __init__(self, interp, role_clf, logger)`
+- Defined: `topogpt2_grid_scaler.py:499`
+
+### scale (method) `def scale(self, src_state, src_cfg, tgt_cfg, mod)`
+- Defined: `topogpt2_grid_scaler.py:509`
+- Doc: Produce a complete scaled state dict.
+
+### _dispatch (method) `def _dispatch(self, src, tgt_shape, role, key)`
+- Defined: `topogpt2_grid_scaler.py:567`
+- Doc: Route to the correct interpolation method based on shape and role.
+
+### _scale_spectral_2d_to (method) `def _scale_spectral_2d_to(self, t, tgt_shape, key)`
+- Defined: `topogpt2_grid_scaler.py:598`
+- Doc: Scale [in_q, out_q, R, Af] to [in_q', out_q', R, Af].
+
+### _bilinear_fallback (method) `def _bilinear_fallback(self, src, tgt_shape)`
+- Defined: `topogpt2_grid_scaler.py:626`
+
+### __init__ (method) `def __init__(self, cfg)`
+- Defined: `topogpt2_grid_scaler.py:638`
+
+### compute (method) `def compute(self, state, d_model)`
+- Defined: `topogpt2_grid_scaler.py:641`
+- Doc: Compute all configured validation metrics.
+
+### check_degradation (method) `def check_degradation(self, before, after, logger)`
+- Defined: `topogpt2_grid_scaler.py:656`
+- Doc: Return True if any metric dropped beyond its tolerance.
+
+### _spectral_concentration (method) `def _spectral_concentration(self, sd)`
+- Defined: `topogpt2_grid_scaler.py:690`
+
+### _phase_coherence (method) `def _phase_coherence(self, sd)`
+- Defined: `topogpt2_grid_scaler.py:708`
+
+### assemble (method) `def assemble(self, mod, tgt_cfg, scaled_state, logger)`
+- Defined: `topogpt2_grid_scaler.py:726`
+- Doc: Instantiate the target model and load scaled weights.
+
+### save (method) `def save(self, model, tgt_cfg, src_cfg, metrics_before, metrics_after, out_cfg, step_tag, logger)`
+- Defined: `topogpt2_grid_scaler.py:754`
+- Doc: Persist scaled checkpoint and metadata. Returns checkpoint path.
+
+### _write_report (method) `def _write_report(self, path, src_cfg, tgt_cfg, before, after, ckpt)`
+- Defined: `topogpt2_grid_scaler.py:815`
+
+### __init__ (method) `def __init__(self, cfg)`
+- Defined: `topogpt2_grid_scaler.py:872`
+
+### run (method) `def run(self)`
+- Defined: `topogpt2_grid_scaler.py:888`
+- Doc: Execute the full scaling pipeline. Returns per-step result dicts.
+
+### _build_target_config (method) `def _build_target_config(self, mod, src_cfg, tgt_d)`
+- Defined: `topogpt2_grid_scaler.py:1001`
+- Doc: Construct a target config with new D_MODEL, preserving torus topology.
+
+### _infer_n_heads (method) `def _infer_n_heads(tgt_d, src_n_heads)`
+- Defined: `topogpt2_grid_scaler.py:1018`
+- Doc: Find the largest divisor of tgt_d that keeps D_HEAD >= 8.
+
+### _infer_n_kv_heads (method) `def _infer_n_kv_heads(tgt_d, tgt_n_heads, src_n_heads, src_n_kv)`
+- Defined: `topogpt2_grid_scaler.py:1033`
+
+### _print_summary (method) `def _print_summary(self, results, src_cfg)`
+- Defined: `topogpt2_grid_scaler.py:1047`
+
+### _cfg_dict (method) `def _cfg_dict(c)`
+- Defined: `topogpt2_grid_scaler.py:770`
 
 ## topogpt2_multi_inference.py
-- `ModuleImporter.load` (method) `topogpt2_multi_inference.py:100` `def load(self, path)` -- Return the imported module, reusing the cached copy if available.
-- `CheckpointDiscovery.resolve` (method) `topogpt2_multi_inference.py:127` `def resolve(self, sources)` -- Expand directories and glob patterns into a sorted list of paths.
-- `CheckpointLoader.load` (method) `topogpt2_multi_inference.py:167` `def load(self, path, device)` -- Return (state_dict, optional_embedded_config).
-- `ConfigReconstructor.reconstruct` (method) `topogpt2_multi_inference.py:222` `def reconstruct(self, mod, state_dict, embedded)` -- Return a TopoGPT2Config matching the loaded weights.
-- `TokenizerFactory.get` (method) `topogpt2_multi_inference.py:320` `def get(self, mod)` -- Return a shared tokenizer instance (built once per process).
-- `GenerationEngine.__init__` (method) `topogpt2_multi_inference.py:330` `def __init__(self, cfg, device)`
-- `GenerationEngine.generate` (method) `topogpt2_multi_inference.py:334` `def generate(self, model, tokenizer, prompt)` -- Run generation and return (full_text, n_new_tokens, elapsed_s).
-- `MultiInferenceRunner.__init__` (method) `topogpt2_multi_inference.py:453` `def __init__(self, cfg)`
-- `MultiInferenceRunner.run` (method) `topogpt2_multi_inference.py:462` `def run(self)` -- Execute the full multi-model inference pipeline.
-- `ResultRenderer.render` (method) `topogpt2_multi_inference.py:590` `def render(self, results, prompt)` -- Print prompt header, per-model outputs, and comparison table.
-- `JsonExporter.export` (method) `topogpt2_multi_inference.py:680` `def export(self, results, path, prompt)` -- Serialize results to JSON.
-- `JsonExporter.build_parser` (method) `topogpt2_multi_inference.py:707` `def build_parser()` -- Build the CLI argument parser.
-- `JsonExporter.config_from_args` (method) `topogpt2_multi_inference.py:780` `def config_from_args(args)` -- Build a RunConfig from parsed CLI arguments.
-- `JsonExporter.main` (method) `topogpt2_multi_inference.py:800` `def main()` -- CLI entry point.
 
+### _setup_logger (method) `def _setup_logger(name, level)`
+- Defined: `topogpt2_multi_inference.py:85`
 
-Next: [API_p2.md](API_p2.md)
+### _fmt_params (method) `def _fmt_params(n)`
+- Defined: `topogpt2_multi_inference.py:666`
+- Doc: Format parameter counts as human-readable strings (25.1M, 147.5M).
+
+### build_parser (method) `def build_parser()`
+- Defined: `topogpt2_multi_inference.py:707`
+- Doc: Build the CLI argument parser.
+
+### config_from_args (method) `def config_from_args(args)`
+- Defined: `topogpt2_multi_inference.py:780`
+- Doc: Build a RunConfig from parsed CLI arguments.
+
+### main (method) `def main()`
+- Defined: `topogpt2_multi_inference.py:800`
+- Doc: CLI entry point.
+
+### load (method) `def load(self, path)`
+- Defined: `topogpt2_multi_inference.py:100`
+- Doc: Return the imported module, reusing the cached copy if available.
+
+### resolve (method) `def resolve(self, sources)`
+- Defined: `topogpt2_multi_inference.py:127`
+- Doc: Expand directories and glob patterns into a sorted list of paths.
+
+### load (method) `def load(self, path, device)`
+- Defined: `topogpt2_multi_inference.py:167`
+- Doc: Return (state_dict, optional_embedded_config).
+
+### _load_safetensors (method) `def _load_safetensors(self, path, device)`
+- Defined: `topogpt2_multi_inference.py:183`
+
+### _load_torch (method) `def _load_torch(self, path, device)`
+- Defined: `topogpt2_multi_inference.py:191`
+
+### reconstruct (method) `def reconstruct(self, mod, state_dict, embedded)`
+- Defined: `topogpt2_multi_inference.py:222`
+- Doc: Return a TopoGPT2Config matching the loaded weights.
+
+### _infer (method) `def _infer(self, mod, sd)`
+- Defined: `topogpt2_multi_inference.py:243`
+
+### _infer_d_head (method) `def _infer_d_head(sd)`
+- Defined: `topogpt2_multi_inference.py:278`
+
+### _infer_n_kv (method) `def _infer_n_kv(sd, d_head, n_heads)`
+- Defined: `topogpt2_multi_inference.py:285`
+
+### _infer_max_seq (method) `def _infer_max_seq(sd)`
+- Defined: `topogpt2_multi_inference.py:295`
+
+### _infer_torus (method) `def _infer_torus(sd)`
+- Defined: `topogpt2_multi_inference.py:302`
+
+### get (method) `def get(self, mod)`
+- Defined: `topogpt2_multi_inference.py:320`
+- Doc: Return a shared tokenizer instance (built once per process).
+
+### __init__ (method) `def __init__(self, cfg, device)`
+- Defined: `topogpt2_multi_inference.py:330`
+
+### generate (method) `def generate(self, model, tokenizer, prompt)`
+- Defined: `topogpt2_multi_inference.py:334`
+- Doc: Run generation and return (full_text, n_new_tokens, elapsed_s).
+
+### _fast_generate (method) `def _fast_generate(self, model, input_ids)`
+- Defined: `topogpt2_multi_inference.py:361`
+
+### _manual_generate (method) `def _manual_generate(self, model, input_ids)`
+- Defined: `topogpt2_multi_inference.py:372`
+
+### _apply_repetition_penalty (method) `def _apply_repetition_penalty(logits, generated, penalty)`
+- Defined: `topogpt2_multi_inference.py:412`
+
+### _apply_top_p (method) `def _apply_top_p(logits, p)`
+- Defined: `topogpt2_multi_inference.py:424`
+
+### __init__ (method) `def __init__(self, cfg)`
+- Defined: `topogpt2_multi_inference.py:453`
+
+### run (method) `def run(self)`
+- Defined: `topogpt2_multi_inference.py:462`
+- Doc: Execute the full multi-model inference pipeline.
+
+### _run_one (method) `def _run_one(self, ckpt_path, mod, tokenizer, engine)`
+- Defined: `topogpt2_multi_inference.py:499`
+
+### _make_label (method) `def _make_label(path)`
+- Defined: `topogpt2_multi_inference.py:570`
+- Doc: Extract a short human-readable label from a checkpoint path.
+
+### render (method) `def render(self, results, prompt)`
+- Defined: `topogpt2_multi_inference.py:590`
+- Doc: Print prompt header, per-model outputs, and comparison table.
+
+### _print_prompt_header (method) `def _print_prompt_header(self, prompt)`
+- Defined: `topogpt2_multi_inference.py:597`
+
+### _print_model_output (method) `def _print_model_output(self, r)`
+- Defined: `topogpt2_multi_inference.py:605`
+
+### _print_comparison_table (method) `def _print_comparison_table(self, results)`
+- Defined: `topogpt2_multi_inference.py:628`
+
+### export (method) `def export(self, results, path, prompt)`
+- Defined: `topogpt2_multi_inference.py:680`
+- Doc: Serialize results to JSON.
+
+## zeroshot.py
+
+### build_logger (function) `def build_logger(name, level)`
+- Defined: `zeroshot.py:69`
+- Doc: Return a stderr logger with timestamp formatting.
+
+### build_arg_parser (method) `def build_arg_parser()`
+- Defined: `zeroshot.py:1709`
+- Doc: Construct and return the CLI argument parser.
+
+### main (method) `def main()`
+- Defined: `zeroshot.py:1774`
+- Doc: CLI entry point.
+
+### validate_geometry (method) `def validate_geometry(self)`
+- Defined: `zeroshot.py:140`
+- Doc: Raise ValueError for impossible torus configurations.
+
+### src_nodes (method) `def src_nodes(self)`
+- Defined: `zeroshot.py:154`
+
+### tgt_nodes (method) `def tgt_nodes(self)`
+- Defined: `zeroshot.py:158`
+
+### __post_init__ (method) `def __post_init__(self)`
+- Defined: `zeroshot.py:222`
+
+### hamilton_product (method) `def hamilton_product(q1, q2)`
+- Defined: `zeroshot.py:258`
+
+### normalize (method) `def normalize(q, eps)`
+- Defined: `zeroshot.py:269`
+
+### conjugate (method) `def conjugate(q)`
+- Defined: `zeroshot.py:273`
+
+### rotate_vector (method) `def rotate_vector(v, q)`
+- Defined: `zeroshot.py:278`
+
+### __init__ (method) `def __init__(self, in_features, out_features, bias)`
+- Defined: `zeroshot.py:296`
+
+### forward (method) `def forward(self, x)`
+- Defined: `zeroshot.py:310`
+
+### __init__ (method) `def __init__(self, in_q, out_q, grid_h, grid_w, init_scale)`
+- Defined: `zeroshot.py:329`
+
+### _kernel (method) `def _kernel(self, c)`
+- Defined: `zeroshot.py:344`
+
+### _contract (method) `def _contract(self, W, X)`
+- Defined: `zeroshot.py:347`
+
+### forward (method) `def forward(self, x)`
+- Defined: `zeroshot.py:350`
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `zeroshot.py:382`
+
+### _filter1d (method) `def _filter1d(self, x, kr, ki)`
+- Defined: `zeroshot.py:404`
+
+### encode (method) `def encode(self, x)`
+- Defined: `zeroshot.py:409`
+
+### decode (method) `def decode(self, z)`
+- Defined: `zeroshot.py:412`
+
+### forward (method) `def forward(self, x)`
+- Defined: `zeroshot.py:415`
+
+### process_torus_grid (method) `def process_torus_grid(self, grid)`
+- Defined: `zeroshot.py:420`
+
+### __init__ (method) `def __init__(self, d_model, config)`
+- Defined: `zeroshot.py:443`
+
+### _build_torus_graph (method) `def _build_torus_graph(self)`
+- Defined: `zeroshot.py:468`
+
+### _torus_soft_assign (method) `def _torus_soft_assign(self, phi1, phi2)`
+- Defined: `zeroshot.py:484`
+
+### _message_passing (method) `def _message_passing(self, node_feat)`
+- Defined: `zeroshot.py:495`
+
+### forward (method) `def forward(self, x)`
+- Defined: `zeroshot.py:509`
+
+### __init__ (method) `def __init__(self, d_model, expansion, dropout)`
+- Defined: `zeroshot.py:540`
+
+### forward (method) `def forward(self, x)`
+- Defined: `zeroshot.py:552`
+
+### __init__ (method) `def __init__(self, d_model, config)`
+- Defined: `zeroshot.py:565`
+
+### _route (method) `def _route(self, x)`
+- Defined: `zeroshot.py:581`
+
+### forward (method) `def forward(self, x)`
+- Defined: `zeroshot.py:604`
+
+### __init__ (method) `def __init__(self, d_head, max_seq_len)`
+- Defined: `zeroshot.py:618`
+
+### _build_cache (method) `def _build_cache(self, seq_len)`
+- Defined: `zeroshot.py:626`
+
+### _rotate_half (method) `def _rotate_half(x)`
+- Defined: `zeroshot.py:633`
+
+### forward (method) `def forward(self, q, k, seq_len, offset)`
+- Defined: `zeroshot.py:637`
+
+### __init__ (method) `def __init__(self, d_model, eps)`
+- Defined: `zeroshot.py:655`
+
+### forward (method) `def forward(self, x)`
+- Defined: `zeroshot.py:660`
+
+### __init__ (method) `def __init__(self, d_model, n_heads, config)`
+- Defined: `zeroshot.py:671`
+
+### forward (method) `def forward(self, x, is_causal, past_kv)`
+- Defined: `zeroshot.py:686`
+
+### __init__ (method) `def __init__(self, d_model, n_heads, config)`
+- Defined: `zeroshot.py:725`
+
+### _forward_impl (method) `def _forward_impl(self, x, past_kv)`
+- Defined: `zeroshot.py:734`
+
+### forward (method) `def forward(self, x, past_kv)`
+- Defined: `zeroshot.py:743`
+
+### __init__ (method) `def __init__(self, config)`
+- Defined: `zeroshot.py:757`
+
+### _init_weights (method) `def _init_weights(self)`
+- Defined: `zeroshot.py:771`
+
+### forward (method) `def forward(self, token_ids, past_kvs)`
+- Defined: `zeroshot.py:778`
+
+### generate (method) `def generate(self, token_ids, max_new_tokens, temperature, top_k)`
+- Defined: `zeroshot.py:795`
+- Doc: Top-k autoregressive generation with KV cache.
+
+### __init__ (method) `def __init__(self, mode)`
+- Defined: `zeroshot.py:837`
+
+### _interp2d (method) `def _interp2d(self, tensor, tgt_h, tgt_w)`
+- Defined: `zeroshot.py:840`
+- Doc: Interpolate a 4D real tensor [in_q, out_q, h, w] to [in_q, out_q, tgt_h, tgt_w].
+
+### transfer (method) `def transfer(self, src_layer, tgt_layer)`
+- Defined: `zeroshot.py:856`
+- Doc: Copy and interpolate all kernel parameters from src_layer to tgt_layer.
+
+### __init__ (method) `def __init__(self, mode)`
+- Defined: `zeroshot.py:886`
+
+### transfer (method) `def transfer(self, src_embed, src_radial, src_angular, tgt_embed, tgt_radial, tgt_angular)`
+- Defined: `zeroshot.py:889`
+- Doc: Interpolate src_embed [src_R*src_A, D] into tgt_embed [tgt_R*tgt_A, D].
+
+### __init__ (method) `def __init__(self, spec_interp_mode, node_interp_mode, logger)`
+- Defined: `zeroshot.py:936`
+
+### expand (method) `def expand(self, src, tgt)`
+- Defined: `zeroshot.py:946`
+- Doc: Mutates tgt in-place to carry the expanded weights of src.
+
+### __init__ (method) `def __init__(self, spec_interp_mode, node_interp_mode, logger)`
+- Defined: `zeroshot.py:1018`
+
+### expand (method) `def expand(self, src, tgt)`
+- Defined: `zeroshot.py:1031`
+- Doc: Mutates tgt in-place.
+
+### __init__ (method) `def __init__(self, spec_interp_mode, node_interp_mode, logger)`
+- Defined: `zeroshot.py:1072`
+
+### expand (method) `def expand(self, src, tgt)`
+- Defined: `zeroshot.py:1085`
+- Doc: Expand src into tgt.  Returns tgt with all weights transferred.
+
+### __init__ (method) `def __init__(self, logger)`
+- Defined: `zeroshot.py:1126`
+
+### load (method) `def load(self, path, model, device)`
+- Defined: `zeroshot.py:1133`
+- Doc: Load weights into model from path.  Returns the metadata dict.
+
+### save (method) `def save(self, path, model, metadata)`
+- Defined: `zeroshot.py:1177`
+- Doc: Save model weights to path.
+
+### __init__ (method) `def __init__(self, logger)`
+- Defined: `zeroshot.py:1286`
+
+### _load_shapes (method) `def _load_shapes(self, path)`
+- Defined: `zeroshot.py:1289`
+- Doc: Return {key: shape} for every tensor in the checkpoint.
+
+### _load_metadata (method) `def _load_metadata(self, path)`
+- Defined: `zeroshot.py:1304`
+- Doc: Return safetensors string metadata dict (empty when unavailable).
+
+### probe (method) `def probe(self, path, fallback_radial, fallback_angular)`
+- Defined: `zeroshot.py:1315`
+- Doc: Infer CheckpointArch from the checkpoint at path.
+
+### _infer_d_head_fallback (method) `def _infer_d_head_fallback(d_model, q_out, k_out)`
+- Defined: `zeroshot.py:1433`
+- Doc: Fallback d_head inference when rope.inv_freq is absent.
+
+### __init__ (method) `def __init__(self, logger)`
+- Defined: `zeroshot.py:1474`
+
+### validate (method) `def validate(self, model, prompt)`
+- Defined: `zeroshot.py:1477`
+- Doc: Return True if all checks pass, False otherwise.
+
+### __init__ (method) `def __init__(self, exp_cfg, logger)`
+- Defined: `zeroshot.py:1565`
+
+### _config_from_arch (method) `def _config_from_arch(self, arch, torus_radial, torus_angular)`
+- Defined: `zeroshot.py:1570`
+- Doc: Build a TopoGPT2Config whose tensor dimensions exactly match arch.
+
+### _build_metadata_for_save (method) `def _build_metadata_for_save(self, src_meta, arch, tgt_radial, tgt_angular)`
+- Defined: `zeroshot.py:1609`
+
+### run (method) `def run(self)`
+- Defined: `zeroshot.py:1631`
+- Doc: Execute the full expansion pipeline.  Returns the expanded model.

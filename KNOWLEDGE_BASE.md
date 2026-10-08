@@ -11,7 +11,7 @@
 
 **Total Files Parsed:** 12 | **Total Symbols Extracted:** 1020 | **Total Imports:** 211
 
-<!-- ranking_model: v1.0 | weights: {ppr:0.45,auth:0.2,test:0.15,doc:0.1,fresh:0.1} | alpha:0.85 | commit:1e0fd0b | date:2026-07-18 -->
+<!-- ranking_model: v1.0 | weights: {ppr:0.45,auth:0.2,test:0.15,doc:0.1,fresh:0.1} | alpha:0.85 | commit:05a4468 | date:2026-07-18 -->
 
 
 ## Table of Contents
@@ -24,13 +24,12 @@
 6. [Hotspot Analysis](#hotspot-analysis)
 7. [Change Impact Analysis](#change-impact-analysis)
 8. [Suggested Linting Rules](#suggested-linting-rules)
-9. [Concept Graph](#concept-graph)
-10. [Orphans](#orphans)
-11. [Query Recipes](#query-recipes)
-12. [Structural Knowledge Map](#structural-knowledge-map)
-13. [UML Class Diagram](#uml-class-diagram)
-14. [Code Property Graph](#code-property-graph)
-15. [Architecture Reference](#architecture-reference)
+9. [Orphans](#orphans)
+10. [Query Recipes](#query-recipes)
+11. [Structural Knowledge Map](#structural-knowledge-map)
+12. [UML Class Diagram](#uml-class-diagram)
+13. [Code Property Graph](#code-property-graph)
+14. [Architecture Reference](#architecture-reference)
     - [PY (11 files)](#py-11-files)
     - [SH (1 files)](#sh-1-files)
 
@@ -72,7 +71,8 @@ Auto-detected from path patterns, naming conventions, and imported frameworks.
 
 | Layer | Files |
 |-------|-------|
-| utility | 12 |
+| utility | 11 |
+| infrastructure | 1 |
 
 ### utility
 
@@ -83,11 +83,14 @@ Auto-detected from path patterns, naming conventions, and imported frameworks.
 - `quantize.py` (py, 115 symbols)
 - `reinforce.py` (py, 47 symbols)
 - `topogpt2_1.py` (py, 126 symbols)
-- `topogpt2_embeddings_navigator.py` (py, 149 symbols)
 - `topogpt2_explorer.py` (py, 155 symbols)
 - `topogpt2_grid_scaler.py` (py, 54 symbols)
 - `topogpt2_multi_inference.py` (py, 44 symbols)
 - `zeroshot.py` (py, 97 symbols)
+
+### infrastructure
+
+- `topogpt2_embeddings_navigator.py` (py, 149 symbols)
 
 ---
 
@@ -159,60 +162,6 @@ Files ranked by combined complexity (symbol count) and centrality (connection co
 | `reinforce.py` | 0.303 | 0.720 | 0.553 | 47 | 18 |
 | `quantize.py` | 0.742 | 0.760 | 0.753 | 115 | 19 |
 | `install.sh` | 0.000 | 0.000 | 0.000 | 0 | 0 |
-
----
-
-## Concept Graph
-
-Semantic second-brain layer: nouns are concept nodes, verbs are edges. Each noun maps atomically to a file set (EXTRACTED); each verb aggregates structural imports, calls, and inherits into consumes, invokes, extends, depends_on, or bridges (INFERRED).
-
-**50 concepts, 0 relations.**
-
-| Concept | Files | Mentions |
-|---------|-------|----------|
-| `model` | 11 | 110 |
-| `checkpoint` | 11 | 99 |
-| `topo` | 11 | 98 |
-| `gpt2` | 11 | 69 |
-| `config` | 11 | 67 |
-| `head` | 11 | 53 |
-| `load` | 11 | 45 |
-| `weights` | 10 | 40 |
-| `run` | 10 | 26 |
-| `torus` | 9 | 101 |
-| `build` | 9 | 32 |
-| `graph` | 9 | 17 |
-| `quaternion` | 8 | 92 |
-| `spectral` | 8 | 88 |
-| `layer` | 8 | 64 |
-| `weight` | 8 | 48 |
-| `grid` | 8 | 42 |
-| `token` | 8 | 42 |
-| `top` | 8 | 40 |
-| `attention` | 8 | 38 |
-| `cache` | 8 | 37 |
-| `state` | 8 | 36 |
-| `topogpt2` | 8 | 32 |
-| `all` | 8 | 28 |
-| `returns` | 8 | 22 |
-| `dict` | 8 | 21 |
-| `text` | 8 | 20 |
-| `multi` | 8 | 18 |
-| `generate` | 8 | 16 |
-| `full` | 8 | 15 |
-
-### Dialectic Prompts
-
-- Thesis: `all` centralizes 8 files; Antithesis: `attention` pulls 8 files with 8 shared (Jaccard 1.00); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
-- Thesis: `all` centralizes 8 files; Antithesis: `build` pulls 9 files with 8 shared (Jaccard 0.89); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
-- Thesis: `all` centralizes 8 files; Antithesis: `cache` pulls 8 files with 7 shared (Jaccard 0.78); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
-- Thesis: `all` centralizes 8 files; Antithesis: `checkpoint` pulls 11 files with 8 shared (Jaccard 0.73); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
-- Thesis: `all` centralizes 8 files; Antithesis: `compute` pulls 7 files with 6 shared (Jaccard 0.67); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
-- Thesis: `all` centralizes 8 files; Antithesis: `config` pulls 11 files with 8 shared (Jaccard 0.73); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
-- Thesis: `all` centralizes 8 files; Antithesis: `configuration` pulls 7 files with 4 shared (Jaccard 0.36); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
-- Thesis: `all` centralizes 8 files; Antithesis: `contract` pulls 7 files with 7 shared (Jaccard 0.88); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
-- Thesis: `all` centralizes 8 files; Antithesis: `dict` pulls 8 files with 7 shared (Jaccard 0.78); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
-- Thesis: `all` centralizes 8 files; Antithesis: `dimension` pulls 7 files with 6 shared (Jaccard 0.67); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
 
 ---
 
