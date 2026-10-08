@@ -1,0 +1,60 @@
+# API (page 2 of 2)
+Previous: [API.md](API.md)
+
+## zeroshot.py
+- `build_logger` (function) `zeroshot.py:69` `def build_logger(name, level)` -- Return a stderr logger with timestamp formatting.
+- `ExpansionConfig.validate_geometry` (method) `zeroshot.py:140` `def validate_geometry(self)` -- Raise ValueError for impossible torus configurations.
+- `ExpansionConfig.src_nodes` (method) `zeroshot.py:154` `def src_nodes(self)`
+- `ExpansionConfig.tgt_nodes` (method) `zeroshot.py:158` `def tgt_nodes(self)`
+- `QuaternionOps.hamilton_product` (method) `zeroshot.py:258` `def hamilton_product(q1, q2)`
+- `QuaternionOps.normalize` (method) `zeroshot.py:269` `def normalize(q, eps)`
+- `QuaternionOps.conjugate` (method) `zeroshot.py:273` `def conjugate(q)`
+- `QuaternionOps.rotate_vector` (method) `zeroshot.py:278` `def rotate_vector(v, q)`
+- `QuaternionLinear.__init__` (method) `zeroshot.py:296` `def __init__(self, in_features, out_features, bias)`
+- `QuaternionLinear.forward` (method) `zeroshot.py:310` `def forward(self, x)`
+- `QuaternionSpectralLayer.__init__` (method) `zeroshot.py:329` `def __init__(self, in_q, out_q, grid_h, grid_w, init_scale)`
+- `QuaternionSpectralLayer.forward` (method) `zeroshot.py:350` `def forward(self, x)`
+- `SpectralAutoencoder.__init__` (method) `zeroshot.py:382` `def __init__(self, config)`
+- `SpectralAutoencoder.encode` (method) `zeroshot.py:409` `def encode(self, x)`
+- `SpectralAutoencoder.decode` (method) `zeroshot.py:412` `def decode(self, z)`
+- `SpectralAutoencoder.forward` (method) `zeroshot.py:415` `def forward(self, x)`
+- `SpectralAutoencoder.process_torus_grid` (method) `zeroshot.py:420` `def process_torus_grid(self, grid)`
+- `QuaternionTorusBrain.__init__` (method) `zeroshot.py:443` `def __init__(self, d_model, config)`
+- `QuaternionTorusBrain.forward` (method) `zeroshot.py:509` `def forward(self, x)`
+- `SwiGLU.__init__` (method) `zeroshot.py:540` `def __init__(self, d_model, expansion, dropout)`
+- `SwiGLU.forward` (method) `zeroshot.py:552` `def forward(self, x)`
+- `TopoMoEBrain.__init__` (method) `zeroshot.py:565` `def __init__(self, d_model, config)`
+- `TopoMoEBrain.forward` (method) `zeroshot.py:604` `def forward(self, x)`
+- `RotaryEmbedding.__init__` (method) `zeroshot.py:618` `def __init__(self, d_head, max_seq_len)`
+- `RotaryEmbedding.forward` (method) `zeroshot.py:637` `def forward(self, q, k, seq_len, offset)`
+- `RMSNorm.__init__` (method) `zeroshot.py:655` `def __init__(self, d_model, eps)`
+- `RMSNorm.forward` (method) `zeroshot.py:660` `def forward(self, x)`
+- `MultiHeadAttention.__init__` (method) `zeroshot.py:671` `def __init__(self, d_model, n_heads, config)`
+- `MultiHeadAttention.forward` (method) `zeroshot.py:686` `def forward(self, x, is_causal, past_kv)`
+- `TopoGPT2Layer.__init__` (method) `zeroshot.py:725` `def __init__(self, d_model, n_heads, config)`
+- `TopoGPT2Layer.forward` (method) `zeroshot.py:743` `def forward(self, x, past_kv)`
+- `TopoGPT2.__init__` (method) `zeroshot.py:757` `def __init__(self, config)`
+- `TopoGPT2.forward` (method) `zeroshot.py:778` `def forward(self, token_ids, past_kvs)`
+- `TopoGPT2.generate` (method) `zeroshot.py:795` `def generate(self, token_ids, max_new_tokens, temperature, top_k)` -- Top-k autoregressive generation with KV cache.
+- `SpectralKernelInterpolator.__init__` (method) `zeroshot.py:837` `def __init__(self, mode)`
+- `SpectralKernelInterpolator.transfer` (method) `zeroshot.py:856` `def transfer(self, src_layer, tgt_layer)` -- Copy and interpolate all kernel parameters from src_layer to tgt_layer.
+- `NodeEmbedInterpolator.__init__` (method) `zeroshot.py:886` `def __init__(self, mode)`
+- `NodeEmbedInterpolator.transfer` (method) `zeroshot.py:889` `def transfer(self, src_embed, src_radial, src_angular, tgt_embed, tgt_radial, tgt_angular)` -- Interpolate src_embed [src_R*src_A, D] into tgt_embed [tgt_R*tgt_A, D].
+- `TorusBrainExpander.__init__` (method) `zeroshot.py:936` `def __init__(self, spec_interp_mode, node_interp_mode, logger)`
+- `TorusBrainExpander.expand` (method) `zeroshot.py:946` `def expand(self, src, tgt)` -- Mutates tgt in-place to carry the expanded weights of src.
+- `TopoMoEBrainExpander.__init__` (method) `zeroshot.py:1018` `def __init__(self, spec_interp_mode, node_interp_mode, logger)`
+- `TopoMoEBrainExpander.expand` (method) `zeroshot.py:1031` `def expand(self, src, tgt)` -- Mutates tgt in-place.
+- `TopoGPT2Expander.__init__` (method) `zeroshot.py:1072` `def __init__(self, spec_interp_mode, node_interp_mode, logger)`
+- `TopoGPT2Expander.expand` (method) `zeroshot.py:1085` `def expand(self, src, tgt)` -- Expand src into tgt.
+- `CheckpointIO.__init__` (method) `zeroshot.py:1126` `def __init__(self, logger)`
+- `CheckpointIO.load` (method) `zeroshot.py:1133` `def load(self, path, model, device)` -- Load weights into model from path.
+- `CheckpointIO.save` (method) `zeroshot.py:1177` `def save(self, path, model, metadata)` -- Save model weights to path.
+- `CheckpointArchProber.__init__` (method) `zeroshot.py:1286` `def __init__(self, logger)`
+- `CheckpointArchProber.probe` (method) `zeroshot.py:1315` `def probe(self, path, fallback_radial, fallback_angular)` -- Infer CheckpointArch from the checkpoint at path.
+- `ExpansionValidator.__init__` (method) `zeroshot.py:1474` `def __init__(self, logger)`
+- `ExpansionValidator.validate` (method) `zeroshot.py:1477` `def validate(self, model, prompt)` -- Return True if all checks pass, False otherwise.
+- `ZeroShotExpansionPipeline.__init__` (method) `zeroshot.py:1565` `def __init__(self, exp_cfg, logger)`
+- `ZeroShotExpansionPipeline.run` (method) `zeroshot.py:1631` `def run(self)` -- Execute the full expansion pipeline.
+- `ZeroShotExpansionPipeline.build_arg_parser` (method) `zeroshot.py:1709` `def build_arg_parser()` -- Construct and return the CLI argument parser.
+- `ZeroShotExpansionPipeline.main` (method) `zeroshot.py:1774` `def main()` -- CLI entry point.
+

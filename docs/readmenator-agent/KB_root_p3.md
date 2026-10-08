@@ -1,0 +1,216 @@
+# Subsystem: root (page 3 of 3)
+Previous: [KB_root_p2.md](KB_root_p2.md)
+
+## topogpt2_grid_scaler.py
+- Doc: TopoGPT2 Zero-Shot D_MODEL Scaler.
+- Layer: utility
+- Language: py
+- Symbols:
+  - `InterpolationConfig` (class, line 97) `class InterpolationConfig`
+  - `ValidationConfig` (class, line 108) `class ValidationConfig`
+  - `ProgressiveConfig` (class, line 121) `class ProgressiveConfig`
+  - `OutputConfig` (class, line 131) `class OutputConfig`
+  - `TopoScalerConfig` (class, line 141) `class TopoScalerConfig`
+  - `_setup_logger` (method, line 169) `def _setup_logger(name, level)`
+  - `ModuleImporter` (class, line 181) `class ModuleImporter`
+  - `CheckpointReader` (class, line 205) `class CheckpointReader`
+  - `ConfigReconstructor` (class, line 242) `class ConfigReconstructor`
+  - `TensorRole` (class, line 328) `class TensorRole`
+  - `SpectralInterpolator` (class, line 380) `class SpectralInterpolator`
+  - `StateScaler` (class, line 483) `class StateScaler`
+  - `ScalingValidator` (class, line 635) `class ScalingValidator`
+  - `ModelAssembler` (class, line 723) `class ModelAssembler`
+  - `CheckpointSaver` (class, line 751) `class CheckpointSaver`
+  - `TopoGPT2DModelScaler` (class, line 860) `class TopoGPT2DModelScaler`
+  - `build_parser` (method, line 1070) `def build_parser()`
+  - `config_from_args` (method, line 1097) `def config_from_args(args)`
+  - `main` (method, line 1119) `def main()`
+  - `__post_init__` (method, line 159) `def __post_init__(self)`
+  - `load` (method, line 184) `def load(self, path)`
+  - `read` (method, line 208) `def read(self, path, device)`
+  - `_extract` (method, line 225) `def _extract(self, obj)`
+  - `reconstruct` (method, line 245) `def reconstruct(self, mod, state_dict, embedded)`
+  - `_infer` (method, line 259) `def _infer(self, mod, sd)`
+  - `_infer_d_head` (method, line 291) `def _infer_d_head(sd)`
+  - `_infer_n_kv` (method, line 298) `def _infer_n_kv(sd, d_head, n_heads)`
+  - `_infer_max_seq` (method, line 308) `def _infer_max_seq(sd)`
+  - `_infer_torus` (method, line 315) `def _infer_torus(sd)`
+  - `classify` (method, line 340) `def classify(self, key, shape)`
+  - `__init__` (method, line 388) `def __init__(self, cfg)`
+  - `interpolate_2d` (method, line 391) `def interpolate_2d(self, W, tgt_rows, tgt_cols)`
+  - `interpolate_1d` (method, line 421) `def interpolate_1d(self, v, tgt_len)`
+  - `_resize_spectrum_2d` (method, line 452) `def _resize_spectrum_2d(self, W_f, tgt_rows, tgt_cols)`
+  - `__init__` (method, line 499) `def __init__(self, interp, role_clf, logger)`
+  - `scale` (method, line 509) `def scale(self, src_state, src_cfg, tgt_cfg, mod)`
+  - `_dispatch` (method, line 567) `def _dispatch(self, src, tgt_shape, role, key)`
+  - `_scale_spectral_2d_to` (method, line 598) `def _scale_spectral_2d_to(self, t, tgt_shape, key)`
+  - `_bilinear_fallback` (method, line 626) `def _bilinear_fallback(self, src, tgt_shape)`
+  - `__init__` (method, line 638) `def __init__(self, cfg)`
+  - `compute` (method, line 641) `def compute(self, state, d_model)`
+  - `check_degradation` (method, line 656) `def check_degradation(self, before, after, logger)`
+  - `_spectral_concentration` (method, line 690) `def _spectral_concentration(self, sd)`
+  - `_phase_coherence` (method, line 708) `def _phase_coherence(self, sd)`
+  - `assemble` (method, line 726) `def assemble(self, mod, tgt_cfg, scaled_state, logger)`
+  - `save` (method, line 754) `def save(self, model, tgt_cfg, src_cfg, metrics_before, metrics_after, out_cfg, step_tag, logger)`
+  - `_write_report` (method, line 815) `def _write_report(self, path, src_cfg, tgt_cfg, before, after, ckpt)`
+  - `__init__` (method, line 872) `def __init__(self, cfg)`
+  - `run` (method, line 888) `def run(self)`
+  - `_build_target_config` (method, line 1001) `def _build_target_config(self, mod, src_cfg, tgt_d)`
+  - `_infer_n_heads` (method, line 1018) `def _infer_n_heads(tgt_d, src_n_heads)`
+  - `_infer_n_kv_heads` (method, line 1033) `def _infer_n_kv_heads(tgt_d, tgt_n_heads, src_n_heads, src_n_kv)`
+  - `_print_summary` (method, line 1047) `def _print_summary(self, results, src_cfg)`
+  - `_cfg_dict` (method, line 770) `def _cfg_dict(c)`
+
+## topogpt2_multi_inference.py
+- Doc: Runs a single prompt through every TopoGPT2 checkpoint found in a directory (or an explicit...
+- Layer: utility
+- Language: py
+- Symbols:
+  - `SamplingConfig` (class, line 60) `class SamplingConfig`
+  - `RunConfig` (class, line 72) `class RunConfig`
+  - `_setup_logger` (method, line 85) `def _setup_logger(name, level)`
+  - `ModuleImporter` (class, line 95) `class ModuleImporter`
+  - `CheckpointDiscovery` (class, line 122) `class CheckpointDiscovery`
+  - `CheckpointLoader` (class, line 164) `class CheckpointLoader`
+  - `ConfigReconstructor` (class, line 219) `class ConfigReconstructor`
+  - `TokenizerFactory` (class, line 315) `class TokenizerFactory`
+  - `GenerationEngine` (class, line 327) `class GenerationEngine`
+  - `ModelResult` (class, line 433) `class ModelResult`
+  - `MultiInferenceRunner` (class, line 450) `class MultiInferenceRunner`
+  - `ResultRenderer` (class, line 584) `class ResultRenderer`
+  - `_fmt_params` (method, line 666) `def _fmt_params(n)`
+  - `JsonExporter` (class, line 677) `class JsonExporter`
+  - `build_parser` (method, line 707) `def build_parser()`
+  - `config_from_args` (method, line 780) `def config_from_args(args)`
+  - `main` (method, line 800) `def main()`
+  - `load` (method, line 100) `def load(self, path)`
+  - `resolve` (method, line 127) `def resolve(self, sources)`
+  - `load` (method, line 167) `def load(self, path, device)`
+  - `_load_safetensors` (method, line 183) `def _load_safetensors(self, path, device)`
+  - `_load_torch` (method, line 191) `def _load_torch(self, path, device)`
+  - `reconstruct` (method, line 222) `def reconstruct(self, mod, state_dict, embedded)`
+  - `_infer` (method, line 243) `def _infer(self, mod, sd)`
+  - `_infer_d_head` (method, line 278) `def _infer_d_head(sd)`
+  - `_infer_n_kv` (method, line 285) `def _infer_n_kv(sd, d_head, n_heads)`
+  - `_infer_max_seq` (method, line 295) `def _infer_max_seq(sd)`
+  - `_infer_torus` (method, line 302) `def _infer_torus(sd)`
+  - `get` (method, line 320) `def get(self, mod)`
+  - `__init__` (method, line 330) `def __init__(self, cfg, device)`
+  - `generate` (method, line 334) `def generate(self, model, tokenizer, prompt)`
+  - `_fast_generate` (method, line 361) `def _fast_generate(self, model, input_ids)`
+  - `_manual_generate` (method, line 372) `def _manual_generate(self, model, input_ids)`
+  - `_apply_repetition_penalty` (method, line 412) `def _apply_repetition_penalty(logits, generated, penalty)`
+  - `_apply_top_p` (method, line 424) `def _apply_top_p(logits, p)`
+  - `__init__` (method, line 453) `def __init__(self, cfg)`
+  - `run` (method, line 462) `def run(self)`
+  - `_run_one` (method, line 499) `def _run_one(self, ckpt_path, mod, tokenizer, engine)`
+  - `_make_label` (method, line 570) `def _make_label(path)`
+  - `render` (method, line 590) `def render(self, results, prompt)`
+  - `_print_prompt_header` (method, line 597) `def _print_prompt_header(self, prompt)`
+  - `_print_model_output` (method, line 605) `def _print_model_output(self, r)`
+  - `_print_comparison_table` (method, line 628) `def _print_comparison_table(self, results)`
+  - `export` (method, line 680) `def export(self, results, path, prompt)`
+
+## zeroshot.py
+- Doc: Zero-shot torus resolution expansion for TopoGPT2.
+- Layer: utility
+- Language: py
+- Symbols:
+  - `build_logger` (function, line 69) `def build_logger(name, level)`
+  - `ExpansionConfig` (class, line 87) `class ExpansionConfig`
+  - `TopoGPT2Config` (class, line 169) `class TopoGPT2Config`
+  - `QuaternionOps` (class, line 254) `class QuaternionOps`
+  - `QuaternionLinear` (class, line 287) `class QuaternionLinear(Module)`
+  - `QuaternionSpectralLayer` (class, line 321) `class QuaternionSpectralLayer(Module)`
+  - `SpectralAutoencoder` (class, line 373) `class SpectralAutoencoder(Module)`
+  - `QuaternionTorusBrain` (class, line 427) `class QuaternionTorusBrain(Module)`
+  - `SwiGLU` (class, line 534) `class SwiGLU(Module)`
+  - `TopoMoEBrain` (class, line 556) `class TopoMoEBrain(Module)`
+  - `RotaryEmbedding` (class, line 613) `class RotaryEmbedding(Module)`
+  - `RMSNorm` (class, line 652) `class RMSNorm(Module)`
+  - `MultiHeadAttention` (class, line 665) `class MultiHeadAttention(Module)`
+  - `TopoGPT2Layer` (class, line 719) `class TopoGPT2Layer(Module)`
+  - `TopoGPT2` (class, line 749) `class TopoGPT2(Module)`
+  - `SpectralKernelInterpolator` (class, line 828) `class SpectralKernelInterpolator`
+  - `NodeEmbedInterpolator` (class, line 876) `class NodeEmbedInterpolator`
+  - `TorusBrainExpander` (class, line 917) `class TorusBrainExpander`
+  - `TopoMoEBrainExpander` (class, line 1009) `class TopoMoEBrainExpander`
+  - `TopoGPT2Expander` (class, line 1052) `class TopoGPT2Expander`
+  - `CheckpointIO` (class, line 1120) `class CheckpointIO`
+  - `CheckpointArch` (class, line 1216) `class CheckpointArch`
+  - `CheckpointArchProber` (class, line 1239) `class CheckpointArchProber`
+  - `ExpansionValidator` (class, line 1463) `class ExpansionValidator`
+  - `ZeroShotExpansionPipeline` (class, line 1550) `class ZeroShotExpansionPipeline`
+  - `build_arg_parser` (method, line 1709) `def build_arg_parser()`
+  - `main` (method, line 1774) `def main()`
+  - `validate_geometry` (method, line 140) `def validate_geometry(self)`
+  - `src_nodes` (method, line 154) `def src_nodes(self)`
+  - `tgt_nodes` (method, line 158) `def tgt_nodes(self)`
+  - `__post_init__` (method, line 222) `def __post_init__(self)`
+  - `hamilton_product` (method, line 258) `def hamilton_product(q1, q2)`
+  - `normalize` (method, line 269) `def normalize(q, eps)`
+  - `conjugate` (method, line 273) `def conjugate(q)`
+  - `rotate_vector` (method, line 278) `def rotate_vector(v, q)`
+  - `__init__` (method, line 296) `def __init__(self, in_features, out_features, bias)`
+  - `forward` (method, line 310) `def forward(self, x)`
+  - `__init__` (method, line 329) `def __init__(self, in_q, out_q, grid_h, grid_w, init_scale)`
+  - `_kernel` (method, line 344) `def _kernel(self, c)`
+  - `_contract` (method, line 347) `def _contract(self, W, X)`
+  - `forward` (method, line 350) `def forward(self, x)`
+  - `__init__` (method, line 382) `def __init__(self, config)`
+  - `_filter1d` (method, line 404) `def _filter1d(self, x, kr, ki)`
+  - `encode` (method, line 409) `def encode(self, x)`
+  - `decode` (method, line 412) `def decode(self, z)`
+  - `forward` (method, line 415) `def forward(self, x)`
+  - `process_torus_grid` (method, line 420) `def process_torus_grid(self, grid)`
+  - `__init__` (method, line 443) `def __init__(self, d_model, config)`
+  - `_build_torus_graph` (method, line 468) `def _build_torus_graph(self)`
+  - `_torus_soft_assign` (method, line 484) `def _torus_soft_assign(self, phi1, phi2)`
+  - `_message_passing` (method, line 495) `def _message_passing(self, node_feat)`
+  - `forward` (method, line 509) `def forward(self, x)`
+  - `__init__` (method, line 540) `def __init__(self, d_model, expansion, dropout)`
+  - `forward` (method, line 552) `def forward(self, x)`
+  - `__init__` (method, line 565) `def __init__(self, d_model, config)`
+  - `_route` (method, line 581) `def _route(self, x)`
+  - `forward` (method, line 604) `def forward(self, x)`
+  - `__init__` (method, line 618) `def __init__(self, d_head, max_seq_len)`
+  - `_build_cache` (method, line 626) `def _build_cache(self, seq_len)`
+  - `_rotate_half` (method, line 633) `def _rotate_half(x)`
+  - `forward` (method, line 637) `def forward(self, q, k, seq_len, offset)`
+  - `__init__` (method, line 655) `def __init__(self, d_model, eps)`
+  - `forward` (method, line 660) `def forward(self, x)`
+  - `__init__` (method, line 671) `def __init__(self, d_model, n_heads, config)`
+  - `forward` (method, line 686) `def forward(self, x, is_causal, past_kv)`
+  - `__init__` (method, line 725) `def __init__(self, d_model, n_heads, config)`
+  - `_forward_impl` (method, line 734) `def _forward_impl(self, x, past_kv)`
+  - `forward` (method, line 743) `def forward(self, x, past_kv)`
+  - `__init__` (method, line 757) `def __init__(self, config)`
+  - `_init_weights` (method, line 771) `def _init_weights(self)`
+  - `forward` (method, line 778) `def forward(self, token_ids, past_kvs)`
+  - `generate` (method, line 795) `def generate(self, token_ids, max_new_tokens, temperature, top_k)`
+  - `__init__` (method, line 837) `def __init__(self, mode)`
+  - `_interp2d` (method, line 840) `def _interp2d(self, tensor, tgt_h, tgt_w)`
+  - `transfer` (method, line 856) `def transfer(self, src_layer, tgt_layer)`
+  - `__init__` (method, line 886) `def __init__(self, mode)`
+  - `transfer` (method, line 889) `def transfer(self, src_embed, src_radial, src_angular, tgt_embed, tgt_radial, tgt_angular)`
+  - `__init__` (method, line 936) `def __init__(self, spec_interp_mode, node_interp_mode, logger)`
+  - `expand` (method, line 946) `def expand(self, src, tgt)`
+  - `__init__` (method, line 1018) `def __init__(self, spec_interp_mode, node_interp_mode, logger)`
+  - `expand` (method, line 1031) `def expand(self, src, tgt)`
+  - `__init__` (method, line 1072) `def __init__(self, spec_interp_mode, node_interp_mode, logger)`
+  - `expand` (method, line 1085) `def expand(self, src, tgt)`
+  - `__init__` (method, line 1126) `def __init__(self, logger)`
+  - `load` (method, line 1133) `def load(self, path, model, device)`
+  - `save` (method, line 1177) `def save(self, path, model, metadata)`
+  - `__init__` (method, line 1286) `def __init__(self, logger)`
+  - `_load_shapes` (method, line 1289) `def _load_shapes(self, path)`
+  - `_load_metadata` (method, line 1304) `def _load_metadata(self, path)`
+  - `probe` (method, line 1315) `def probe(self, path, fallback_radial, fallback_angular)`
+  - `_infer_d_head_fallback` (method, line 1433) `def _infer_d_head_fallback(d_model, q_out, k_out)`
+  - `__init__` (method, line 1474) `def __init__(self, logger)`
+  - `validate` (method, line 1477) `def validate(self, model, prompt)`
+  - `__init__` (method, line 1565) `def __init__(self, exp_cfg, logger)`
+  - `_config_from_arch` (method, line 1570) `def _config_from_arch(self, arch, torus_radial, torus_angular)`
+  - `_build_metadata_for_save` (method, line 1609) `def _build_metadata_for_save(self, src_meta, arch, tgt_radial, tgt_angular)`
+  - `run` (method, line 1631) `def run(self)`
+
