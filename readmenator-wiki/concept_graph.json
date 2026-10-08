@@ -1,0 +1,776 @@
+{
+  "concepts": [
+    {
+      "name": "model",
+      "files": [
+        "app.py",
+        "inference.py",
+        "inference2.py",
+        "quantize.py",
+        "reinforce.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 110,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "checkpoint",
+      "files": [
+        "app.py",
+        "inference.py",
+        "inference2.py",
+        "quantize.py",
+        "reinforce.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 99,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "topo",
+      "files": [
+        "app.py",
+        "inference.py",
+        "inference2.py",
+        "quantize.py",
+        "reinforce.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 98,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "gpt2",
+      "files": [
+        "app.py",
+        "inference.py",
+        "inference2.py",
+        "quantize.py",
+        "reinforce.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 69,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "config",
+      "files": [
+        "app.py",
+        "inference.py",
+        "inference2.py",
+        "quantize.py",
+        "reinforce.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 67,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "head",
+      "files": [
+        "app.py",
+        "inference.py",
+        "inference2.py",
+        "quantize.py",
+        "reinforce.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 53,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "load",
+      "files": [
+        "app.py",
+        "inference.py",
+        "inference2.py",
+        "quantize.py",
+        "reinforce.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 45,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "weights",
+      "files": [
+        "app.py",
+        "inference.py",
+        "inference2.py",
+        "quantize.py",
+        "reinforce.py",
+        "topogpt2_1.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 40,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "run",
+      "files": [
+        "app.py",
+        "inference.py",
+        "inference2.py",
+        "quantize.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 26,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "torus",
+      "files": [
+        "app.py",
+        "inference2.py",
+        "quantize.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 101,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "build",
+      "files": [
+        "app.py",
+        "inference2.py",
+        "quantize.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 32,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "graph",
+      "files": [
+        "app.py",
+        "inference.py",
+        "inference2.py",
+        "quantize.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "zeroshot.py"
+      ],
+      "mentions": 17,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "quaternion",
+      "files": [
+        "app.py",
+        "inference2.py",
+        "quantize.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "zeroshot.py"
+      ],
+      "mentions": 92,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "spectral",
+      "files": [
+        "app.py",
+        "inference2.py",
+        "quantize.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "zeroshot.py"
+      ],
+      "mentions": 88,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "layer",
+      "files": [
+        "app.py",
+        "inference2.py",
+        "quantize.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "zeroshot.py"
+      ],
+      "mentions": 64,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "weight",
+      "files": [
+        "app.py",
+        "inference.py",
+        "inference2.py",
+        "quantize.py",
+        "topogpt2_1.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "zeroshot.py"
+      ],
+      "mentions": 48,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "grid",
+      "files": [
+        "app.py",
+        "inference2.py",
+        "quantize.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "zeroshot.py"
+      ],
+      "mentions": 42,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "token",
+      "files": [
+        "app.py",
+        "inference.py",
+        "inference2.py",
+        "quantize.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 42,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "top",
+      "files": [
+        "app.py",
+        "inference2.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 40,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "attention",
+      "files": [
+        "app.py",
+        "inference2.py",
+        "quantize.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "zeroshot.py"
+      ],
+      "mentions": 38,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "cache",
+      "files": [
+        "app.py",
+        "inference2.py",
+        "quantize.py",
+        "topogpt2_1.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 37,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "state",
+      "files": [
+        "app.py",
+        "quantize.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 36,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "topogpt2",
+      "files": [
+        "app.py",
+        "inference2.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 32,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "all",
+      "files": [
+        "app.py",
+        "inference2.py",
+        "quantize.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "zeroshot.py"
+      ],
+      "mentions": 28,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "returns",
+      "files": [
+        "app.py",
+        "inference2.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 22,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "dict",
+      "files": [
+        "app.py",
+        "quantize.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 21,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "text",
+      "files": [
+        "app.py",
+        "inference2.py",
+        "quantize.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 20,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "multi",
+      "files": [
+        "app.py",
+        "inference2.py",
+        "quantize.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 18,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "generate",
+      "files": [
+        "app.py",
+        "inference.py",
+        "inference2.py",
+        "quantize.py",
+        "reinforce.py",
+        "topogpt2_1.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 16,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "full",
+      "files": [
+        "app.py",
+        "inference2.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 15,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "logger",
+      "files": [
+        "app.py",
+        "inference.py",
+        "inference2.py",
+        "reinforce.py",
+        "topogpt2_1.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 10,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "forward",
+      "files": [
+        "app.py",
+        "inference2.py",
+        "quantize.py",
+        "reinforce.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "zeroshot.py"
+      ],
+      "mentions": 69,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "per",
+      "files": [
+        "inference2.py",
+        "quantize.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 40,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "compute",
+      "files": [
+        "app.py",
+        "reinforce.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "zeroshot.py"
+      ],
+      "mentions": 35,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "safetensors",
+      "files": [
+        "app.py",
+        "inference.py",
+        "inference2.py",
+        "topogpt2_1.py",
+        "topogpt2_explorer.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 27,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "embeddings",
+      "files": [
+        "app.py",
+        "inference2.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "zeroshot.py"
+      ],
+      "mentions": 22,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "linear",
+      "files": [
+        "app.py",
+        "inference2.py",
+        "quantize.py",
+        "topogpt2_1.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "zeroshot.py"
+      ],
+      "mentions": 21,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "size",
+      "files": [
+        "app.py",
+        "inference2.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "zeroshot.py"
+      ],
+      "mentions": 20,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "torch",
+      "files": [
+        "app.py",
+        "inference2.py",
+        "quantize.py",
+        "topogpt2_1.py",
+        "topogpt2_explorer.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 20,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "via",
+      "files": [
+        "app.py",
+        "reinforce.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "zeroshot.py"
+      ],
+      "mentions": 20,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "embedding",
+      "files": [
+        "app.py",
+        "inference2.py",
+        "quantize.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "zeroshot.py"
+      ],
+      "mentions": 19,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "pipeline",
+      "files": [
+        "app.py",
+        "inference2.py",
+        "quantize.py",
+        "topogpt2_1.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 17,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "file",
+      "files": [
+        "app.py",
+        "inference2.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 16,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "level",
+      "files": [
+        "inference2.py",
+        "reinforce.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 16,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "new",
+      "files": [
+        "app.py",
+        "inference2.py",
+        "topogpt2_1.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 15,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "configuration",
+      "files": [
+        "inference.py",
+        "quantize.py",
+        "reinforce.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py"
+      ],
+      "mentions": 12,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "dimension",
+      "files": [
+        "app.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 10,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "loads",
+      "files": [
+        "inference.py",
+        "inference2.py",
+        "quantize.py",
+        "topogpt2_explorer.py",
+        "topogpt2_grid_scaler.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 8,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "raw",
+      "files": [
+        "app.py",
+        "inference2.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "topogpt2_multi_inference.py",
+        "zeroshot.py"
+      ],
+      "mentions": 8,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "contract",
+      "files": [
+        "app.py",
+        "inference2.py",
+        "quantize.py",
+        "topogpt2_1.py",
+        "topogpt2_embeddings_navigator.py",
+        "topogpt2_explorer.py",
+        "zeroshot.py"
+      ],
+      "mentions": 7,
+      "confidence": "EXTRACTED"
+    }
+  ],
+  "relations": [],
+  "dialectic": [
+    "Thesis: `all` centralizes 8 files; Antithesis: `attention` pulls 8 files with 8 shared (Jaccard 1.00); Synthesis: should they merge, split by layer, or keep `bridges` explicit?",
+    "Thesis: `all` centralizes 8 files; Antithesis: `build` pulls 9 files with 8 shared (Jaccard 0.89); Synthesis: should they merge, split by layer, or keep `bridges` explicit?",
+    "Thesis: `all` centralizes 8 files; Antithesis: `cache` pulls 8 files with 7 shared (Jaccard 0.78); Synthesis: should they merge, split by layer, or keep `bridges` explicit?",
+    "Thesis: `all` centralizes 8 files; Antithesis: `checkpoint` pulls 11 files with 8 shared (Jaccard 0.73); Synthesis: should they merge, split by layer, or keep `bridges` explicit?",
+    "Thesis: `all` centralizes 8 files; Antithesis: `compute` pulls 7 files with 6 shared (Jaccard 0.67); Synthesis: should they merge, split by layer, or keep `bridges` explicit?",
+    "Thesis: `all` centralizes 8 files; Antithesis: `config` pulls 11 files with 8 shared (Jaccard 0.73); Synthesis: should they merge, split by layer, or keep `bridges` explicit?",
+    "Thesis: `all` centralizes 8 files; Antithesis: `configuration` pulls 7 files with 4 shared (Jaccard 0.36); Synthesis: should they merge, split by layer, or keep `bridges` explicit?",
+    "Thesis: `all` centralizes 8 files; Antithesis: `contract` pulls 7 files with 7 shared (Jaccard 0.88); Synthesis: should they merge, split by layer, or keep `bridges` explicit?",
+    "Thesis: `all` centralizes 8 files; Antithesis: `dict` pulls 8 files with 7 shared (Jaccard 0.78); Synthesis: should they merge, split by layer, or keep `bridges` explicit?",
+    "Thesis: `all` centralizes 8 files; Antithesis: `dimension` pulls 7 files with 6 shared (Jaccard 0.67); Synthesis: should they merge, split by layer, or keep `bridges` explicit?"
+  ]
+}
